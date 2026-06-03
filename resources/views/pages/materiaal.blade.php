@@ -6,6 +6,13 @@
     <title>Materiaal</title>
 </head>
 <body>
+
+        @if(session('Success'))
+            <p style="color: green; font-weight: bold;">
+                {{ session('Success') }}
+            </p>
+        @endif
+
         <table border="1">
             <tr>
                 <th>Naam</th>
@@ -20,8 +27,10 @@
                 <td>{{ $material->product_number }}</td>
                 <td>{{ $material->stock }}</td>
                 <td>
-                    <form action="#" method="POST">
+                    <form action="/materiaal/{{ $material->id }}" method="POST">
                         @csrf
+                        <input type="hidden" name="material_id" value="{{ $material->id }}">
+
                         <input type="number" name="quantity" min="1" max="{{ $material->stock }}">
                         <button type="submit">Bestel</button>
                     </form>
