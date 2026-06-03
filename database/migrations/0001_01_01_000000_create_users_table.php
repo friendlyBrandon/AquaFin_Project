@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('fullname');
             $table->string('username')->unique();
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('is_stockMedewerker')->default(false);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

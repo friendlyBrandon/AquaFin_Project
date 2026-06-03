@@ -32,18 +32,17 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'fullname' => ['required', 'string','max:255'],
-            'username' => ['required','string','max:255'],
+            'fullname' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $username = strtolower($request->name . '.' . $request->fullname);
         $user = User::create([
             'name' => $request->name,
             'fullname' => $request->fullname,
-            'username' => $request->username,
+            'username' => $username,
             'password' => Hash::make($request->password),
         ]);
-
         event(new Registered($user));
 
         Auth::login($user);
