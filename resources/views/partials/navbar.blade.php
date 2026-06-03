@@ -7,6 +7,7 @@
         </a>
 
         <a href="{{ route('dashboard') }}">
+            
             Dashboard
         </a>
 
