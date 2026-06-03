@@ -1,40 +1,36 @@
-<x-style-l
-<!DOCTYPE html>
-<html lang=en>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css/style.css">
-        <title>Aquafin</title>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+
+
+    <div class="left-side">
+        <h1>Welkom bij Aquafin</h1>
+
+        <p>
+            Bestel en raadpleeg materialen voor onderhouds-,
+            herstel- en bouwwerkzaamheden.
+        </p>
 
         
+    </div>
 
-        
-    </head>
-    <body>
-        <div class="container">
-            <div class="leftside">
-                <h1>Welkom bij <span>Aquafin</span></h1>
-                <p>
-                    Welkom op het Aquafin Stock Managment Platform.
-                </p>
-            </div>
+    <div class="right-side">
+        <img src="{{ asset('images/logo.png') }}" class="logo-topright">
+        <div class="login-card">
+            <h2>Materiaalbeheer</h2>
 
-            <div class="rightside">
-                <div class="login">
-                    <p class="subtitle">
-                        Log in of maak account aan
-                    </p>
-                    <a href="login" class="login-btn">
-                        Inloggen
-                    </a>
-                    <a href="register" class="register-btn">
-                        Registreren
-                    </a>
-                </div>
+            <p>Log in of maak een account aan.</p>
 
-            </div>
+            <a href="{{ route('login') }}" class="btn-login">
+                Inloggen
+            </a>
+
+            <a href="{{ route('register') }}" class="btn-register">
+                Registreren
+            </a>
         </div>
-    </body>
-</html>
+    </div>
+
+</div>
+@endsection
