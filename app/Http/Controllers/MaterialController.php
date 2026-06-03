@@ -10,6 +10,6 @@ class MaterialController extends Controller
     public function index() {
         $materials = Material::all();
             
-        return view('materiaal', compact('materials'));
+        return view('pages.materiaal', compact('materials'));
     }
 }
