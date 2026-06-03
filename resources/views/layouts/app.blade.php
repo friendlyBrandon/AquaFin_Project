@@ -9,8 +9,14 @@
    @vite(['resources/css/style.css'])
 </head>
 <body>
-   
-    @yield('content')
+
+    @auth
+        @include('partials.navbar')
+    @endauth
+
+    <main>
+        @yield('content')
+    </main>
 
 </body>
 </html>

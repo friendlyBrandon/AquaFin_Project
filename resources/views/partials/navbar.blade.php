@@ -1,24 +1,26 @@
 <nav class="navbar">
     <div class="nav-left">
-        <a href="{{ route('home') }}" class="logo">
-            <img src="{{ asset('images/aquafin-logo.png') }}" alt="Aquafin">
+        <a href="{{ route('dashboard') }}" class="logo">
+            💧 Aquafin
         </a>
     </div>
 
     <div class="nav-center">
-        <a href="{{ route('materialen.index') }}">Materialen</a>
-        <a href="{{ route('weersvoorspelling') }}">Weer & Risico</a>
-        <a href="{{ route('messages.index') }}">Berichten</a>
-        <a href="{{ route('order.logs') }}">Bestellogs</a>
-        <a href="{{ route('profile') }}">Profiel</a>
+        <a href="#">Materials</a>
+        <a href="#">Flood Risk Forecast</a>
+        <a href="#">Messages</a>
     </div>
 
     <div class="nav-right">
-        <a href="{{ route('winkelmand') }}" class="cart">🛒</a>
+        @auth
+            <a href="#">🛒 Cart</a>
+            <a href="#">Profile</a>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button class="logout">Uitloggen</button>
-        </form>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button class="logout-btn">Logout</button>
+            </form>
+       
+        @endauth
     </div>
 </nav>
