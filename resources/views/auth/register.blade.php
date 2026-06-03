@@ -11,16 +11,9 @@
 
         <!-- Full name -->
         <div class="mt-4">
-            <x-input-label for="email" :value="__('Full name')" />
+            <x-input-label for="fullname" :value="__('Full name')" />
             <x-text-input id="fullname" class="block mt-1 w-full" type="text" name="fullname" :value="old('fullname')" required autocomplete="fullname" />
-            <x-input-error :messages="$errors->get('Full Name')" class="mt-2" />
-        </div>
-
-        <!-- Username -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Username')" />
-            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('Full Name')" class="mt-2" />
+            <x-input-error :messages="$errors->get('fullname')" class="mt-2" />
         </div>
 
         <!-- Password -->
