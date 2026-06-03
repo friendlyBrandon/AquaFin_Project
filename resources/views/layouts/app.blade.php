@@ -9,7 +9,7 @@
    @vite(['resources/css/style.css'])
 </head>
 <body>
-
+   
     @yield('content')
 
 </body>

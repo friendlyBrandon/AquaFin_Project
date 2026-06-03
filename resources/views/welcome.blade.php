@@ -5,11 +5,11 @@
 
 
     <div class="left-side">
-        <h1>Welkom bij Aquafin</h1>
+        <h1>Welcome to Aquafin</h1>
 
         <p>
-            Bestel en raadpleeg materialen voor onderhouds-,
-            herstel- en bouwwerkzaamheden.
+            Order and consult materials for maintenance,
+            repair, and construction work.
         </p>
 
         
@@ -18,16 +18,16 @@
     <div class="right-side">
         <img src="{{ asset('images/logo.png') }}" class="logo-topright">
         <div class="login-card">
-            <h2>Materiaalbeheer</h2>
+            <h2>Material Management</h2>
 
-            <p>Log in of maak een account aan.</p>
+            <p>Log in or create an account.</p>
 
             <a href="{{ route('login') }}" class="btn-login">
-                Inloggen
+                Log in
             </a>
 
             <a href="{{ route('register') }}" class="btn-register">
-                Registreren
+                Registrer
             </a>
         </div>
     </div>
