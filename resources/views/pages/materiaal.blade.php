@@ -13,6 +13,8 @@
             </p>
         @endif
 
+        <input type="text" id="zoekbalk" placeholder="Zoek op naam of productnummer...">
+
         <table border="1">
             <tr>
                 <th>Naam</th>
