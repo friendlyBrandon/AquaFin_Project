@@ -7,6 +7,9 @@ use App\Models\Material;
 
 class MaterialController extends Controller
 {
-    $materials = Material::all();
+    public function index() {
+        $materials = Material::all();
+            
         return view('materiaal', compact('materials'));
+    }
 }
