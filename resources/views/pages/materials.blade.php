@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materials</title>
-</head>
-<body>
+@extends('layouts.dashboard')
 
-        @if(session('Success'))
-            <p style="color: green; font-weight: bold;">
-                {{ session('Success') }}
-            </p>
-        @endif
+@section('content')
 
-        <input type="text" id="search" placeholder="Search name or productnumber... ">
+<div class="materials">
+@if(session('Success'))
+    <p style="color: green; font-weight: bold;">
+        {{ session('Success') }}
+    </p>
+@endif
 
+
+<input type="text" id="search" placeholder="Search name or productnumber...">
         <table border="1" id="materiaalTabel">
         <thead>
             <tr>
@@ -27,8 +23,8 @@
         <tbody>
             @foreach($materials as $material)
             <tr class="material-row">
-                <td class="prod-number">{{ $material->product_number }}</td>
                 <td class="mat-name">{{ $material->name }}</td>
+                <td class="prod-number">{{ $material->product_number }}</td>
                 <td>{{ $material->stock }}</td>
                 <td>
                     <form action="/materials/{{ $material->id }}" method="POST">
@@ -43,23 +39,23 @@
         </tbody>
     </table>
 
-    <script>
-        document.getElementById('search').addEventListener('keyup', function() {
+<script>
+document.getElementById('search').addEventListener('keyup', function() {
 
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('.material-row');
+    let filter = this.value.toLowerCase();
+    let rows = document.querySelectorAll('.material-row');
 
-            rows.forEach(function(row) {
-                let productNumber = row.querySelector('.prod-number').textContent.toLowerCase();
-                let name = row.querySelector('.mat-name').textContent.toLowerCase();
+    rows.forEach(function(row) {
+        let productNumber = row.querySelector('.prod-number').textContent.toLowerCase();
+        let name = row.querySelector('.mat-name').textContent.toLowerCase();
 
-                if (productNumber.includes(filter) || name.includes(filter)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+        if (productNumber.includes(filter) || name.includes(filter)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+});
+</script>
+</div>
+@endsection
