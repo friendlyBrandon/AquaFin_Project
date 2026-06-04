@@ -167,3 +167,12 @@
 .dashboard h1{
     color:#0099d8;
 }
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    padding: 40px;
+}
