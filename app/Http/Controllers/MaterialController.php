@@ -23,12 +23,12 @@ class MaterialController extends Controller
     $material = Material::findOrFail($id);
 
     if ($request->quantity > $material->stock) {
-        return redirect()->back()->withErrors(['quantity' => 'Meer dan de volledige voorraad bestellen, is niet mogelijk!']);
+        return redirect()->back()->withErrors(['quantity' => 'Order more than the available stock is impossible!']);
     }
 
     $material->stock -= $request->quantity;
     $material->save();
 
-    return redirect()->back()->with('Success', 'Materiaal in winkelmandje toegevoegd!');
+    return redirect()->back()->with('Success', 'Material added to shopping cart!');
     }
 }

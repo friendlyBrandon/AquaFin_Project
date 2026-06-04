@@ -6,7 +6,7 @@
     </div>
 
     <div class="nav-center">
-        <a href="#">Materials</a>
+        <a href="/materials">Materials</a>
         <a href="#">Flood Risk Forecast</a>
         <a href="#">Messages</a>
     </div>
