@@ -6,20 +6,16 @@
     </div>
 
     <div class="nav-center">
+        @auth
         <a href="#">Materials</a>
         <a href="#">Flood Risk Forecast</a>
         <a href="#">Messages</a>
-    </div>
-
-    <div class="nav-right">
-        @auth
-            <a href="#">🛒 Cart</a>
-            <a href="#">Profile</a>
-
-            <form method="POST" action="{{ route('logout') }}">
+        <a href="#">🛒 Cart</a>
+        <a href="{{ route('profile.edit') }}">Profile</a>
+        <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button class="logout-btn">Logout</button>
-            </form>
+        </form>
        
         @endauth
     </div>
