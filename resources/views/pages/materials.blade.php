@@ -27,8 +27,8 @@
         <tbody>
             @foreach($materials as $material)
             <tr class="material-row">
-                <td class="prod-number">{{ $material->product_number }}</td>
                 <td class="mat-name">{{ $material->name }}</td>
+                <td class="prod-number">{{ $material->product_number }}</td>
                 <td>{{ $material->stock }}</td>
                 <td>
                     <form action="/materials/{{ $material->id }}" method="POST">
