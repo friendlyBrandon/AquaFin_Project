@@ -10,7 +10,7 @@ class MaterialController extends Controller
     public function index() {
         $materials = Material::all();
             
-        return view('pages.materiaal', compact('materials'));
+        return view('pages.materials', compact('materials'));
     }
 
     public function order(Request $request, $id) {
