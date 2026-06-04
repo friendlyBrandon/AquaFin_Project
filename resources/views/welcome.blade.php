@@ -27,7 +27,7 @@
             </a>
 
             <a href="{{ route('register') }}" class="btn-register">
-                Registrer
+                Register
             </a>
         </div>
     </div>

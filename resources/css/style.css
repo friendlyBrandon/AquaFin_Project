@@ -153,20 +153,26 @@
     color: #333;
     font-weight: 500;
     cursor: pointer;
+    font-size:1rem;
 }
 
 .logout-btn:hover {
-    color: red;
+    color: #0099d8;
 }
 .logo{
     font-size:1.5rem;
     font-weight:bold;
 }
 
-.logout-btn{
-    background:none;
-    border:none;
-    color:white;
-    cursor:pointer;
-    font-size:1rem;
+.dashboard h1{
+    color:#0099d8;
+}
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    padding: 40px;
 }
