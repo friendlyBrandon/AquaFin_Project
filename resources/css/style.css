@@ -238,4 +238,61 @@
 
     text-align: left;
     padding: 40px;
+    
 }
+.profile-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 30px;
+    margin-bottom: 30px;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.profile-card h2 {
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.profile-card p {
+    color: #666;
+}
+
+/*
+.profile-btn{
+    background: linear-gradient(135deg, #0099d8, #00b4ff);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+   
+    box-shadow: 0 4px 12px rgba(0, 153, 216, 0.25);
+}
+    */
+
+/* Style voor Breeze primary button */
+.x-primary-button,
+button[type="submit"] {
+    background: linear-gradient(135deg, #0099d8, #00b4ff);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 153, 216, 0.25);
+}
+
+/* Hover */
+.x-primary-button:hover,
+button[type="submit"]:hover {
+    box-shadow: 0 8px 18px rgba(0, 153, 216, 0.35);
+}
+
+
+
