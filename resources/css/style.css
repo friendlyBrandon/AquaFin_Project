@@ -217,7 +217,7 @@
     font-weight:bold;
 }
 
-.dashboard h1{
+.title{
     color:#0099d8;
 }
 .dashboard{
@@ -227,5 +227,15 @@
     align-items: center;
 
     text-align: center;
+    padding: 40px;
+}
+
+.profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+
+    text-align: left;
     padding: 40px;
 }
