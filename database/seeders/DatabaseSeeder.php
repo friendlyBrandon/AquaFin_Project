@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Material;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,8 +20,7 @@ class DatabaseSeeder extends Seeder
 
        // User::factory()->create([
             //'name' => 'Test User',
-            //'username' => ''
-            //'email' => 'test@example.com',
+            //'username' => 'Yapper.yap'
         //]);
 
         Material::factory(5)->create();
