@@ -14,11 +14,11 @@
         <table border="1" id="materiaalTabel">
         <thead>
             <tr>
-                <th>Productname</th>                
-                <th>Productnumber</th>
-                <th>Category</th>
-                <th>Stock</th>
-                <th>Order</th>
+                <th>Productnaam</th>                
+                <th>Productnummer</th>
+                <th>Categorie</th>
+                <th>Voorraad</th>
+                <th>Bestelling</th>
             </tr>
         </thead>
         <tbody>
