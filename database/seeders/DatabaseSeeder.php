@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'Gwen.Wick',
             'password' => Hash::make('BigBoyAdmin154?'),
             'is_admin' => '1',
+            'provincie' => 'Antwerpen'
         ]);
 
         Material::factory(5)->create();
