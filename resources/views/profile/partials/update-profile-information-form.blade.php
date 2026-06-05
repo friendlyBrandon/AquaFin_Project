@@ -17,24 +17,22 @@
         @csrf
         @method('patch')
 
+        @if (auth()->user()->is_stockMedewerker == 1)
+            <div>
+                <p class="function">Function: Warehouse worker</p>
+            </div>
+        @elseif (auth()->user()->is_admin == 1)
+            <div>
+                <p class="function">Function: Admin</p>
+            </div>
+        @else
+            <div>
+                <p class="function">Function: Technieker</p>
+            </div>
+        @endif
         <div>
             <x-input-label for="username" :value="__('Username:')" />
-            <x-text-input id="username" name="name" type="text" class="mt-1 block w-full" :value="old('username', $user->username)" required autofocus autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('Username')" />
-        </div>
-
-        <div class="profile-btn">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
-            @endif
+            <x-text-input id="username" type="text" class="mt-1 block w-full" :value="$user->username" readonly />
         </div>
     </form>
 </section>
