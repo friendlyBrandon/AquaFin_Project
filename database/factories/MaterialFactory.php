@@ -18,9 +18,11 @@ class MaterialFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->word(),
+            'productname' => fake()->word(),
 
-            'product_number' => fake()->unique()->randomNumber(8, true), 
+            'productnumber' => fake()->unique()->randomNumber(8, true), 
+
+            'category' => fake()->word(),
             
             'stock' => fake()->numberBetween(0, 1000),
         ];

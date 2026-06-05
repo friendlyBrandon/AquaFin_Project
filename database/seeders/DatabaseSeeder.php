@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             MaterialListSeeder::class,
         ]);
-     main
          User::factory(10)->create();
 
         User::factory()->create([
