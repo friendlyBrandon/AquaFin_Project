@@ -11,7 +11,7 @@
         <a href="#">Flood Risk Forecast</a>
         <a href="#">Messages</a>
          @if(auth()->user()->is_admin == 1) 
-        <a href="#">Admin page</a>
+        <a href="#">Order Log</a>
         @else 
         @endif
         <a href="#">🛒 Cart</a>
