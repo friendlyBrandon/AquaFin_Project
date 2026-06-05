@@ -19,14 +19,14 @@
         <div class="login-card">
             <h2>Material Management</h2>
 
-            <p>Log in or create an account.</p>
+            <p>Log in of maak een account.</p>
 
             <a href="{{ route('login') }}" class="btn-login">
-                Log in
+                Inloggen
             </a>
 
             <a href="{{ route('register') }}" class="btn-register">
-                Register
+                Registeren
             </a>
         </div>
     </div>
