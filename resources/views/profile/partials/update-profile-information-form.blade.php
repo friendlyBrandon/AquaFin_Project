@@ -32,6 +32,19 @@
         @endif
         <div>
             <x-input-label for="username" :value="__('Gebruikersnaam:')" />
+                <p class="function">Function: Warehouse worker</p>
+            </div>
+        @elseif (auth()->user()->is_admin == 1)
+            <div>
+                <p class="function">Function: Admin</p>
+            </div>
+        @else
+            <div>
+                <p class="function">Function: Technieker</p>
+            </div>
+        @endif
+        <div>
+            <x-input-label for="username" :value="__('Username:')" />
             <x-text-input id="username" type="text" class="mt-1 block w-full" :value="$user->username" readonly />
         </div>
     </form>

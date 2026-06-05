@@ -18,12 +18,10 @@ class DatabaseSeeder extends Seeder
     
     public function run(): void
     {
-<<<<<<< HEAD
         $this->call([
             MaterialListSeeder::class,
         ]);
-    
-=======
+     main
          User::factory(10)->create();
 
         User::factory()->create([
@@ -32,11 +30,10 @@ class DatabaseSeeder extends Seeder
             'username' => 'Gwen.Wick',
             'password' => Hash::make('BigBoyAdmin154?'),
             'is_admin' => '1',
+            'provincie' => 'Antwerpen'
         ]);
 
         Material::factory(5)->create();
-
-        
->>>>>>> 382c99a2e09519a1d5044ce09358be48160c0cab
+      
     }
 }

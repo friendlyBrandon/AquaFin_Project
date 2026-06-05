@@ -34,6 +34,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'fullname' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'provincie' => ['required','string','max:255'],
         ]);
 
         $username = strtolower($request->name . '.' . $request->fullname);
@@ -42,6 +43,7 @@ class RegisteredUserController extends Controller
             'fullname' => $request->fullname,
             'username' => $username,
             'password' => Hash::make($request->password),
+            'provincie' => $request->provincie,
         ]);
         event(new Registered($user));
 
