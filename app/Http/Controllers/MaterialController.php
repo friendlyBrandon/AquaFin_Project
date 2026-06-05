@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Material;
+use Illuminate\Support\Facades\Session;
 
 class MaterialController extends Controller
 {
@@ -29,6 +30,27 @@ class MaterialController extends Controller
     $material->stock -= $request->quantity;
     $material->save();
 
-    return redirect()->back()->with('Success', 'Material added to shopping cart!');
+  return redirect('/cart')->with('Success', 'Material added to shopping cart!');
     }
+  
+public function addToCart(Request $request, $id)
+{
+    $qty = (int) $request->quantity;
+
+    if ($qty < 1) {
+        return back();
+    }
+
+    $cart = session()->get('cart', []);
+
+    if (isset($cart[$id])) {
+        $cart[$id] += $qty;
+    } else {
+        $cart[$id] = $qty;
+    }
+
+    session()->put('cart', $cart);
+
+    return redirect('/cart');
+}
 }

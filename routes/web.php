@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,13 @@ Route::get('/dashboard', function () {
 
 Route::get('/materials', [MaterialController::class, 'index']);
 Route::post('/materials/{id}', [MaterialController::class, 'order']);
+Route::post('/materials/{id}', [MaterialController::class, 'addToCart']);
+
+Route::get('/cart',[CartController::class, 'index']);
+Route::post('/cart/update/{id}', [CartController::class, 'update']);
+Route::post('/cart/remove/{id}', [CartController::class, 'remove']);
+Route::get('/checkout', [CartController::class, 'checkout']);
+Route::post('/cart/checkout/{id}', [CartController::class, 'checkout']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
