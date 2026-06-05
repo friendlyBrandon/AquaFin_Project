@@ -10,7 +10,14 @@
         <a href="/materials">Materials</a>
         <a href="#">Flood Risk Forecast</a>
         <a href="#">Messages</a>
+
         <a href="/cart">🛒 Cart</a>
+
+         @if(auth()->user()->is_admin == 1) 
+        <a href="#">Order Log</a>
+        @else 
+        @endif
+
         <a href="{{ route('profile.edit') }}">Profile</a>
         <form method="POST" action="{{ route('logout') }}">
                 @csrf
