@@ -4,7 +4,7 @@
     
      
     <div class="profile">
-        <h1 class="title">Profile</h1>
+        <h1 class="title">Profiel</h1>
 <br>
        
             <div class="profile-card">

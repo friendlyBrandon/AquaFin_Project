@@ -10,21 +10,23 @@
 @endif
 
 
-<input type="text" id="search" placeholder="Search name or productnumber...">
+<input type="text" id="search" placeholder="Zoek op naam of productnummer...">
         <table border="1" id="materiaalTabel">
         <thead>
             <tr>
-                <th>Name</th>                
-                <th>Productnumber</th>
-                <th>Stock</th>
-                <th>Order</th>
+                <th>Productnaam</th>                
+                <th>Productnummer</th>
+                <th>Categorie</th>
+                <th>Voorraad</th>
+                <th>Bestelling</th>
             </tr>
         </thead>
         <tbody>
             @foreach($materials as $material)
             <tr class="material-row">
-                <td class="mat-name">{{ $material->name }}</td>
-                <td class="prod-number">{{ $material->product_number }}</td>
+                <td class="mat-name">{{ $material->productname }}</td>
+                <td class="prod-number">{{ $material->productnumber }}</td>
+                <td class="cat-name">{{ $material->category }}</td>
                 <td>{{ $material->stock }}</td>
                 <td>
                     <form action="/materials/{{ $material->id }}" method="POST">
@@ -48,8 +50,9 @@ document.getElementById('search').addEventListener('keyup', function() {
     rows.forEach(function(row) {
         let productNumber = row.querySelector('.prod-number').textContent.toLowerCase();
         let name = row.querySelector('.mat-name').textContent.toLowerCase();
+        let category = row.querySelector('.cat-name').textContent.toLowerCase();
 
-        if (productNumber.includes(filter) || name.includes(filter)) {
+        if (productNumber.includes(filter) || name.includes(filter) || category.includes(filter)) {
             row.style.display = "";
         } else {
             row.style.display = "none";
