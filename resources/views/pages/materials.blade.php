@@ -10,7 +10,7 @@
 @endif
 
 
-<input type="text" id="search" placeholder="Search name or productnumber...">
+<input type="text" id="search" placeholder="Zoek op naam of productnummer...">
         <table border="1" id="materiaalTabel">
         <thead>
             <tr>
