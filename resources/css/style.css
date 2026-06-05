@@ -284,36 +284,6 @@ button[type="submit"]:hover {
     margin: auto;
     font-family: 'Inter', sans-serif;
 }
-/* SEARCH WRAPPER (optioneel voor centreren/spacing) */
-.search-wrapper {
-    margin-bottom: 25px;
-}
-
-/* SEARCH BAR MODERN LOOK */
-#search {
-    width: 100%;
-    max-width: 700px;
-    padding: 16px 20px;
-    font-size: 16px;
-    border-radius: 12px;
-    border: 1px solid #ddd;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    transition: all 0.2s ease;
-    outline: none;
-}
-
-/* FOCUS EFFECT */
-#search:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 6px 18px rgba(79,70,229,0.2);
-    transform: scale(1.01);
-}
-
-/* PLACEHOLDER STYLE */
-#search::placeholder {
-    color: #9ca3af;
-}
 .search {
     width: 100%;
     padding: 14px 16px;

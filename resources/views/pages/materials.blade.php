@@ -14,9 +14,8 @@
         <table border="1" id="materiaalTabel">
         <thead>
             <tr>
-                <th>Productname</th>                
+                <th>Name</th>                
                 <th>Productnumber</th>
-                <th>Category</th>
                 <th>Stock</th>
                 <th>Order</th>
             </tr>
@@ -24,9 +23,8 @@
         <tbody>
             @foreach($materials as $material)
             <tr class="material-row">
-                <td class="mat-name">{{ $material->productname }}</td>
-                <td class="prod-number">{{ $material->productnumber }}</td>
-                <td class="cat-name">{{ $material->category }}</td>
+                <td class="mat-name">{{ $material->name }}</td>
+                <td class="prod-number">{{ $material->product_number }}</td>
                 <td>{{ $material->stock }}</td>
                 <td>
                     <form action="/materials/{{ $material->id }}" method="POST">
@@ -50,9 +48,8 @@ document.getElementById('search').addEventListener('keyup', function() {
     rows.forEach(function(row) {
         let productNumber = row.querySelector('.prod-number').textContent.toLowerCase();
         let name = row.querySelector('.mat-name').textContent.toLowerCase();
-        let category = row.querySelector('.cat-name').textContent.toLowerCase();
 
-        if (productNumber.includes(filter) || name.includes(filter) || category.includes(filter)) {
+        if (productNumber.includes(filter) || name.includes(filter)) {
             row.style.display = "";
         } else {
             row.style.display = "none";
