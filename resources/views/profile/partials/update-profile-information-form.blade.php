@@ -1,11 +1,11 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Profile Information') }}
+            {{ __('Profielgegevens') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Update your account's profile information.") }}
+            {{ __("Update de profielgegevens van uw account.") }}
         </p>
     </header>
 
@@ -19,6 +19,19 @@
 
         @if (auth()->user()->is_stockMedewerker == 1)
             <div>
+                <p class="function">Functie: Warehouse worker</p>
+            </div>
+        @elseif (auth()->user()->is_admin == 1)
+            <div>
+                <p class="function">Functie: Admin</p>
+            </div>
+        @else
+            <div>
+                <p class="function">Functie: Technieker</p>
+            </div>
+        @endif
+        <div>
+            <x-input-label for="username" :value="__('Gebruikersnaam:')" />
                 <p class="function">Function: Warehouse worker</p>
             </div>
         @elseif (auth()->user()->is_admin == 1)
