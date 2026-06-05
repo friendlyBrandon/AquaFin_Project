@@ -14,17 +14,12 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
+    
     public function run(): void
     {
-        // User::factory(10)->create();
-
-       // User::factory()->create([
-            //'name' => 'Test User',
-            //'username' => 'Yapper.yap'
-        //]);
-
-        Material::factory(5)->create();
-
-        
+        $this->call([
+            MaterialListSeeder::class,
+        ]);
+    
     }
 }
