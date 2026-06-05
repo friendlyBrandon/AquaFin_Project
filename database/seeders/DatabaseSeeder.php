@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Material;
 
 class DatabaseSeeder extends Seeder
@@ -17,9 +18,25 @@ class DatabaseSeeder extends Seeder
     
     public function run(): void
     {
+<<<<<<< HEAD
         $this->call([
             MaterialListSeeder::class,
         ]);
     
+=======
+         User::factory(10)->create();
+
+        User::factory()->create([
+            'name' => 'Gwen',
+            'fullname' => 'Wick',
+            'username' => 'Gwen.Wick',
+            'password' => Hash::make('BigBoyAdmin154?'),
+            'is_admin' => '1',
+        ]);
+
+        Material::factory(5)->create();
+
+        
+>>>>>>> 382c99a2e09519a1d5044ce09358be48160c0cab
     }
 }

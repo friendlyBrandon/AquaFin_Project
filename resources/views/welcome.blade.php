@@ -5,11 +5,10 @@
 
 
     <div class="left-side">
-        <h1>Welcome to Aquafin</h1>
+        <h1>Welkom bij Aquafin</h1>
 
         <p>
-            Order and consult materials for maintenance,
-            repair, and construction work.
+            Bestel en raadpleeg materialen voor onderhouds-, herstel- en bouwwerkzaamheden.
         </p>
 
         
