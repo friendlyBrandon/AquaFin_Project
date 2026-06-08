@@ -19,19 +19,16 @@ class Message extends Model
         'is_read',
     ];
 
-    // Relatie: Wie heeft het gestuurd?
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
     }
 
-    // Relatie: Voor wie is het?
     public function receiver()
     {
         return $this->belongsTo(User::class, 'receiver_id');
     }
 
-    // Relatie: Alle antwoorden op dit specifieke bericht
     public function replies()
     {
         return $this->hasMany(Message::class, 'parent_id');
