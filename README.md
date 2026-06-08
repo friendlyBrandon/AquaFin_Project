@@ -14,3 +14,12 @@ npm run build
 # Sources:
 
 - https://chatgpt.com/share/6a2557ea-2c10-83eb-a11b-fefca377a8e7
+
+- https://chatgpt.com/share/6a26c044-1f34-83ed-a0b1-16334c2f3d85
+
+
+# API data source on dashboard:
+
+- https://open-meteo.com/en/docs (weather)
+
+- https://open-meteo.com/en/docs/geocoding-api (location for city)
