@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,7 +18,28 @@ Route::get('/reset-password/{username}', function ($username) {
 Route::post('/save-password', [PasswordResetLinkController::class, 'updatePassword']);
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    $provincie = Auth::user()->provincie;
+
+    $geo = Http::get('https://geocoding-api.open-meteo.com/v1/search', [
+    'name' => $provincie
+])->json();
+
+$location = $geo['results'][0] ?? null;
+if (!$location) {
+    return view('dashboard', ['weather' => null]);
+}
+
+$weather = Http::get('https://api.open-meteo.com/v1/forecast', [
+    'latitude' => $location['latitude'],
+    'longitude' => $location['longitude'],
+    'daily' => 'weather_code,rain_sum,showers_sum,precipitation_probability_max',
+    'timezone' => 'auto',
+])->json();
+
+    return view('dashboard', [
+        'weather' => $weather,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 

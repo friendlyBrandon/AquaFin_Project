@@ -10,13 +10,13 @@
                 class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                 <option value="">Selecteer een provincie</option>
                 <option value="Antwerpen" {{ old('provincie') == 'Antwerpen' ? 'selected' : '' }}>Antwerpen</option>
-                <option value="Oost-Vlaanderen" {{ old('provincie') == 'Oost-Vlaanderen' ? 'selected' : '' }}>
+                <option value="Gent" {{ old('provincie') == 'Oost-Vlaanderen' ? 'selected' : '' }}>
                     Oost-Vlaanderen</option>
-                <option value="West-Vlaanderen" {{ old('provincie') == 'West-Vlaanderen' ? 'selected' : '' }}>
+                <option value="Brugge" {{ old('provincie') == 'West-Vlaanderen' ? 'selected' : '' }}>
                     West-Vlaanderen</option>
-                <option value="Vlaams-Brabant" {{ old('provincie') == 'Vlaams-Brabant' ? 'selected' : '' }}>Vlaams-Brabant
+                <option value="Leuven" {{ old('provincie') == 'Vlaams-Brabant' ? 'selected' : '' }}>Vlaams-Brabant
                 </option>
-                <option value="Limburg" {{ old('provincie') == 'Limburg' ? 'selected' : '' }}>Limburg</option>
+                <option value="Hasselt" {{ old('provincie') == 'Limburg' ? 'selected' : '' }}>Limburg</option>
             </select>
 
             <x-input-error :messages="$errors->get('provincie')" class="mt-2" />
