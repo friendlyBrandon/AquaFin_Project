@@ -5,7 +5,7 @@
         <h1 class="title">Dashboard</h1>
         <p>Welcome bij Aquafin materiaalbeheer.</p>
 
-        <h2>Weer</h2>
+        <h2>Weer ({{ $provincie }}) </h2> 
 
         @if($weather && isset($weather['daily']))
             <table class="table">

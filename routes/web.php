@@ -39,6 +39,7 @@ $weather = Http::get('https://api.open-meteo.com/v1/forecast', [
 
     return view('dashboard', [
         'weather' => $weather,
+        'provincie' => $provincie
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
