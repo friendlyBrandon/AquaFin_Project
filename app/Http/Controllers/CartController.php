@@ -53,11 +53,22 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        unset($cart[$id]);
+        if (isset($cart[$id])) {
+            
+            $item = $cart[$id];
+            $qtyToRemove = is_array($item) ? $item['quantity'] : $item;
 
-        session()->put('cart', $cart);
+            $material = \App\Models\Material::find($id);
+            if ($material) {
+                $material->stock += $qtyToRemove;
+                $material->save();
+            }
 
-        return redirect('/cart');
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('Success', 'Item verwijderd en voorraad is hersteld!');
     }
 
     public function store(Request $request)
