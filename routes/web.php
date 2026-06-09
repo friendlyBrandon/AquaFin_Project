@@ -53,8 +53,7 @@ Route::get('/materials', [MaterialController::class, 'index']);
 
 Route::get('/forecast', [ForcastController::class, 'forecast']);
 
-Route::post('/materials/{id}', [MaterialController::class, 'order']);
-Route::post('/materials/{id}', [MaterialController::class, 'addToCart']);
+Route::post('/materials/bestel', [MaterialController::class, 'order']);
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 

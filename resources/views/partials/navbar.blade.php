@@ -14,7 +14,7 @@
         <a href="/orderlog">Bestellog</a>
         @else 
         @endif
-        <a href="{{ route('cart.index') }}">🛒 Winkelmand</a>
+        <a href="{{ route('cart.index') }}">Winkelmand</a>
         <a href="{{ route('profile.edit') }}">Profiel</a>
        <form method="POST" action="{{ route('logout') }}">
                 @csrf

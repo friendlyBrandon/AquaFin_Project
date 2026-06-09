@@ -4,45 +4,48 @@
 
 <div class="cart">
 
-<h1>🛒 Shopping Cart</h1>
+<h1>Winkelwagen</h1>
 
 @php
     $cart = session('cart', []);
 @endphp
 
 @if(empty($cart))
-    <p>No materials in the cart.</p>
+    <p>Je winkelwagen is momenteel leeg.</p>
 @else
 <table border="1">
     <tr>
-        <th>Material</th>
-        <th>Quantity</th>
-        <th>Action</th>
+        <th>Materiaal</th>
+        <th>Aantal</th>
+        <th>Actie</th>
     </tr>
 
     @php $totalItems = 0; @endphp
 
-    @foreach($cart as $id => $qty)
+    @foreach($cart as $id => $item)
 
-    @php
-        $material = $materials[$id] ?? null;
-    @endphp
+        @php
+            $echteQty = is_array($item) ? $item['quantity'] : $item;
 
-     
-        @if($material)
+            $material = $materials[$id] ?? \App\Models\Material::find($id);
+            
+            $naam = $material ? $material->productname : (is_array($item) ? $item['productname'] : 'Onbekend');
+        @endphp
 
-        @php $totalItems += $qty; @endphp
+        @if($material || is_array($item))
 
-        <tr>
-            <td>{{ $material->productname }}</td>
-            <td>{{ $qty }}</td>
-            <td>
-               <form method="POST" action="/cart/remove/{{ $id }}">
-                @csrf
-                <button type="submit">Remove</button>
-                </form>
-            </td>
-        </tr>
+            @php $totalItems += $echteQty; @endphp
+
+            <tr>
+                <td>{{ $naam }}</td>
+                <td>{{ $echteQty }}</td>
+                <td>
+                   <form method="POST" action="/cart/remove/{{ $id }}">
+                    @csrf
+                    <button type="submit" style="padding: 5px 10px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Verwijderen</button>
+                    </form>
+                </td>
+            </tr>
 
         @endif
 
@@ -50,10 +53,11 @@
 
 </table>
 
-<p><b>Total items:</b> {{ $totalItems }}</p>
- <form method="POST" action="/orderlog">
+<p><b>Totaal aantal items:</b> {{ $totalItems }}</p>
+
+<form method="POST" action="/orderlog">
     @csrf
-    <button type="submit">Checkout</button>
+    <button type="submit" style="padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Afrekenen</button>
 </form>
 
 @endif
