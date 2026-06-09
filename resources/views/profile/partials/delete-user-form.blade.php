@@ -8,11 +8,11 @@
             {{ __('Zodra uw account is verwijderd, worden alle bijbehorende gegevens en informatie permanent verwijderd. Download voordat u uw account verwijdert alle gegevens en informatie die u wilt bewaren.') }}
         </p>
     </header>
-
+<br>
     <x-danger-button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+    >{{ __('Verwijder Account') }}</x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
