@@ -8,7 +8,7 @@
     <div class="nav-center">
         @auth
         <a href="/materials">Materiaal</a>
-        <a href="#">Neerslag Voorspelling</a>
+        <a href="/forecast">Neerslag Voorspelling</a>
         <a href="/contact">Contact</a>
          @if(auth()->user()->is_admin == 1) 
         <a href="#">Bestellog</a>
