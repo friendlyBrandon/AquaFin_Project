@@ -10,7 +10,7 @@ npm install
 
 npm run build
 
-# Forcasting python 5 years
+# Forcasting python 1 year
 
 - Go to the forcasting folder in the main folder of the project.
 
