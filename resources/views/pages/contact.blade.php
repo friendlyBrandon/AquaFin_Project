@@ -37,6 +37,7 @@
         
         <h2>Mijn Inbox</h2>
 
+        @if($user->is_admin || $user->is_stockMedewerker)
         <h3>Ontvangen formulieren</h3>
         <ul>
             @forelse($berichten->where('receiver_id', $user->id) as $bericht)
@@ -53,6 +54,7 @@
         </ul>
 
         <hr>
+        @endif
 
         <h3>Verzonden formulieren</h3>
         <ul>
