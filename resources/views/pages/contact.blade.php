@@ -1,10 +1,18 @@
-@extends('layouts.app') 
+@extends('layouts.dashboard') 
 
 @section('content')
 <div>
     <div>
         <h2>Welkom, {{ $user->username }}</h2>
-        <p><strong>Functie:</strong> {{ $user->is_admin ? 'Admin' : 'Stockmedewerker' }}</p>
+        <p><strong>Functie:</strong> 
+        @if($user->is_admin == 1)
+            Admin
+        @elseif($user->is_stockmedewerker == 1)
+            Stockmedewerker
+         @else
+            Technieker
+        @endif
+    </p>
     </div>
 
     @if($actie === 'overzicht' || $actie === 'bekijk')
