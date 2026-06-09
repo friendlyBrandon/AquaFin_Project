@@ -11,6 +11,7 @@
 }
 
 
+
 /* Linkerkant */
 .left-side {
     flex: 1;
@@ -40,7 +41,6 @@
 }
 
 
-
 /* Rechterkant */
 .logo-topright {
     position: absolute;
@@ -55,6 +55,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.logo-topright{
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    font-size:1.5rem;
+    font-weight:bold;
+    
 }
 
 .login-card {
@@ -115,50 +123,7 @@
     text-align:center;
     margin-top:15px;
 }
-/*navigatiebalk
-.navbar  {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
-    padding: 15px 70px;
-    background: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-
-.nav-left .logo {
-    font-size: 20px;
-    font-weight: bold;
-    color: #0099d8;
-    text-decoration: none;
-}
-
-.nav-center a,
-.nav-right a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-}
-
-.nav-center a:hover,
-.logout-btn:hover {
-    color: #0099d8;
-}
-
-.logout-btn {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    background: none;
-    border: none;
-    color: #333;
-    font-weight: 500;
-    cursor: pointer;
-    font-size:1rem;
-}
-*/
 /* navigatiebalk */
 .navbar {
     display: flex;
@@ -229,6 +194,19 @@
     text-align: center;
     padding: 40px;
 }
+.reminder {
+    border: 2px solid #007bb0;
+    background-color: lightblue;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.reminder-card {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
 
 .profile{
     display: flex;
@@ -284,6 +262,36 @@ button[type="submit"]:hover {
     margin: auto;
     font-family: 'Inter', sans-serif;
 }
+/* SEARCH WRAPPER (voor centreren/spacing) */
+.search-wrapper {
+    margin-bottom: 25px;
+}
+
+/* SEARCH BAR LOOK */
+#search {
+    width: 100%;
+    max-width: 700px;
+    padding: 16px 20px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+/* FOCUS EFFECT */
+#search:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 6px 18px rgba(79,70,229,0.2);
+    transform: scale(1.01);
+}
+
+/* PLACEHOLDER STYLE */
+#search::placeholder {
+    color: #9ca3af;
+}
 .search {
     width: 100%;
     padding: 14px 16px;
@@ -319,6 +327,16 @@ button[type="submit"]:hover {
     padding: 14px;
     border-bottom: 1px solid #eee;
 }
+.reminder {
+    border: 2px solid #0099d8;
+    background-color: #0097d857;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
 
-
-
+.reminder h2 , reminder h1{
+    color:#007bb0;
+    padding: 5px;
+    border-radius: 5px;
+}
