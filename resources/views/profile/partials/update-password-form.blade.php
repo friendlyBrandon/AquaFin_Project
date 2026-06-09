@@ -8,7 +8,7 @@
             {{ __('Zorg ervoor dat uw account een lang, willekeurig wachtwoord gebruikt om veilig te blijven.') }}
         </p>
     </header>
-
+<br>
     <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('put')
@@ -30,9 +30,9 @@
             <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
-
+<br>
         <div class="profile-btn">
-            <x-primary-button>{{ __('Bewaar') }}</x-primary-button>
+            <x-primary-button>{{ __('Bewaar Wachtwoord') }}</x-primary-button>
 
             @if (session('status') === 'password-updated')
                 <p
