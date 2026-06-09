@@ -9,13 +9,36 @@ use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $medewerkers = User::where('is_admin', true)
-                           ->orWhere('is_stockmedewerker', true)
-                           ->get();
+        $user = Auth::user();
         
-        return view('pages.contact', compact('medewerkers'));
+        $actie = $request->query('actie', 'overzicht');
+        
+        $berichten = [];
+        $medewerkers = [];
+        $gekozenOntvanger = null;
+        $bekijkBericht = null;
+
+        if ($actie === 'overzicht') {
+            $berichten = Message::where('sender_id', $user->id)
+                                ->orWhere('receiver_id', $user->id)
+                                ->orderBy('created_at', 'desc')
+                                ->get();
+                                
+        } elseif ($actie === 'nieuw_kies') {
+            $medewerkers = User::where(function($q) {
+                $q->where('is_admin', true)->orWhere('is_stockmedewerker', true);
+            })->where('id', '!=', $user->id)->get();
+            
+        } elseif ($actie === 'nieuw_formulier') {
+            $gekozenOntvanger = User::find($request->query('ontvanger_id'));
+            
+        } elseif ($actie === 'bekijk') {
+            $bekijkBericht = Message::find($request->query('bericht_id'));
+        }
+
+        return view('pages.contact', compact('user', 'actie', 'berichten', 'medewerkers', 'gekozenOntvanger', 'bekijkBericht'));
     }
 
     public function store(Request $request)
@@ -40,6 +63,6 @@ class ContactController extends Controller
             'file_path'   => $filePath,
         ]);
 
-        return redirect('/contact')->with('success', 'Je bericht is succesvol verstuurd!');
+        return redirect('/contact')->with('success', 'Formulier is succesvol verstuurd!');
     }
 }
