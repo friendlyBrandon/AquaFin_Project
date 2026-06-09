@@ -124,11 +124,29 @@
         <hr>
 
         @if($bekijkBericht->file_path)
-            <p><strong>Bijlage:</strong> <a href="{{ asset('storage/' . $bekijkBericht->file_path) }}" target="_blank">Download / Bekijk Bestand</a></p>
+            <p><strong>Bijlage:</strong></p>
+            
+            @php
+                $extensie = strtolower(pathinfo($bekijkBericht->file_path, PATHINFO_EXTENSION));
+            @endphp
+
+           @if(in_array($extensie, ['jpg', 'jpeg', 'png', 'gif']))
+                <a href="{{ asset('storage/' . $bekijkBericht->file_path) }}" target="_blank">
+                    <img src="{{ asset('storage/' . $bekijkBericht->file_path) }}" alt="Bijlage" style="max-width: 100%; max-height: 300px; height: auto; object-fit: contain;">
+                </a>
+                <br>
+                <small><a href="{{ asset('storage/' . $bekijkBericht->file_path) }}" target="_blank" style="color: blue;"></a></small>
+            
+            @elseif($extensie === 'pdf')
+                <embed src="{{ asset('storage/' . $bekijkBericht->file_path) }}" type="application/pdf" width="100%" height="600">
+            
+            @else
+                <a href="{{ asset('storage/' . $bekijkBericht->file_path) }}" target="_blank">[ 📎 Download {{ strtoupper($extensie) }} Bestand ]</a>
+            @endif
         @endif
 
-        <br>
-        <a href="/contact">Terug naar overzicht</a>
+        <br><br>
+        <a href="/contact"><button type="button">Terug naar overzicht</button></a>
 
     @endif
 
