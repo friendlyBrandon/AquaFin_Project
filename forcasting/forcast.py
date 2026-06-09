@@ -22,7 +22,7 @@ def run_prophet_forecast(json_data_string):
         model.fit(df)
         
         # 4. De Toekomstige Dataframe Creëren (5 jaar = 60 maanden)
-        future_periods_months = 5 * 12 # 60 maanden
+        future_periods_months = 12 # 60 maanden
         # We gebruiken 'MS' (Month Start) als frequentie
         future = model.make_future_dataframe(periods=future_periods_months, freq='MS') 
         
@@ -32,7 +32,7 @@ def run_prophet_forecast(json_data_string):
         # 6. Resultaten Filteren en Formatteren
         
         # De voorspellingen van de laatste 60 maanden (5 jaar)
-        future_data = forecast[['ds', 'yhat']].tail(60)
+        future_data = forecast[['ds', 'yhat']].tail(12)
         
         # 7. Aggregatie en Structurering voor PHP
         results = []

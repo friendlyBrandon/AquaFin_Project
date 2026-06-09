@@ -2,81 +2,96 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Neerslagvoorspelling</title>
+    <title>Rainfall Forecast</title>
+
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Voorspelling Neerslag (2026 - 2030)</h1>
-    <p>Gebaseerd op Lineaire Regressie per maand.</p>
+<div class="container">
+    <h1>📈 1 Year Rainfall Forecast</h1>
 
-    <div id="charts-container">
-        {{-- Hier wordt per maand een canvas geplaatst --}}
-    </div>
+    <canvas id="rainChart"></canvas>
+</div>
 
-    <script>
-        // De data moet vanuit PHP naar JavaScript worden geëxtrapoleerd
-        const monthlyForecastData = @json($forecastedRainfall);
+@php
+    // PHP data naar JS voorbereiden
+    $labels = [];
+    $values = [];
 
-        // Function om de grafiek te tekenen
-        function renderChart(monthlyData, monthName) {
-            const container = document.getElementById('chart-container');
-            const canvasId = `chart-${monthName}`;
+    foreach ($processedForecast as $item) {
+        $labels[] = $item['year'] . '-' . str_pad($item['month'], 2, '0', STR_PAD_LEFT);
+        $values[] = $item['rainfall'];
+    }
+@endphp
 
-            // Maak een container voor deze specifieke maand
-            const div = document.createElement('div');
-            div.className = 'chart-wrapper';
-            div.innerHTML = `<h2>${monthName}</h2><canvas id="${canvasId}"></canvas>`;
-            container.appendChild(div);
+<script>
+    const labels = @json($labels);
+    const data = @json($values);
 
-            const ctx = document.getElementById(canvasId).getContext('2d');
-            
-            // Initialiseer de Chart
-            new Chart(ctx, {
-                type: 'bar', // Bar is vaak het beste voor maandelijkse voorspellingen
-                data: {
-                    labels: monthlyData.map(item => item.year), // X-as: Jaartallen
-                    datasets: [{
-                        label: 'Voorspelde Neerslag (mm)',
-                        data: monthlyData.map(item => item.rainfall), // Y-as: Neerslag
-                        backgroundColor: 'rgba(54, 162, 235, 0.8)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
+    const ctx = document.getElementById('rainChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Rainfall (mm)',
+                data: data,
+                borderColor: 'blue',
+                backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                tension: 0.3,
+                fill: true,
+                pointRadius: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Neerslag (mm)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Jaar'
-                            }
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: `Voorspelling voor ${monthName}`
-                        }
-                    }
+                tooltip: {
+                    enabled: true
                 }
-            });
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        maxRotation: 90,
+                        minRotation: 45
+                    }
+                },
+                y: {
+                    beginAtZero: false
+                }
+            }
         }
-
-        // Loop over de data en genereer een grafiek voor elke maand
-        Object.keys(monthlyForecastData).forEach(month => {
-            const data = monthlyForecastData[month];
-            renderChart(data, month);
-        });
-    </script>
+    });
+</script>
 
 </body>
 </html>

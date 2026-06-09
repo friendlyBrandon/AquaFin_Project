@@ -359,7 +359,7 @@ class ForcastController extends Controller
             // 4. De gestructureerde data ophalen (Deze functie blijft hetzelfde!)
             $processedForecast = $forecastData;
 
-            return view('forecast.results', compact('processedForecast'));
+            return view('forecast.forecast', compact('processedForecast'));
 
         } catch (\Exception $e) {
             dd($e->getMessage());
