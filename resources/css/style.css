@@ -192,12 +192,35 @@
     align-items: center;
 
     text-align: center;
-    padding: 40px;
+  
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    
+}
+.dashboard-container{
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+.dashboard-header {
+    width: 100%;
+    text-align: left;
+    margin: 30px auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #1faeeb, #0099d8);
+    color: white;
+    margin-top: 15px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    
+    
 }
 .reminder {
     border: 2px solid #007bb0;
     background-color: lightblue;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
     margin-top: 20px;
 }
