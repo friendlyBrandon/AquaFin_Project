@@ -6,11 +6,16 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function index()
-    {
-        $cartItems = session()->get('cart', []);
-        return view('pages.cart', compact('cartItems'));
-    }
+  public function index()
+{
+    $cart = session()->get('cart', []);
+
+    $materials = \App\Models\Material::whereIn('id', array_keys($cart))
+        ->get()
+        ->keyBy('id');
+
+    return view('pages.cart', compact('cart', 'materials'));
+}
 
     public function add(Request $request)
     {
@@ -53,6 +58,19 @@ class CartController extends Controller
         session()->put('cart', $cart);
 
         return redirect('/cart');
+    }
+
+    public function store(Request $request)
+    {
+        $cart = session()->get('cart', []);
+
+        // Logica om de bestelling op te slaan in de database
+        // Bijvoorbeeld: Order::create([...]);
+
+        // Leeg de winkelmand na het opslaan van de bestelling
+        session()->forget('cart');
+
+        return redirect('/cart')->with('success', 'Bestelling succesvol geplaatst!');
     }
 
     public function checkout()

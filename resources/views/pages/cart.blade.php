@@ -13,7 +13,6 @@
 @if(empty($cart))
     <p>No materials in the cart.</p>
 @else
-
 <table border="1">
     <tr>
         <th>Material</th>
@@ -25,16 +24,17 @@
 
     @foreach($cart as $id => $qty)
 
-        @php
-            $material = \App\Models\Material::find($id);
-        @endphp
+    @php
+        $material = $materials[$id] ?? null;
+    @endphp
 
+     
         @if($material)
 
         @php $totalItems += $qty; @endphp
 
         <tr>
-            <td>{{ $material->name }}</td>
+            <td>{{ $material->productname }}</td>
             <td>{{ $qty }}</td>
             <td>
                <form method="POST" action="/cart/remove/{{ $id }}">
@@ -51,10 +51,10 @@
 </table>
 
 <p><b>Total items:</b> {{ $totalItems }}</p>
- <form method="Post" action="/cart/checkout/{{ $id }}">
+ <form method="POST" action="/orderlog">
     @csrf
-    <button type="checkout">Checkout</button>
- </form>
+    <button type="submit">Checkout</button>
+</form>
 
 @endif
 
