@@ -5,8 +5,18 @@
         <h1 class="title">Dashboard</h1>
         <p>Welcome bij Aquafin materiaalbeheer.</p>
 
-        <h2>Weer ({{ $provincie }}) </h2> 
+    <div class="reminder">
+        <h1>⚠️</h1>
+        <h2> REMINDER </h2>
+        
+        <p>     Vergeet het gasdetectiemeter niet mee te nemen!     </p>
+    </div>
+        
+        <br>
+        
+        <h2>Neerslag Voorspelling ({{ $provincie }}) </h2> 
 
+        
         @if($weather && isset($weather['daily']))
             <table class="table">
                 <thead>

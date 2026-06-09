@@ -11,6 +11,7 @@
 }
 
 
+
 /* Linkerkant */
 .left-side {
     flex: 1;
@@ -193,6 +194,19 @@
     text-align: center;
     padding: 40px;
 }
+.reminder {
+    border: 2px solid #007bb0;
+    background-color: lightblue;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.reminder-card {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
 
 .profile{
     display: flex;
@@ -248,12 +262,12 @@ button[type="submit"]:hover {
     margin: auto;
     font-family: 'Inter', sans-serif;
 }
-/* SEARCH WRAPPER (optioneel voor centreren/spacing) */
+/* SEARCH WRAPPER (voor centreren/spacing) */
 .search-wrapper {
     margin-bottom: 25px;
 }
 
-/* SEARCH BAR MODERN LOOK */
+/* SEARCH BAR LOOK */
 #search {
     width: 100%;
     max-width: 700px;
@@ -313,6 +327,16 @@ button[type="submit"]:hover {
     padding: 14px;
     border-bottom: 1px solid #eee;
 }
+.reminder {
+    border: 2px solid #0099d8;
+    background-color: #0097d857;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
 
-
-
+.reminder h2 , reminder h1{
+    color:#007bb0;
+    padding: 5px;
+    border-radius: 5px;
+}
