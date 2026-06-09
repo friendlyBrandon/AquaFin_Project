@@ -29,6 +29,8 @@ npm run build
 
 - https://chatgpt.com/share/6a26c044-1f34-83ed-a0b1-16334c2f3d85
 
+- https://chatgpt.com/share/6a281b15-9320-83ed-988e-41776d3d17ae
+
 
 # API data source on dashboard:
 
