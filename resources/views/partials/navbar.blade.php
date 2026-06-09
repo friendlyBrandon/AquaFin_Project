@@ -11,10 +11,10 @@
         <a href="#">Neerslag Voorspelling</a>
         <a href="/contact">Contact</a>
          @if(auth()->user()->is_admin == 1) 
-        <a href="#">Bestellog</a>
+        <a href="/orderlog">Bestellog</a>
         @else 
         @endif
-        <a href="#">🛒 Winkelmand</a>
+        <a href="{{ route('cart.index') }}">Winkelmand</a>
         <a href="{{ route('profile.edit') }}">Profiel</a>
        <form method="POST" action="{{ route('logout') }}">
                 @csrf
