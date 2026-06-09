@@ -37,7 +37,11 @@
 
         <h2>Mijn Inbox</h2>
 
+
         <div class="contact-card">
+
+
+        @if($user->is_admin || $user->is_stockMedewerker)
 
         <h3>Ontvangen formulieren</h3>
         <ul>
@@ -56,8 +60,11 @@
         </div>
      
 
-
         <div class="contact-card">
+
+        <hr>
+        @endif
+
 
         <h3>Verzonden formulieren</h3>
         <ul>

@@ -10,6 +10,18 @@ npm install
 
 npm run build
 
+# Forcasting python 5 years
+
+- Go to the forcasting folder in the main folder of the project.
+
+- Create venv folder by "python -m venv venv"
+
+- Activate venv by typing "venv\Scripts\activate.bat"
+
+- Install needing dependencies "pip install prophet pandas"
+
+- Start Python script "python forcast.py"
+
 
 # Sources:
 

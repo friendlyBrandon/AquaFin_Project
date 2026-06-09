@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ForcastController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
@@ -46,6 +48,9 @@ $weather = Http::get('https://api.open-meteo.com/v1/forecast', [
 
 
 Route::get('/materials', [MaterialController::class, 'index']);
+
+Route::get('/forecast', [ForcastController::class, 'forecast']);
+
 Route::post('/materials/{id}', [MaterialController::class, 'order']);
 
 Route::middleware('auth')->group(function () {
