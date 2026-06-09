@@ -340,3 +340,19 @@ button[type="submit"]:hover {
     padding: 5px;
     border-radius: 5px;
 }
+
+.chart-wrapper{
+    display:block;
+    width:65%;
+    text-align:center;
+}
+.chart{
+    width:200px;
+    height:100px;
+}
+.table{
+    margin-bottom: 5px;
+}
+.provincie{
+    color:#0099d8;
+}

@@ -8,14 +8,13 @@
     <div class="reminder">
         <h1>⚠️</h1>
         <h2> REMINDER </h2>
-        
-        <p>     Vergeet het gasdetectiemeter niet mee te nemen!     </p>
+        <p>Vergeet het gasdetectiemeter niet mee te nemen!</p>
     </div>
         
         <br>
         
-        <h2>Neerslag Voorspelling ({{ $provincie }}) </h2> 
-
+        <h2>Neerslag Voorspelling <span class= "provincie">({{ $provincie }})</span> </h2> 
+        <br>
         
         @if($weather && isset($weather['daily']))
             <table class="table">
@@ -46,9 +45,12 @@
                 </tbody>
             </table>
 
-            <canvas id="rainChart"></canvas>
-
-        @else
+            <div class="chart-wrapper">
+                <div class="chart"></div>
+                    <canvas id="rainChart" width="200" height="100" style="display: block; box-sizing: border-box; height: 191px; width: 382px;"></canvas>
+                </div>
+            </div>
+            @else
             <p>{{ $error ?? 'Weather unavailable' }}</p>
         @endif
     </div>
