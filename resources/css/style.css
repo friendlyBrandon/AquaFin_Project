@@ -356,3 +356,119 @@ button[type="submit"]:hover {
 .provincie{
     color:#0099d8;
 }
+/* CONTACT PAGINA */
+.contact-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.contact-header {
+    background: linear-gradient(135deg, #1faeeb, #0099d8);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.contact-header h2 {
+    margin-bottom: 10px;
+}
+
+.contact-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    
+}
+
+.contact-card h3 {
+    color: #007bb0;
+    margin-bottom: 20px;
+}
+
+.contact-list {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-item {
+    padding: 15px;
+    border-left: 5px solid #1faeeb;
+    background: #f8fbfd;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: 0.2s;
+}
+
+.contact-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.contact-link {
+    color: #0099d8;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.contact-link:hover {
+    color: #007bb0;
+}
+
+.contact-btn {
+    background: #0099d8;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.contact-btn:hover {
+    background: #007bb0;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    border: 1px solid #dbe4ea;
+    border-radius: 10px;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.success-message {
+    background: #e6f8ff;
+    border-left: 5px solid #0099d8;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    background: #fff1f1;
+    border-left: 5px solid #dc2626;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.contact-details {
+    line-height: 2;
+}
+
+.contact-details strong {
+    color: #007bb0;
+}
