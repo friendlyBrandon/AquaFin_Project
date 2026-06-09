@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('productnumber')->unique();
             $table->string('category');
             $table->integer('stock')->default(0);
+            $table->string('image_path')->nullable();
             $table->timestamps();
 
         });

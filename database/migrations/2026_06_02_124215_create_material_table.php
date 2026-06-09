@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
             $table->string('name');
             $table->string('product_number')->unique();
             $table->integer('stock')->default(0);

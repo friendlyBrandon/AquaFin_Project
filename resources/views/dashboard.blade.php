@@ -2,14 +2,18 @@
 
 @section('content')
     <div class="dashboard">
-        <h1 class="title">Dashboard</h1>
-        <p>Welcome bij Aquafin materiaalbeheer.</p>
-
+        
+        <div class="dashboard-header">
+        <h2>Welkom, {{ auth()->user()->username }}</h2>
+        <p>Aquafin Material Management Dashboard</p>
+        </div>
+        
     <div class="reminder">
         <h1>⚠️</h1>
         <h2> REMINDER </h2>
         <p>Vergeet het gasdetectiemeter niet mee te nemen!</p>
     </div>
+    
         
         <br>
         
