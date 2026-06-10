@@ -15,6 +15,7 @@
 @else
 <table border="1">
     <tr>
+        <th>Foto</th>
         <th>Materiaal</th>
         <th>Aantal</th>
         <th>Actie</th>
@@ -30,6 +31,7 @@
             $material = $materials[$id] ?? \App\Models\Material::find($id);
             
             $naam = $material ? $material->productname : (is_array($item) ? $item['productname'] : 'Onbekend');
+            $imagePath = $material ? $material->image_path : (is_array($item) ? $item['image_path'] : null);
         @endphp
 
         @if($material || is_array($item))
@@ -37,8 +39,16 @@
             @php $totalItems += $echteQty; @endphp
 
             <tr>
-                <td>{{ $naam }}</td>
+                <td>
+                    @if($imagePath)
+                        <img src="{{ asset('material_pics/' . $imagePath) }}" alt="{{ str_replace('-', ' ', $naam) }}" width="50">
+                    @endif
+                </td>
+                
+                <td>{{ str_replace('-', ' ', $naam) }}</td>
+                
                 <td>{{ $echteQty }}</td>
+                
                 <td>
                    <form method="POST" action="/cart/remove/{{ $id }}">
                     @csrf
