@@ -83,28 +83,26 @@ Route::get('/dashboard', function () {
 
 
 Route::get('/materials', [MaterialController::class, 'index']);
+Route::post('/materials/bestel', [MaterialController::class, 'order']);
 
 Route::get('/forecast', [ForcastController::class, 'forecast']);
 
-Route::post('/materials/bestel', [MaterialController::class, 'order']);
-
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-
 Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
-
 Route::post('/cart/checkout/{id}', [CartController::class, 'checkout'])->name('cart.checkout');
 
-Route::get('/orderlog', [OrderlogController::class, 'index'])->name('orderlog.index');
-Route::post('/orderlog', [OrderlogController::class, 'store'])->name('orderlog.store');
-Route::post('/orderlog/{order_id}/status/{status}', [OrderlogController::class, 'updateStatus'])->name('orderlog.status');
+Route::middleware('auth')->group(function () {
+    Route::post('/orderlog', [OrderlogController::class, 'store'])->name('orderlog.store');
+    Route::get('/orderlog', [OrderlogController::class, 'index'])->name('orderlog.index');
+    Route::post('/orderlog/{order_id}/status/{status}', [OrderlogController::class, 'updateStatus'])->name('orderlog.status');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::middleware(['auth'])->group(function () {
