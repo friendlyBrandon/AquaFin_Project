@@ -56,14 +56,7 @@
     justify-content: center;
     align-items: center;
 }
-.logo-topright{
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    font-size:1.5rem;
-    font-weight:bold;
-    
-}
+
 
 .login-card {
     background: white;
@@ -154,9 +147,12 @@
     font-weight: 500;
 }
 
-.nav-center a:hover,
-.logout-btn:hover {
+.nav-center a:hover
+ {
     color: #0099d8;
+}
+.logout-btn:hover{
+    color:white;
 }
 
 .nav-center form {
@@ -494,4 +490,7 @@ button[type="submit"]:hover {
 
 .contact-details strong {
     color: #007bb0;
+
 }
+
+/*FORCAST/NEERSLAG CSS IN STYLE ZELF TE VINDEN*/

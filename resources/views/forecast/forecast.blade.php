@@ -1,3 +1,7 @@
+@extends('layouts.dashboard')
+
+@section('content')
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -6,35 +10,53 @@
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    
+    .forc-container {
+    width:95%;
+    max-width: 1200px;
+    margin:10px;
+    padding: 10px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            padding: 40px;
-        }
 
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+.forc-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1e293b;
+    font-size: 2rem;
+    font-weight: 700;
+}
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-    </style>
+
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    height: 550px;
+    margin: 0 auto;
+}
+
+.rainChart {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+</style>
 </head>
-<body>
+<body class="forc-body">
 
-<div class="container">
+<div class="forc-container">
     <h1>📈 1 Year Rainfall Forecast</h1>
-
-    <canvas id="rainChart"></canvas>
+    <div class="chart-wrapper">
+        <canvas id="rainChart" class="rainChart"></canvas>
+    </div>
 </div>
 
 @php
@@ -95,3 +117,4 @@
 
 </body>
 </html>
+@endsection
