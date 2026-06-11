@@ -26,26 +26,59 @@ Route::get('/dashboard', function () {
 
     $provincie = Auth::user()->provincie;
 
-    $geo = Http::get('https://geocoding-api.open-meteo.com/v1/search', [
-    'name' => $provincie
-])->json();
+    try {
+        $geoResponse = Http::timeout(5)->get(
+            'https://geocoding-api.open-meteo.com/v1/search',
+            ['name' => $provincie]
+        );
 
-$location = $geo['results'][0] ?? null;
-if (!$location) {
-    return view('dashboard', ['weather' => null]);
-}
+        if (!$geoResponse->successful()) {
+            throw new Exception('Geocoding service unavailable');
+        }
 
-$weather = Http::get('https://api.open-meteo.com/v1/forecast', [
-    'latitude' => $location['latitude'],
-    'longitude' => $location['longitude'],
-    'daily' => 'weather_code,rain_sum,showers_sum,precipitation_probability_max',
-    'timezone' => 'auto',
-])->json();
+        $geo = $geoResponse->json();
 
-    return view('dashboard', [
-        'weather' => $weather,
-        'provincie' => $provincie
-    ]);
+        $location = $geo['results'][0] ?? null;
+
+        if (!$location) {
+            return view('dashboard', [
+                'weather' => null,
+                'provincie' => $provincie,
+                'error' => 'Locatie kon niet worden gevonden.'
+            ]);
+        }
+
+        $weatherResponse = Http::timeout(5)->get(
+            'https://api.open-meteo.com/v1/forecast',
+            [
+                'latitude' => $location['latitude'],
+                'longitude' => $location['longitude'],
+                'daily' => 'weather_code,rain_sum,showers_sum,precipitation_probability_max',
+                'timezone' => 'auto',
+            ]
+        );
+
+        if (!$weatherResponse->successful()) {
+            throw new Exception('Weather service unavailable');
+        }
+
+        $weather = $weatherResponse->json();
+
+        return view('dashboard', [
+            'weather' => $weather,
+            'provincie' => $provincie,
+            'error' => null,
+        ]);
+
+    } catch (\Exception $e) {
+
+        return view('dashboard', [
+            'weather' => null,
+            'provincie' => $provincie,
+            'error' => 'We konden de weersgegevens momenteel niet laden. Probeer later opnieuw.'
+        ]);
+    }
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -74,9 +107,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth'])->group(function () { 
-Route::get('/contact', [ContactController::class, 'index']);
-Route::post('/contact/verstuur', [ContactController::class, 'store']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/contact', [ContactController::class, 'index']);
+    Route::post('/contact/verstuur', [ContactController::class, 'store']);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
