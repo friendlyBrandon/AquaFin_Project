@@ -35,18 +35,40 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
-    public function update(Request $request, $id)
-    {
-        $quantity = $request->input('quantity');
-
+    public function update(Request $request, $id) {
+        $request->validate(['quantity' => 'required|integer|min:1']);
+        
+        $nieuweAantal = (int) $request->quantity;
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            $cart[$id] = $quantity;
-            session()->put('cart', $cart);
+        if(!isset($cart[$id])) return redirect()->back();
+
+        $oudeAantal = is_array($cart[$id]) ? $cart[$id]['quantity'] : $cart[$id];
+        
+        $verschil = $nieuweAantal - $oudeAantal;
+
+        $materiaal = \App\Models\Material::find($id);
+
+        if($verschil > 0) {
+            if($materiaal->stock < $verschil) {
+                return redirect()->back()->withErrors(['error' => 'Er is niet genoeg voorraad om dit te verhogen!']);
+            }
+            $materiaal->stock -= $verschil;
+        } elseif($verschil < 0) {
+            $materiaal->stock += abs($verschil);
         }
 
-        return redirect('/cart');
+        $materiaal->save();
+
+        if(is_array($cart[$id])) {
+            $cart[$id]['quantity'] = $nieuweAantal;
+        } else {
+            $cart[$id] = $nieuweAantal;
+        }
+
+        session()->put('cart', $cart);
+
+        return redirect()->back()->with('success', 'Aantal succesvol aangepast!');
     }
 
     public function remove($id)
@@ -75,10 +97,6 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        // Logica om de bestelling op te slaan in de database
-        // Bijvoorbeeld: Order::create([...]);
-
-        // Leeg de winkelmand na het opslaan van de bestelling
         session()->forget('cart');
 
         return redirect('/cart')->with('success', 'Bestelling succesvol geplaatst!');

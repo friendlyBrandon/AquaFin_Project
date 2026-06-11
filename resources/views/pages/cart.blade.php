@@ -47,7 +47,15 @@
                 
                 <td>{{ str_replace('-', ' ', $naam) }}</td>
                 
-                <td>{{ $echteQty }}</td>
+                <td style="padding: 10px;">
+                    <form method="POST" action="{{ route('cart.update', $id) }}" style="display: flex; gap: 5px; align-items: center;">
+                        @csrf
+                        <input type="number" name="quantity" value="{{ is_array($item) ? $item['quantity'] : $item }}" min="1" style="width: 70px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+                        <button type="submit" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            Wijzigen
+                        </button>
+                    </form>
+                </td>
                 
                 <td>
                    <form method="POST" action="/cart/remove/{{ $id }}">
