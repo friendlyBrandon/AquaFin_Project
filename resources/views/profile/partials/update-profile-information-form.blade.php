@@ -25,6 +25,8 @@
         @csrf
         @method('patch')
 
+        <input type="hidden" name="name" value="{{ $user->name }}">
+
         @if (auth()->user()->is_stockMedewerker == 1)
             <div>
                 <p style="color:black; font-weight: bold;">Functie: Stock Medewerker</p>
@@ -45,11 +47,26 @@
             <select id="provincie" name="provincie" required
                 class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                 <option value="">Selecteer een provincie</option>
-                <option value="Antwerpen" {{ old('provincie', $user->provincie) == 'Antwerpen' ? 'selected' : '' }}>Antwerpen</option>
-                <option value="Gent" {{ old('provincie', $user->provincie) == 'Gent' ? 'selected' : '' }}>Oost-Vlaanderen</option>
-                <option value="Brugge" {{ old('provincie', $user->provincie) == 'Brugge' ? 'selected' : '' }}>West-Vlaanderen</option>
-                <option value="Leuven" {{ old('provincie', $user->provincie) == 'Leuven' ? 'selected' : '' }}>Vlaams-Brabant</option>
-                <option value="Hasselt" {{ old('provincie', $user->provincie) == 'Hasselt' ? 'selected' : '' }}>Limburg</option>
+                
+                <option value="Antwerpen" {{ old('provincie', $user->provincie) == 'Antwerpen' ? 'selected' : '' }}>
+                    Antwerpen
+                </option>
+                
+                <option value="Oost-Vlaanderen" {{ old('provincie', $user->provincie) == 'Oost-Vlaanderen' ? 'selected' : '' }}>
+                    Oost-Vlaanderen
+                </option>
+                
+                <option value="West-Vlaanderen" {{ old('provincie', $user->provincie) == 'West-Vlaanderen' ? 'selected' : '' }}>
+                    West-Vlaanderen
+                </option>
+                
+                <option value="Vlaams-Brabant" {{ old('provincie', $user->provincie) == 'Vlaams-Brabant' ? 'selected' : '' }}>
+                    Vlaams-Brabant
+                </option>
+                
+                <option value="Limburg" {{ old('provincie', $user->provincie) == 'Limburg' ? 'selected' : '' }}>
+                    Limburg
+                </option>
             </select>
 
             <x-input-error class="mt-2" :messages="$errors->get('provincie')" />
