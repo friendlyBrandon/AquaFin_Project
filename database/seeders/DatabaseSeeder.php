@@ -31,6 +31,15 @@ class DatabaseSeeder extends Seeder
             'is_admin' => '1',
             'provincie' => 'Antwerpen'
         ]);
+
+        User::factory()->create([
+            'name' => 'stock',
+            'fullname' => 'medewerker',
+            'username' => 'stock.medewerker',
+            'password' => Hash::make('wachtwoord'),
+            'is_stockMedewerker' => '1',
+            'provincie' => 'Antwerpen'
+        ]);
       
     }
 }

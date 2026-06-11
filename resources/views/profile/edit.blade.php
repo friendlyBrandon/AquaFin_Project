@@ -1,7 +1,19 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    
+<div class="profile-container">
+<div class="contact-header">
+        <h2>Welkom, {{ $user->username }}</h2>
+        <p><strong>Functie:</strong> 
+        @if($user->is_admin == 1)
+            Admin
+        @elseif($user->is_stockmedewerker == 1)
+            Stockmedewerker
+         @else
+            Technieker
+        @endif
+    </p>
+    </div>
      
     <div class="profile">
         <h1 class="title">Profiel</h1>
@@ -19,4 +31,5 @@
                 </div>
             </div>       
     </div>
+    </div>  
 @endsection
