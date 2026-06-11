@@ -14,6 +14,8 @@ npm run build
 
 - Go to the forcasting folder in the main folder of the project.
 
+- Go into the forcasting folder by "cd forcasting"
+
 - Create venv folder by "python -m venv venv"
 
 - Activate venv by typing "venv\Scripts\activate.bat"
