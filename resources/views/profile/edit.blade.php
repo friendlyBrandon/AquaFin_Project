@@ -17,13 +17,6 @@
                 <div class="max-w-xl">
                     @include('profile.partials.update-password-form')
                 </div>
-            </div>
-
-            <div class="profile-card">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-       
+            </div>       
     </div>
 @endsection
