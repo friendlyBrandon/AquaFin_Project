@@ -66,7 +66,7 @@
                                 @csrf
                                 <input type="hidden" name="material_id" value="{{ $material->id }}">
                                 
-                                <input type="number" name="quantity" min="1" max="{{ $material->stock }}" required style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" {{ $material->stock == 0 ? 'disabled' : '' }}>
+                                <input type="number" placeholder="1" name="quantity" min="1" max="{{ $material->stock }}" required style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" {{ $material->stock == 0 ? 'disabled' : '' }}>
                                 
                                 <button type="submit" style="flex-grow: 1; padding: 8px; background-color: {{ $material->stock == 0 ? '#ccc' : '#0056b3' }}; color: white; border: none; border-radius: 4px; cursor: pointer;" {{ $material->stock == 0 ? 'disabled' : '' }}>
                                     Order
