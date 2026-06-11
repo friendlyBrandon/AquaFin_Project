@@ -19,7 +19,7 @@
         <x-text-input id="username" type="text" class="mt-1 block w-full bg-gray-100" :value="$user->username" readonly />
     </div>
 
-    <br>
+    
 
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
         @csrf
@@ -29,15 +29,15 @@
 
         @if (auth()->user()->is_stockMedewerker == 1)
             <div>
-                <p style="color:black; font-weight: bold;">Functie: Stock Medewerker</p>
+                <p style="color:black;">Functie: Stock Medewerker</p>
             </div>
         @elseif (auth()->user()->is_admin == 1)
             <div>
-                <p style="color:black; font-weight: bold;">Functie: Admin</p>
+                <p style="color:black;">Functie: Admin</p>
             </div>
         @else
             <div>
-               <p style="color:black; font-weight: bold;">Functie: Technieker</p>
+               <p style="color:black;">Functie: Technieker</p>
             </div>
         @endif   
 
@@ -71,7 +71,7 @@
 
             <x-input-error class="mt-2" :messages="$errors->get('provincie')" />
         </div>
-
+<br>
         <div class="flex items-center gap-4 mt-6">
             <x-primary-button>{{ __('Opslaan') }}</x-primary-button>
 

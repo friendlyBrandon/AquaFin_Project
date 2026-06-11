@@ -237,6 +237,7 @@
     padding: 40px;
     
 }
+
 .profile-card {
     background: #fff;
     border-radius: 18px;
@@ -377,6 +378,11 @@ button[type="submit"]:hover {
 }
 /* CONTACT PAGINA */
 .contact-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+.profile-container {
     max-width: 1200px;
     margin: 30px auto;
     padding: 20px;
