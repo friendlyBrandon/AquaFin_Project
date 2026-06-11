@@ -77,6 +77,22 @@ class OrderlogController extends Controller
         }
 
         session()->forget('cart');
-        return redirect()->route('orderlog.index')->with('success', 'Bestelling ' . $orderId . ' is succesvol geplaatst!');
+
+        if (Auth::user()->is_admin == 1 || Auth::user()->is_stockMedewerker == 1) {
+            
+            return redirect()->route('orderlog.index')->with('success', 'Bestelling ' . $orderId . ' is succesvol geplaatst!');
+            
+        } else {
+            
+            $aantalPending = Orderlog::where('user_id', Auth::id())
+                                     ->where('status', 'pending')
+                                     ->get()
+                                     ->groupBy('order_id')
+                                     ->count();
+
+            $bericht = 'Bestelling ' . $orderId . ' is succesvol geplaatst! Je hebt momenteel ' . $aantalPending . ' bestelling(en) in de wacht staan.';
+
+            return redirect('/materials')->with('success', $bericht);
+        }
     }
 }

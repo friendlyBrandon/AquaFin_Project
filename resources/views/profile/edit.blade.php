@@ -7,7 +7,7 @@
         <p><strong>Functie:</strong> 
         @if($user->is_admin == 1)
             Admin
-        @elseif($user->is_stockmedewerker == 1)
+        @elseif($user->is_stockMedewerker == 1)
             Stockmedewerker
          @else
             Technieker
