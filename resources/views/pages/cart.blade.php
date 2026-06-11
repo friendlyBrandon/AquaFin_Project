@@ -65,9 +65,11 @@
 
 <p><b>Totaal aantal items:</b> {{ $totalItems }}</p>
 
-<form method="POST" action="/orderlog">
+<form method="POST" action="{{ route('orderlog.store') }}">
     @csrf
-    <button type="submit" style="padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Afrekenen</button>
+    <button type="submit" style="padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+        Bestelling Plaatsen
+    </button>
 </form>
 
 @endif
