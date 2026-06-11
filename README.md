@@ -18,7 +18,7 @@ npm run build
 
 - Activate venv by typing "venv\Scripts\activate.bat"
 
-- Install needing dependencies "pip install prophet pandas"
+- Install needing dependencies "pip install prophet pandas flask"
 
 - Start Python script "python forcast.py"
 
