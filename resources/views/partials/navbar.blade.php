@@ -11,9 +11,6 @@
             <a href="#">Neerslag Voorspelling</a>
             <a href="/contact">Contact</a>
             
-            @if(auth()->user()->is_admin == 1) 
-                <a href="/orderlog">Bestellog</a>
-            @endif
 
             <a href="{{ route('profile.edit') }}">Profiel</a>
 
@@ -29,6 +26,10 @@
                     </span>
                 @endif
             </a>
+
+            @if(auth()->user()->is_admin == 1 || auth()->user()->is_stockmedewerker == 1)
+                <a href="/orderlog">Bestellog</a>
+            @endif            
             
             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf

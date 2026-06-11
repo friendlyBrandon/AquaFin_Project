@@ -27,12 +27,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Gwen',
             'fullname' => 'Wick',
             'username' => 'Gwen.Wick',
-            'password' => Hash::make('BigBoyAdmin154?'),
+            'password' => Hash::make('testtest'),
             'is_admin' => '1',
             'provincie' => 'Antwerpen'
         ]);
-
-        Material::factory(5)->create();
       
     }
 }

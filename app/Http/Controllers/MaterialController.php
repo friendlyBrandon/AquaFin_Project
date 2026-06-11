@@ -11,6 +11,9 @@ class MaterialController extends Controller
     public function index() {
         $materials = Material::all()->map(function($material) {
             $material->category = trim($material->category);
+            
+            $material->productname = str_replace('-', ' ', $material->productname);
+            
             return $material;
         });
             
@@ -42,7 +45,7 @@ class MaterialController extends Controller
         } else {
             $cart[$id] = [
                 "id" => $material->id,
-                "productname" => $material->productname,
+                "productname" => str_replace('-', ' ', $material->productname),
                 "productnumber" => $material->productnumber,
                 "quantity" => $qty,
                 "image_path" => $material->image_path,
