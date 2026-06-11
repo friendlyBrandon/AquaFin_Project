@@ -52,19 +52,19 @@
                     Antwerpen
                 </option>
                 
-                <option value="Oost-Vlaanderen" {{ old('provincie', $user->provincie) == 'Oost-Vlaanderen' ? 'selected' : '' }}>
+                <option value="Gent" {{ old('provincie', $user->provincie) == 'Oost-Vlaanderen' ? 'selected' : '' }}>
                     Oost-Vlaanderen
                 </option>
                 
-                <option value="West-Vlaanderen" {{ old('provincie', $user->provincie) == 'West-Vlaanderen' ? 'selected' : '' }}>
+                <option value="Brugge" {{ old('provincie', $user->provincie) == 'West-Vlaanderen' ? 'selected' : '' }}>
                     West-Vlaanderen
                 </option>
                 
-                <option value="Vlaams-Brabant" {{ old('provincie', $user->provincie) == 'Vlaams-Brabant' ? 'selected' : '' }}>
+                <option value="Leuven" {{ old('provincie', $user->provincie) == 'Vlaams-Brabant' ? 'selected' : '' }}>
                     Vlaams-Brabant
                 </option>
                 
-                <option value="Limburg" {{ old('provincie', $user->provincie) == 'Limburg' ? 'selected' : '' }}>
+                <option value="Hasselt" {{ old('provincie', $user->provincie) == 'Limburg' ? 'selected' : '' }}>
                     Limburg
                 </option>
             </select>
