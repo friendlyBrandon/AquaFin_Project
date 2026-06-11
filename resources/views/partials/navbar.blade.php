@@ -27,7 +27,7 @@
                 @endif
             </a>
 
-            @if(auth()->user()->is_admin == 1 || auth()->user()->is_stockmedewerker == 1)
+            @if(auth()->user()->is_admin == 1 || auth()->user()->is_stockMedewerker == 1)
                 <a href="/orderlog">Bestellog</a>
             @endif            
             
