@@ -89,15 +89,19 @@ class OrderlogController extends Controller
         foreach($cart as $id => $item) {
             $echteQty = is_array($item) ? $item['quantity'] : $item;
             
-            $materiaal = Material::find($id);
-            $ruweNaam = $materiaal ? $materiaal->productname : (is_array($item) ? $item['productname'] : 'Onbekend');
+            $realId = is_array($item) && isset($item['material_id']) ? $item['material_id'] : $id;
+            $dimensions = is_array($item) && isset($item['dimensions']) ? $item['dimensions'] : null;
+            
+            $materiaal = Material::find($realId);
+            $ruweNaam = $materiaal ? $materiaal->productname : (is_array($item) ? ($item['productname'] ?? 'Onbekend') : 'Onbekend');
 
             Orderlog::create([
-                'order_id' => $orderId,
-                'user_id' => Auth::id(),
+                'order_id'    => $orderId,
+                'user_id'     => Auth::id(),
                 'productname' => str_replace('-', ' ', $ruweNaam),
-                'quantity' => $echteQty,
-                'status' => 'pending'
+                'quantity'    => $echteQty,
+                'dimensions'  => $dimensions,
+                'status'      => 'pending'
             ]);
         }
 

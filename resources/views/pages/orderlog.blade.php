@@ -30,6 +30,7 @@
         </div>
 
     </div>
+    
     @if($orders->isEmpty())
         <p>Er zijn momenteel geen bestellingen.</p>
     @else
@@ -66,14 +67,34 @@
 
                 <div style="padding: 15px;">
                     <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <tr>
+                            <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555;">Product</th>
+                            <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555;">Dimensies / Eigenschappen</th>
+                            <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555; text-align: right;">Aantal</th>
+                        </tr>
                         @foreach($items as $item)
-                            <tr style="border-bottom: 1px solid #eee;">
-                                <td style="padding: 8px 0; font-weight: bold; width: 70%;">{{ $item->productname }}</td>
-                                <td style="padding: 8px 0; color: #555;">{{ $item->quantity }} stuks</td>
+                            <tr style="border-bottom: 1px solid #f4f4f4;">
+                                
+                                <td style="padding: 10px 5px; width: 40%; vertical-align: top;">
+                                    <span style="font-weight: bold;">{{ $item->productname }}</span>
+                                </td>
+                                
+                                <td style="padding: 10px 5px; width: 40%; vertical-align: top;">
+                                    @if($item->dimensions)
+                                        <span style="color: #007bff;">{!! nl2br(e($item->dimensions)) !!}</span>
+                                    @else
+                                        <span style="color: #999; font-style: italic;">Standaard</span>
+                                    @endif
+                                </td>
+
+                                <td style="padding: 10px 5px; color: #555; vertical-align: top; text-align: right; width: 20%;">
+                                    {{ $item->quantity }} stuks
+                                </td>
+
                             </tr>
                         @endforeach
                     </table>
-                </div>
+                    </div>
 
                 @if((auth()->user()->is_admin == 1 || auth()->user()->is_stockMedewerker == 1) && $status == 'pending')
                     <div style="padding: 15px; background-color: #fafafa; border-top: 1px solid #eee; display: flex; gap: 10px;">

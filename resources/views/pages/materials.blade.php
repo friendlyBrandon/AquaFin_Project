@@ -35,11 +35,11 @@
         <div style="display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 30px; position: sticky; top: 10px; z-index: 100;">
             
             <button type="button" onclick="openCustomOrderModal()" style="padding: 12px 25px; background-color: #6c757d; color: white; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background-color 0.3s;">
-                Maatwerk toevoegen
+                Materiaal op maat aanvragen
             </button>
 
             <button type="submit" style="padding: 12px 25px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background-color 0.3s;">
-                Bestellen
+                Aan winkelmand toevoegen
             </button>
 
         </div>
@@ -82,7 +82,7 @@
 <div id="customOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     
     <div style="background-color: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
-        <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">Materiaal op maat aanvragen</h3>
+        <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">Materiaalopmaat aanvragen</h3>
         
         <form method="POST" action="/materials/maatwerk">
             @csrf
