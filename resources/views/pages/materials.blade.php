@@ -79,7 +79,7 @@ const categorieSecties = document.querySelectorAll('.categorie-sectie');
 
 function fuzzyMatch(zoekterm, doelwit) {
     if (zoekterm.length === 0) return true;
-    if (doelwit.includes(zoekterm)) return true; // Directe match
+    if (doelwit.includes(zoekterm)) return true;
 
     if (zoekterm.length < 2) return false;
 
