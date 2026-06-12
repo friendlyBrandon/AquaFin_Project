@@ -119,7 +119,7 @@ class OrderlogController extends Controller
                                      ->groupBy('order_id')
                                      ->count();
 
-            $bericht = 'Bestelling ' . $orderId . ' is succesvol geplaatst! Je hebt momenteel ' . $aantalPending . ' bestelling(en) in de wacht staan.';
+            $bericht = 'Bestelling ' . $orderId . ' is succesvol geplaatst!';
 
             return redirect()->route('cart.index')->with('success', $bericht);
         }
