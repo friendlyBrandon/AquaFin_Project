@@ -77,20 +77,55 @@ const searchInput = document.getElementById('search');
 const categorySelect = document.getElementById('categorySelect');
 const categorieSecties = document.querySelectorAll('.categorie-sectie');
 
+function fuzzyMatch(zoekterm, doelwit) {
+    if (zoekterm.length === 0) return true;
+    if (doelwit.includes(zoekterm)) return true; // Directe match
+
+    if (zoekterm.length < 2) return false;
+
+    let toegestaneFouten = Math.floor(zoekterm.length / 2);
+
+    for (let i = 0; i <= doelwit.length - zoekterm.length; i++) {
+        let fouten = 0;
+        for (let j = 0; j < zoekterm.length; j++) {
+            if (doelwit[i + j] !== zoekterm[j]) {
+                fouten++;
+            }
+            if (fouten > toegestaneFouten) break;
+        }
+        if (fouten <= toegestaneFouten) return true;
+    }
+    return false;
+}
+
+function matchesAllWords(zoekterm, doelwit) {
+    let zoekWoorden = zoekterm.split(' ').filter(w => w.length > 0);
+    if (zoekWoorden.length === 0) return true;
+
+    for (let woord of zoekWoorden) {
+        if (!fuzzyMatch(woord, doelwit)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 function filterMaterialen() {
-    let filterTekst = searchInput.value.toLowerCase();
+    let filterTekst = searchInput.value.toLowerCase().trim();
     let gekozenCategorie = categorySelect.value;
 
     categorieSecties.forEach(function(sectie) {
         let sectieCategorie = sectie.getAttribute('data-category');
         let categorieIsGekozen = (gekozenCategorie === 'all' || gekozenCategorie === sectieCategorie);
+        
         let cards = sectie.querySelectorAll('.product-card');
         let heeftZichtbareCards = false;
 
         cards.forEach(function(card) {
             let name = card.getAttribute('data-name');
             let number = card.getAttribute('data-number');
-            let zoekMatch = name.includes(filterTekst) || number.includes(filterTekst);
+
+            let zoekMatch = matchesAllWords(filterTekst, name) || number.includes(filterTekst);
 
             if (categorieIsGekozen && zoekMatch) {
                 card.style.display = "flex";
@@ -107,9 +142,10 @@ function filterMaterialen() {
         }
     });
 }
+
 searchInput.addEventListener('keyup', filterMaterialen);
 categorySelect.addEventListener('change', filterMaterialen);
+
 filterMaterialen();
 </script>
-
 @endsection
