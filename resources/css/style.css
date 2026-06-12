@@ -93,11 +93,13 @@
 .btn-login {
     background: #0099d8;
     color: white;
+    text-decoration: none;
 }
 
 .btn-register {
     border: 2px solid #0099d8;
     color: #0099d8;
+    text-decoration: none;
 }
 
 .btn-register:hover , .btn-login:hover{
