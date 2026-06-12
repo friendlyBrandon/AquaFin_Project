@@ -25,32 +25,38 @@
         </div>
 
         <div style="flex: 2; min-width: 250px;">
-            <input type="text" id="search" placeholder="Zoek op naam of productnummer..." style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
+            <input type="text" id="searchInput" placeholder="Zoek op naam of productnummer..." style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
         </div>
     </div>
 
     <form action="/materials/bestel" method="POST">
         @csrf
 
-        <div style="text-align: right; margin-bottom: 30px; position: sticky; top: 10px; z-index: 100;">
+        <div style="display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 30px; position: sticky; top: 10px; z-index: 100;">
+            
+            <button type="button" onclick="openCustomOrderModal()" style="padding: 12px 25px; background-color: #6c757d; color: white; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background-color 0.3s;">
+                Maatwerk toevoegen
+            </button>
+
             <button type="submit" style="padding: 12px 25px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background-color 0.3s;">
                 Bestellen
             </button>
+
         </div>
 
-        @foreach($materials->groupBy('category') as $categorieNaam => $artikelen)
-            <div class="categorie-sectie" data-category="{{ $categorieNaam }}">
-                <h2 style="border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 20px; color: #333;">{{ $categorieNaam }}</h2>
+        @foreach($materials->groupBy('category') as $categoryName => $items)
+            <div class="category-section" data-category="{{ $categoryName }}">
+                <h2 style="border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 20px; color: #333;">{{ $categoryName }}</h2>
                 
                 <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 50px;">
-                    @foreach($artikelen as $material)
+                    @foreach($items as $material)
                         <div class="product-card" data-name="{{ strtolower($material->productname) }}" data-number="{{ strtolower($material->productnumber) }}" style="width: 250px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); background-color: #fff; display: flex; flex-direction: column;">
                             
                             <div style="height: 150px; background-color: #f4f4f4; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;">
                                 @if($material->image_path)
                                     <img src="{{ asset('material_pics/' . $material->image_path) }}" alt="{{ $material->productname }}" style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
                                 @else
-                                    <span style="color: #999; font-size: 1.2em;">📷 Geen foto</span>
+                                    <span style="color: #999; font-size: 1.2em;">Geen foto</span>
                                 @endif
                             </div>
                             
@@ -70,82 +76,121 @@
                 </div>
             </div>
         @endforeach
-    </form> </div>
+    </form> 
+</div>
+
+<div id="customOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+    
+    <div style="background-color: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+        <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">Materiaal op maat aanvragen</h3>
+        
+        <form method="POST" action="/materials/maatwerk">
+            @csrf
+            
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Kies het basismateriaal:</label>
+            <select name="material_id" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <option value="" disabled selected>Selecteer een artikel</option>
+                @foreach($materials as $material)
+                    <option value="{{ $material->id }}">{{ $material->productname }} (Art: {{ $material->productnumber }})</option>
+                @endforeach
+            </select>
+
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Aantal stuks:</label>
+            <input type="number" name="quantity" min="1" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Afmetingen & Eigenschappen:</label>
+            <textarea name="dimensions" rows="4" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; resize: vertical;"></textarea>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end;">
+                <button type="button" onclick="closeCustomOrderModal()" style="padding: 10px 15px; background-color: #f8f9fa; border: 1px solid #ccc; color: #333; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                    Annuleren
+                </button>
+                <button type="submit" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                    Aan winkelmand toevoegen
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <script>
-const searchInput = document.getElementById('search');
+const searchInput = document.getElementById('searchInput');
 const categorySelect = document.getElementById('categorySelect');
-const categorieSecties = document.querySelectorAll('.categorie-sectie');
+const categorySections = document.querySelectorAll('.category-section');
 
-function fuzzyMatch(zoekterm, doelwit) {
-    if (zoekterm.length === 0) return true;
-    if (doelwit.includes(zoekterm)) return true;
+function fuzzyMatch(query, target) {
+    if (query.length === 0) return true;
+    if (target.includes(query)) return true;
+    if (query.length < 2) return false;
 
-    if (zoekterm.length < 2) return false;
-
-    let toegestaneFouten = Math.floor(zoekterm.length / 2);
-
-    for (let i = 0; i <= doelwit.length - zoekterm.length; i++) {
-        let fouten = 0;
-        for (let j = 0; j < zoekterm.length; j++) {
-            if (doelwit[i + j] !== zoekterm[j]) {
-                fouten++;
+    let maxErrors = Math.floor(query.length / 2);
+    for (let i = 0; i <= target.length - query.length; i++) {
+        let errors = 0;
+        for (let j = 0; j < query.length; j++) {
+            if (target[i + j] !== query[j]) {
+                errors++;
             }
-            if (fouten > toegestaneFouten) break;
+            if (errors > maxErrors) break;
         }
-        if (fouten <= toegestaneFouten) return true;
+        if (errors <= maxErrors) return true;
     }
     return false;
 }
 
-function matchesAllWords(zoekterm, doelwit) {
-    let zoekWoorden = zoekterm.split(' ').filter(w => w.length > 0);
-    if (zoekWoorden.length === 0) return true;
-
-    for (let woord of zoekWoorden) {
-        if (!fuzzyMatch(woord, doelwit)) {
+function matchMultipleTerms(query, target) {
+    let terms = query.split(' ').filter(w => w.length > 0);
+    if (terms.length === 0) return true;
+    for (let term of terms) {
+        if (!fuzzyMatch(term, target)) {
             return false;
         }
     }
     return true;
 }
 
-function filterMaterialen() {
-    let filterTekst = searchInput.value.toLowerCase().trim();
-    let gekozenCategorie = categorySelect.value;
+function filterMaterials() {
+    let queryText = searchInput.value.toLowerCase().trim();
+    let selectedCategory = categorySelect.value;
 
-    categorieSecties.forEach(function(sectie) {
-        let sectieCategorie = sectie.getAttribute('data-category');
-        let categorieIsGekozen = (gekozenCategorie === 'all' || gekozenCategorie === sectieCategorie);
-        
-        let cards = sectie.querySelectorAll('.product-card');
-        let heeftZichtbareCards = false;
+    categorySections.forEach(function(section) {
+        let sectionCategory = section.getAttribute('data-category');
+        let categoryMatches = (selectedCategory === 'all' || selectedCategory === sectionCategory);
+        let cards = section.querySelectorAll('.product-card');
+        let hasVisibleCards = false;
 
         cards.forEach(function(card) {
             let name = card.getAttribute('data-name');
             let number = card.getAttribute('data-number');
+            let isMatch = matchMultipleTerms(queryText, name) || number.includes(queryText);
 
-            let zoekMatch = matchesAllWords(filterTekst, name) || number.includes(filterTekst);
-
-            if (categorieIsGekozen && zoekMatch) {
+            if (categoryMatches && isMatch) {
                 card.style.display = "flex";
-                heeftZichtbareCards = true;
+                hasVisibleCards = true;
             } else {
                 card.style.display = "none";
             }
         });
 
-        if (categorieIsGekozen && heeftZichtbareCards) {
-            sectie.style.display = "block";
+        if (categoryMatches && hasVisibleCards) {
+            section.style.display = "block";
         } else {
-            sectie.style.display = "none";
+            section.style.display = "none";
         }
     });
 }
 
-searchInput.addEventListener('keyup', filterMaterialen);
-categorySelect.addEventListener('change', filterMaterialen);
+searchInput.addEventListener('keyup', filterMaterials);
+categorySelect.addEventListener('change', filterMaterials);
+filterMaterials();
 
-filterMaterialen();
+const modal = document.getElementById('customOrderModal');
+
+function openCustomOrderModal() {
+    modal.style.display = 'flex';
+}
+
+function closeCustomOrderModal() {
+    modal.style.display = 'none';
+}
 </script>
 @endsection
