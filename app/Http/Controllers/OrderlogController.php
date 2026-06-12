@@ -22,21 +22,44 @@ class OrderlogController extends Controller
     }
 
     public function updateStatus($order_id, $status) {
+        
         if (Auth::user()->is_admin == 1 || Auth::user()->is_stockMedewerker == 1) {
             
-            if ($status === 'accepted') {
-                $status = 'validated';
-            }
-            elseif ($status === 'rejected') {
-                $status = 'refused';
+            $orderItems = \App\Models\Orderlog::where('order_id', $order_id)->get();
+            
+            if ($orderItems->isEmpty()) {
+                return redirect()->back()->withErrors(['error' => 'Bestelling niet gevonden.']);
             }
 
-            Orderlog::where('order_id', $order_id)->update(['status' => $status]);
+            $huidigeStatus = $orderItems->first()->status;
+
+            if ($status === 'accepted') {
+                $nieuweStatus = 'validated';
+            } 
+            elseif ($status === 'rejected') {
+                $nieuweStatus = 'refused';
+
+                if ($huidigeStatus === 'pending') {
+                    foreach ($orderItems as $item) {
+                        
+                        $materiaal = \App\Models\Material::where('productname', $item->productname)
+                                                         ->orWhere('productname', str_replace(' ', '-', $item->productname))
+                                                         ->first();
+                        
+                        if ($materiaal) {
+                            $materiaal->stock += $item->quantity;
+                            $materiaal->save();
+                        }
+                    }
+                }
+            }
+
+            \App\Models\Orderlog::where('order_id', $order_id)->update(['status' => $nieuweStatus]);
             
-            return redirect()->back()->with('success', 'Bestelling ' . $order_id . ' is succesvol bijgewerkt!');
+            return redirect()->route('orderlog.index')->with('success', 'Bestelling ' . $order_id . ' is nu: ' . strtoupper($nieuweStatus) . '. Voorraad is bijgewerkt!');
         }
         
-        return redirect()->back();
+        return redirect()->route('orderlog.index')->withErrors(['error' => 'Je hebt niet de juiste rechten om bestellingen te wijzigen!']);
     }
 
 
@@ -46,19 +69,22 @@ class OrderlogController extends Controller
 
         $vandaag = date('Ymd');
 
-        $laatsteBestelling = Orderlog::where('order_id', 'LIKE', 'ORD-' . $vandaag . '-%')
-                                     ->orderBy('order_id', 'desc')
-                                     ->first();
+        $bestellingenVandaag = Orderlog::where('order_id', 'LIKE', 'ORD-' . $vandaag . '-%')->pluck('order_id');
 
-        if ($laatsteBestelling) {
-            $laatsteNummer = (int) substr($laatsteBestelling->order_id, -4);
-            $nieuwNummer = $laatsteNummer + 1;
-        } else {
-            $nieuwNummer = 1;
+        $hoogsteNummer = 0;
+        foreach ($bestellingenVandaag as $bestaandeId) {
+            $parts = explode('-', $bestaandeId);
+            
+            if (isset($parts[2]) && is_numeric($parts[2])) {
+                $nummer = (int) $parts[2];
+                if ($nummer > $hoogsteNummer) {
+                    $hoogsteNummer = $nummer;
+                }
+            }
         }
 
+        $nieuwNummer = $hoogsteNummer + 1;
         $volgnummer = str_pad($nieuwNummer, 4, '0', STR_PAD_LEFT);
-
         $orderId = 'ORD-' . $vandaag . '-' . $volgnummer;
 
         foreach($cart as $id => $item) {
@@ -79,11 +105,8 @@ class OrderlogController extends Controller
         session()->forget('cart');
 
         if (Auth::user()->is_admin == 1 || Auth::user()->is_stockMedewerker == 1) {
-            
             return redirect()->route('orderlog.index')->with('success', 'Bestelling ' . $orderId . ' is succesvol geplaatst!');
-            
         } else {
-            
             $aantalPending = Orderlog::where('user_id', Auth::id())
                                      ->where('status', 'pending')
                                      ->get()
@@ -91,8 +114,7 @@ class OrderlogController extends Controller
                                      ->count();
 
             $bericht = 'Bestelling ' . $orderId . ' is succesvol geplaatst! Je hebt momenteel ' . $aantalPending . ' bestelling(en) in de wacht staan.';
-
-            return redirect('/materials')->with('success', $bericht);
+            return redirect()->route('cart.index')->with('success', $bericht);
         }
     }
 }
