@@ -84,6 +84,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/materials', [MaterialController::class, 'index']);
 Route::post('/materials/bestel', [MaterialController::class, 'order']);
+Route::post('/materials/maatwerk', [\App\Http\Controllers\CartController::class, 'addMaatwerk']);
 
 Route::get('/forecast', [ForcastController::class, 'forecast']);
 
