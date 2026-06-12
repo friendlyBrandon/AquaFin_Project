@@ -7,7 +7,7 @@
     <title>Aquafin</title>
 
     @php
-    $isMobile = preg_match('/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', request()->userAgent());
+    $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
     @endphp
     @if($isMobile)
     @vite(['resources/css/mobile.css'])

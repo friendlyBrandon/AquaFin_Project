@@ -129,8 +129,11 @@
     color: #0099d8;
     text-decoration: none;
 }
-
-/* Zorg dat alle links en de logout-form op één lijn staan */
+.logo-navbar{
+    
+    height: 30px; 
+    width: auto; 
+}
 .nav-center {
     display: flex;
     align-items: center;

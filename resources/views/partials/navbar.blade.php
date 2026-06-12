@@ -1,11 +1,17 @@
+@php
+    $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
+@endphp
+@if(!$isMobile)
 <nav class="navbar">
     <div class="nav-left">
-        <a href="{{ route('dashboard') }}" class="logo">
-            💧 Aquafin
+        <a href="{{ route('dashboard') }}" class="logo-navbar">
+           
+            <img src="{{ asset('images/transparant-logo.png') }}" class="logo-navbar">
+            
         </a>
     </div>
 
-    <div class="nav-center">
+    <div class="nav-center" id="navCenter">
         @auth
             <a href="/materials">Materiaal</a>
             <a href="/forecast">Neerslag Voorspelling</a>
@@ -63,3 +69,50 @@
         @endauth
     </div>
 </nav>
+@endif
+@if($isMobile)
+<nav class="navbar-mobile">
+
+    <div class="mobile-top">
+        <a href="javascript:void(0)" id="mobileLogoToggle">
+            <img src="{{ asset('images/transparant-logo.png') }}" class="logo-mobile">
+        </a>
+    </div>
+
+    <div class="nav-mobile-center" id="mobileMenu">
+        @auth
+            <a href="/dashboard">Dashboard</a>
+            <a href="/materials">Materiaal</a>
+            <a href="/forecast">Neerslag Voorspelling</a>
+            <a href="/contact">Contact</a>
+            <a href="{{ route('profile.edit') }}">Profiel</a>
+
+            <a href="{{ route('cart.index') }}">Winkelmand</a>
+
+            @if(auth()->user()->is_admin == 1 || auth()->user()->is_stockMedewerker == 1)
+                <a href="/orderlog">Bestellog</a>
+            @endif
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button class="logout-btn">Logout</button>
+            </form>
+        @endauth
+    </div>
+
+</nav>
+@endif
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const logo = document.getElementById("mobileLogoToggle");
+    const menu = document.getElementById("mobileMenu");
+
+    if (logo) {
+        logo.addEventListener("click", function () {
+            menu.classList.toggle("active");
+        });
+    }
+
+});
+</script>
