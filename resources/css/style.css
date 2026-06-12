@@ -95,16 +95,12 @@
     color: white;
 }
 
-.btn-login:hover {
-    background: #007bb0;
-}
-
 .btn-register {
     border: 2px solid #0099d8;
     color: #0099d8;
 }
 
-.btn-register:hover {
+.btn-register:hover , .btn-login:hover{
     background: #0099d8;
     color: white;
 }
@@ -327,6 +323,7 @@ button[type="submit"]:hover {
     border-color: #4f46e5;
     box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
 }
+
 .materiaalTabel {
     width: 100%;
     border-collapse: collapse;
@@ -502,4 +499,164 @@ button[type="submit"]:hover {
     margin-bottom: 20px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
     
+}
+
+/* =========================
+   MOBILE ONLY (<768px)
+========================= */
+@media screen and (max-width: 768px) {
+
+    .container {
+        flex-direction: column;
+        min-height: 100vh;
+        height: auto;
+    }
+
+    .left-side,
+    .right-side {
+        width: 100%;
+        flex: none;
+    }
+
+    .left-side {
+        padding: 30px 20px;
+        min-height: 250px;
+    }
+
+    .left-side h1 {
+        font-size: 2rem;
+    }
+
+    .left-side p {
+        font-size: 0.95rem;
+    }
+
+    .logo-topright {
+        top: 15px;
+        right: 15px;
+        height: 30px;
+    }
+
+    .login-card {
+        width: 95%;
+        max-width: 400px;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    /* NAVBAR */
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .nav-center {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .nav-center a,
+    .logout-btn {
+        margin: 0;
+    }
+
+    /* DASHBOARD */
+    .dashboard,
+    .dashboard-container,
+    .contact-container,
+    .profile-container,
+    .materials {
+        width: 100%;
+        padding: 15px;
+        margin: 15px auto;
+    }
+
+    .dashboard-header,
+    .contact-header {
+        padding: 20px;
+    }
+
+    .dashboard-header h1,
+    .contact-header h2 {
+        font-size: 1.5rem;
+    }
+
+    /* PROFILE */
+    .profile {
+        padding: 15px;
+    }
+
+    .profile-card,
+    .contact-card,
+    .cart {
+        padding: 20px;
+    }
+
+    /* FORMULIEREN */
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+        font-size: 16px; /* voorkomt zoom op iPhone */
+    }
+
+    /* BUTTONS */
+    .btn,
+    .contact-btn,
+    .x-primary-button,
+    button[type="submit"] {
+        width: 100%;
+        padding: 14px;
+    }
+
+    /* TABELLEN */
+    .materiaalTabel {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .materiaalTabel th,
+    .materiaalTabel td {
+        padding: 10px;
+    }
+
+    /* SEARCH */
+    #search,
+    .search {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* REMINDER */
+    .reminder {
+        padding: 15px;
+    }
+
+    /* GRAFIEKEN */
+    .chart,
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    /* CONTACT ITEMS */
+    .contact-item {
+        padding: 12px;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+    h2 {
+        font-size: 1.4rem;
+    }
+    h3 {
+        font-size: 1.2rem;
+    }
 }

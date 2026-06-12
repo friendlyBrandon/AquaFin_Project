@@ -15,7 +15,7 @@
     </div>
 
     <div class="right-side">
-        <img src="{{ asset('images/logo.png') }}" class="logo-topright">
+        <img src="{{ asset('images/transparant-logo.png') }}" class="logo-topright">
         <div class="login-card">
             <h2>Material Management</h2>
 

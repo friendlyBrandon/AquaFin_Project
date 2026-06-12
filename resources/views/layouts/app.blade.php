@@ -6,7 +6,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>Aquafin</title>
 
-   @vite(['resources/css/style.css'])
+    @php
+    $isMobile = preg_match('/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', request()->userAgent());
+    @endphp
+    @if($isMobile)
+    @vite(['resources/css/mobile.css'])
+    @else
+    @vite(['resources/css/style.css'])
+    @endif
 </head>
 <body>
 
