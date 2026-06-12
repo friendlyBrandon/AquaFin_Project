@@ -361,11 +361,6 @@ button[type="submit"]:hover {
     border-radius: 5px;
 }
 
-.chart-wrapper{
-    display:block;
-    width:65%;
-    text-align:center;
-}
 .chart{
     width:200px;
     height:100px;
