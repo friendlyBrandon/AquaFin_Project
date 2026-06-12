@@ -21,40 +21,50 @@ class MaterialController extends Controller
     }
 
     public function order(Request $request) {
-    
-        $request->validate([
-            'quantity' => 'required|integer|min:1',
-            'material_id' => 'required|exists:materiallist,id',
-        ]);
-
-        $material = Material::findOrFail($request->material_id);
-
-        if ($request->quantity > $material->stock) {
-            return redirect()->back()->withErrors(['quantity' => 'Order more than the available stock is impossible!']);
-        }
-
-        $material->stock -= $request->quantity;
-        $material->save();
-
+        
+        $bestellingen = $request->input('bestelling', []);
+        
         $cart = session()->get('cart', []);
-        $id = $material->id;
-        $qty = (int) $request->quantity;
+        $aantalToegevoegd = 0;
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity'] += $qty;
-        } else {
-            $cart[$id] = [
-                "id" => $material->id,
-                "productname" => str_replace('-', ' ', $material->productname),
-                "productnumber" => $material->productnumber,
-                "quantity" => $qty,
-                "image_path" => $material->image_path,
-                "category" => $material->category
-            ];
+        foreach ($bestellingen as $id => $qty) {
+            $qty = (int) $qty;
+
+            if ($qty > 0) {
+                $material = \App\Models\Material::find($id);
+
+                if ($material) {
+                    
+                    if ($qty > $material->stock) {
+                        return redirect()->back()->withErrors(['error' => 'Order more than the available stock for ' . $material->productname . ' is impossible!']);
+                    }
+
+                    $material->stock -= $qty;
+                    $material->save();
+
+                    if (isset($cart[$id])) {
+                        $cart[$id]['quantity'] += $qty;
+                    } else {
+                        $cart[$id] = [
+                            "id" => $material->id,
+                            "productname" => str_replace('-', ' ', $material->productname),
+                            "productnumber" => $material->productnumber,
+                            "quantity" => $qty,
+                            "image_path" => $material->image_path,
+                            "category" => $material->category
+                        ];
+                    }
+
+                    $aantalToegevoegd++;
+                }
+            }
         }
 
-        session()->put('cart', $cart);
+        if ($aantalToegevoegd > 0) {
+            session()->put('cart', $cart);
+            return redirect()->back()->with('Success', 'Het materiaal is succesvol toegevoegd aan je winkelwagen!');
+        }
 
-        return redirect()->back()->with('Success', 'Het materiaal is succesvol toegevoegd aan je winkelwagen!');
+        return redirect()->back()->withErrors(['error' => 'Je hebt nergens een aantal ingevuld!']);
     }
 }

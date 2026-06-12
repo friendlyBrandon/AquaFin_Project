@@ -4,83 +4,88 @@
 
 <div class="cart">
 
-<h1>Winkelwagen</h1>
+    <h1>Winkelwagen</h1>
 
-@php
-    $cart = session('cart', []);
-@endphp
+    @if(session('success'))
+        <div style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <strong>Succes!</strong> {{ session('success') }}
+        </div>
+    @endif
+    @php
+        $cart = session('cart', []);
+    @endphp
 
-@if(empty($cart))
-    <p>Je winkelwagen is momenteel leeg.</p>
-@else
-<table border="1">
-    <tr>
-        <th>Foto</th>
-        <th>Materiaal</th>
-        <th>Aantal</th>
-        <th>Actie</th>
-    </tr>
+    @if(empty($cart))
+        <p>Je winkelwagen is momenteel leeg.</p>
+    @else
+    <table border="1">
+        <tr>
+            <th>Foto</th>
+            <th>Materiaal</th>
+            <th>Aantal</th>
+            <th>Actie</th>
+        </tr>
 
-    @php $totalItems = 0; @endphp
+        @php $totalItems = 0; @endphp
 
-    @foreach($cart as $id => $item)
+        @foreach($cart as $id => $item)
 
-        @php
-            $echteQty = is_array($item) ? $item['quantity'] : $item;
+            @php
+                $echteQty = is_array($item) ? $item['quantity'] : $item;
 
-            $material = $materials[$id] ?? \App\Models\Material::find($id);
-            
-            $naam = $material ? $material->productname : (is_array($item) ? $item['productname'] : 'Onbekend');
-            $imagePath = $material ? $material->image_path : (is_array($item) ? $item['image_path'] : null);
-        @endphp
-
-        @if($material || is_array($item))
-
-            @php $totalItems += $echteQty; @endphp
-
-            <tr>
-                <td>
-                    @if($imagePath)
-                        <img src="{{ asset('material_pics/' . $imagePath) }}" alt="{{ str_replace('-', ' ', $naam) }}" width="50">
-                    @endif
-                </td>
+                $material = $materials[$id] ?? \App\Models\Material::find($id);
                 
-                <td>{{ str_replace('-', ' ', $naam) }}</td>
-                
-                <td style="padding: 10px;">
-                    <form method="POST" action="{{ route('cart.update', $id) }}" style="display: flex; gap: 5px; align-items: center;">
+                $naam = $material ? $material->productname : (is_array($item) ? $item['productname'] : 'Onbekend');
+                $imagePath = $material ? $material->image_path : (is_array($item) ? $item['image_path'] : null);
+            @endphp
+
+            @if($material || is_array($item))
+
+                @php $totalItems += $echteQty; @endphp
+
+                <tr>
+                    <td>
+                        @if($imagePath)
+                            <img src="{{ asset('material_pics/' . $imagePath) }}" alt="{{ str_replace('-', ' ', $naam) }}" width="50">
+                        @endif
+                    </td>
+                    
+                    <td>{{ str_replace('-', ' ', $naam) }}</td>
+                    
+                    <td style="padding: 10px;">
+                        <form method="POST" action="{{ route('cart.update', $id) }}" style="display: flex; gap: 5px; align-items: center;">
+                            @csrf
+                            <input type="number" name="quantity" value="{{ is_array($item) ? $item['quantity'] : $item }}" min="1" style="width: 70px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+                            <button type="submit" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                Wijzigen
+                            </button>
+                        </form>
+                    </td>
+                    
+                    <td>
+                       <form method="POST" action="/cart/remove/{{ $id }}">
                         @csrf
-                        <input type="number" name="quantity" value="{{ is_array($item) ? $item['quantity'] : $item }}" min="1" style="width: 70px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
-                        <button type="submit" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                            Wijzigen
-                        </button>
-                    </form>
-                </td>
-                
-                <td>
-                   <form method="POST" action="/cart/remove/{{ $id }}">
-                    @csrf
-                    <button type="submit" style="padding: 5px 10px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Verwijderen</button>
-                    </form>
-                </td>
-            </tr>
+                        <button type="submit" style="padding: 5px 10px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Verwijderen</button>
+                        </form>
+                    </td>
+                </tr>
 
-        @endif
+            @endif
 
-    @endforeach
+        @endforeach
 
-</table>
+    </table>
 
-<p><b>Totaal aantal items:</b> {{ $totalItems }}</p>
+    <p><b>Totaal aantal items:</b> {{ $totalItems }}</p>
 
-<form method="POST" action="{{ route('orderlog.store') }}">
-    @csrf
-    <button type="submit" style="padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
-        Bestelling Plaatsen
-    </button>
-</form>
+    <form method="POST" action="{{ route('orderlog.store') }}">
+        @csrf
+        <button type="submit" style="padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+            Bestelling Plaatsen
+        </button>
+    </form>
 
-@endif
+    @endif
 
 </div>
 

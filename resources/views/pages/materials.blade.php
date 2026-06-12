@@ -14,8 +14,7 @@
         </p>
     @endif
 
-    <div style="display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
-        
+    <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
         <div style="flex: 1; min-width: 250px;">
             <select id="categorySelect" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; background-color: #f8f9fa; cursor: pointer;">
                 <option value="all">-- Alle Categorieën --</option>
@@ -28,75 +27,97 @@
         <div style="flex: 2; min-width: 250px;">
             <input type="text" id="search" placeholder="Zoek op naam of productnummer..." style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
         </div>
-
     </div>
 
-    @foreach($materials->groupBy('category') as $categorieNaam => $artikelen)
-        
-        <div class="categorie-sectie" data-category="{{ $categorieNaam }}">
-            
-            <h2 style="border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 20px; color: #333;">{{ $categorieNaam }}</h2>
-            
-            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 50px;">
-                
-                @foreach($artikelen as $material)
-                    <div class="product-card" data-name="{{ strtolower($material->productname) }}" data-number="{{ strtolower($material->productnumber) }}" style="width: 250px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); background-color: #fff; display: flex; flex-direction: column;">
-                        
-                        <div style="height: 150px; background-color: #f4f4f4; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                            @if($material->image_path)
-                                <img src="{{ asset('material_pics/' . $material->image_path) }}" alt="{{ $material->productname }}" style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
-                            @else
-                                <span style="color: #999; font-size: 1.2em;">📷 Geen foto</span>
-                            @endif
-                        </div>
-                        
-                        <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
-                            
-                            <h3 style="margin: 0 0 10px 0; font-size: 1.1em; color: #333;">{{ $material->productname }}</h3>
-                            
-                            <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">
-                                Art. code: <strong>{{ $material->productnumber }}</strong>
-                            </p>
-                            
-                            <p style="margin: 0 0 15px 0; font-size: 0.9em; color: {{ $material->stock > 0 ? 'green' : 'red' }};">
-                                Voorraad: <strong>{{ $material->stock }}</strong>
-                            </p>
-                            
-                            <form action="/materials/bestel" method="POST" style="margin-top: auto; display: flex; gap: 10px;">
-                                @csrf
-                                <input type="hidden" name="material_id" value="{{ $material->id }}">
-                                
-                                <input type="number" placeholder="1" name="quantity" min="1" max="{{ $material->stock }}" required style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" {{ $material->stock == 0 ? 'disabled' : '' }}>
-                                
-                                <button type="submit" style="flex-grow: 1; padding: 8px; background-color: {{ $material->stock == 0 ? '#ccc' : '#0056b3' }}; color: white; border: none; border-radius: 4px; cursor: pointer;" {{ $material->stock == 0 ? 'disabled' : '' }}>
-                                    Order
-                                </button>
-                            </form>
+    <form action="/materials/bestel" method="POST">
+        @csrf
 
-                        </div>
-                    </div>
-                @endforeach
-
-            </div>
+        <div style="text-align: right; margin-bottom: 30px; position: sticky; top: 10px; z-index: 100;">
+            <button type="submit" style="padding: 12px 25px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background-color 0.3s;">
+                Bestellen
+            </button>
         </div>
-    @endforeach
 
-</div>
+        @foreach($materials->groupBy('category') as $categorieNaam => $artikelen)
+            <div class="categorie-sectie" data-category="{{ $categorieNaam }}">
+                <h2 style="border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 20px; color: #333;">{{ $categorieNaam }}</h2>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 50px;">
+                    @foreach($artikelen as $material)
+                        <div class="product-card" data-name="{{ strtolower($material->productname) }}" data-number="{{ strtolower($material->productnumber) }}" style="width: 250px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); background-color: #fff; display: flex; flex-direction: column;">
+                            
+                            <div style="height: 150px; background-color: #f4f4f4; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                @if($material->image_path)
+                                    <img src="{{ asset('material_pics/' . $material->image_path) }}" alt="{{ $material->productname }}" style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
+                                @else
+                                    <span style="color: #999; font-size: 1.2em;">📷 Geen foto</span>
+                                @endif
+                            </div>
+                            
+                            <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
+                                <h3 style="margin: 0 0 10px 0; font-size: 1.1em; color: #333;">{{ $material->productname }}</h3>
+                                <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">Art. code: <strong>{{ $material->productnumber }}</strong></p>
+                                <p style="margin: 0 0 15px 0; font-size: 0.9em; color: {{ $material->stock > 0 ? 'green' : 'red' }};">Voorraad: <strong>{{ $material->stock }}</strong></p>
+                                
+                                <div style="margin-top: auto; display: flex; align-items: center; gap: 10px; background-color: #f8f9fa; padding: 10px; border-radius: 5px; border: 1px solid #eee;">
+                                    <span style="font-size: 0.95em; color: #555; font-weight: bold;">Aantal:</span>
+                                    
+                                    <input type="number" placeholder="0" name="bestelling[{{ $material->id }}]" min="0" max="{{ $material->stock }}" style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; text-align: center;" {{ $material->stock == 0 ? 'disabled' : '' }}>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
+    </form> </div>
 
 <script>
 const searchInput = document.getElementById('search');
 const categorySelect = document.getElementById('categorySelect');
 const categorieSecties = document.querySelectorAll('.categorie-sectie');
 
+function fuzzyMatch(zoekterm, doelwit) {
+    if (zoekterm.length === 0) return true;
+    if (doelwit.includes(zoekterm)) return true; // Directe match
+
+    if (zoekterm.length < 2) return false;
+
+    let toegestaneFouten = Math.floor(zoekterm.length / 2);
+
+    for (let i = 0; i <= doelwit.length - zoekterm.length; i++) {
+        let fouten = 0;
+        for (let j = 0; j < zoekterm.length; j++) {
+            if (doelwit[i + j] !== zoekterm[j]) {
+                fouten++;
+            }
+            if (fouten > toegestaneFouten) break;
+        }
+        if (fouten <= toegestaneFouten) return true;
+    }
+    return false;
+}
+
+function matchesAllWords(zoekterm, doelwit) {
+    let zoekWoorden = zoekterm.split(' ').filter(w => w.length > 0);
+    if (zoekWoorden.length === 0) return true;
+
+    for (let woord of zoekWoorden) {
+        if (!fuzzyMatch(woord, doelwit)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 function filterMaterialen() {
-    let filterTekst = searchInput.value.toLowerCase();
+    let filterTekst = searchInput.value.toLowerCase().trim();
     let gekozenCategorie = categorySelect.value;
 
     categorieSecties.forEach(function(sectie) {
         let sectieCategorie = sectie.getAttribute('data-category');
-        
         let categorieIsGekozen = (gekozenCategorie === 'all' || gekozenCategorie === sectieCategorie);
-
+        
         let cards = sectie.querySelectorAll('.product-card');
         let heeftZichtbareCards = false;
 
@@ -104,7 +125,7 @@ function filterMaterialen() {
             let name = card.getAttribute('data-name');
             let number = card.getAttribute('data-number');
 
-            let zoekMatch = name.includes(filterTekst) || number.includes(filterTekst);
+            let zoekMatch = matchesAllWords(filterTekst, name) || number.includes(filterTekst);
 
             if (categorieIsGekozen && zoekMatch) {
                 card.style.display = "flex";
@@ -123,10 +144,8 @@ function filterMaterialen() {
 }
 
 searchInput.addEventListener('keyup', filterMaterialen);
-
 categorySelect.addEventListener('change', filterMaterialen);
 
 filterMaterialen();
 </script>
-
 @endsection

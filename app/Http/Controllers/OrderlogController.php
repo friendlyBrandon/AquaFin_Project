@@ -74,7 +74,6 @@ class OrderlogController extends Controller
         $hoogsteNummer = 0;
         foreach ($bestellingenVandaag as $bestaandeId) {
             $parts = explode('-', $bestaandeId);
-            
             if (isset($parts[2]) && is_numeric($parts[2])) {
                 $nummer = (int) $parts[2];
                 if ($nummer > $hoogsteNummer) {
@@ -105,8 +104,11 @@ class OrderlogController extends Controller
         session()->forget('cart');
 
         if (Auth::user()->is_admin == 1 || Auth::user()->is_stockMedewerker == 1) {
-            return redirect()->route('orderlog.index')->with('success', 'Bestelling ' . $orderId . ' is succesvol geplaatst!');
+            
+            return redirect()->route('cart.index')->with('success', 'Bestelling ' . $orderId . ' is succesvol geplaatst!');
+            
         } else {
+            
             $aantalPending = Orderlog::where('user_id', Auth::id())
                                      ->where('status', 'pending')
                                      ->get()
@@ -114,6 +116,7 @@ class OrderlogController extends Controller
                                      ->count();
 
             $bericht = 'Bestelling ' . $orderId . ' is succesvol geplaatst! Je hebt momenteel ' . $aantalPending . ' bestelling(en) in de wacht staan.';
+
             return redirect()->route('cart.index')->with('success', $bericht);
         }
     }
