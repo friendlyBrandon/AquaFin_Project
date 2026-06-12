@@ -31,57 +31,58 @@
 
     </div>
 
-    @foreach($materials->groupBy('category') as $categorieNaam => $artikelen)
-        
-        <div class="categorie-sectie" data-category="{{ $categorieNaam }}">
+    <form action="/materials/bestel" method="POST">
+        @csrf
+
+        @foreach($materials->groupBy('category') as $categorieNaam => $artikelen)
             
-            <h2 style="border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 20px; color: #333;">{{ $categorieNaam }}</h2>
-            
-            <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 50px;">
+            <div class="categorie-sectie" data-category="{{ $categorieNaam }}">
                 
-                @foreach($artikelen as $material)
-                    <div class="product-card" data-name="{{ strtolower($material->productname) }}" data-number="{{ strtolower($material->productnumber) }}" style="width: 250px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); background-color: #fff; display: flex; flex-direction: column;">
-                        
-                        <div style="height: 150px; background-color: #f4f4f4; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                            @if($material->image_path)
-                                <img src="{{ asset('material_pics/' . $material->image_path) }}" alt="{{ $material->productname }}" style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
-                            @else
-                                <span style="color: #999; font-size: 1.2em;">📷 Geen foto</span>
-                            @endif
-                        </div>
-                        
-                        <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
+                <h2 style="border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 20px; color: #333;">{{ $categorieNaam }}</h2>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 50px;">
+                    
+                    @foreach($artikelen as $material)
+                        <div class="product-card" data-name="{{ strtolower($material->productname) }}" data-number="{{ strtolower($material->productnumber) }}" style="width: 250px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); background-color: #fff; display: flex; flex-direction: column;">
                             
-                            <h3 style="margin: 0 0 10px 0; font-size: 1.1em; color: #333;">{{ $material->productname }}</h3>
+                            <div style="height: 150px; background-color: #f4f4f4; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                @if($material->image_path)
+                                    <img src="{{ asset('material_pics/' . $material->image_path) }}" alt="{{ $material->productname }}" style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
+                                @else
+                                    <span style="color: #999; font-size: 1.2em;">📷 Geen foto</span>
+                                @endif
+                            </div>
                             
-                            <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">
-                                Art. code: <strong>{{ $material->productnumber }}</strong>
-                            </p>
-                            
-                            <p style="margin: 0 0 15px 0; font-size: 0.9em; color: {{ $material->stock > 0 ? 'green' : 'red' }};">
-                                Voorraad: <strong>{{ $material->stock }}</strong>
-                            </p>
-                            
-                            <form action="/materials/bestel" method="POST" style="margin-top: auto; display: flex; gap: 10px;">
-                                @csrf
-                                <input type="hidden" name="material_id" value="{{ $material->id }}">
+                            <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
                                 
-                                <input type="number" placeholder="1" name="quantity" min="1" max="{{ $material->stock }}" required style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" {{ $material->stock == 0 ? 'disabled' : '' }}>
+                                <h3 style="margin: 0 0 10px 0; font-size: 1.1em; color: #333;">{{ $material->productname }}</h3>
                                 
-                                <button type="submit" style="flex-grow: 1; padding: 8px; background-color: {{ $material->stock == 0 ? '#ccc' : '#0056b3' }}; color: white; border: none; border-radius: 4px; cursor: pointer;" {{ $material->stock == 0 ? 'disabled' : '' }}>
-                                    Order
-                                </button>
-                            </form>
+                                <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">
+                                    Art. code: <strong>{{ $material->productnumber }}</strong>
+                                </p>
+                                
+                                <p style="margin: 0 0 15px 0; font-size: 0.9em; color: {{ $material->stock > 0 ? 'green' : 'red' }};">
+                                    Voorraad: <strong>{{ $material->stock }}</strong>
+                                </p>
+                                
+                                <div style="margin-top: auto; display: flex; gap: 10px;">
+                                    
+                                    <input type="number" placeholder="0" name="bestelling[{{ $material->id }}]" min="0" max="{{ $material->stock }}" style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" {{ $material->stock == 0 ? 'disabled' : '' }}>
+                                    
+                                    <button type="submit" style="flex-grow: 1; padding: 8px; background-color: {{ $material->stock == 0 ? '#ccc' : '#0056b3' }}; color: white; border: none; border-radius: 4px; cursor: pointer;" {{ $material->stock == 0 ? 'disabled' : '' }}>
+                                        Order
+                                    </button>
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
 
+                </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
 
-</div>
+    </form> </div>
 
 <script>
 const searchInput = document.getElementById('search');
@@ -123,7 +124,6 @@ function filterMaterialen() {
 }
 
 searchInput.addEventListener('keyup', filterMaterialen);
-
 categorySelect.addEventListener('change', filterMaterialen);
 
 filterMaterialen();
