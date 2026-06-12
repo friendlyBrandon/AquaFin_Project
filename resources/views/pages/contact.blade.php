@@ -56,7 +56,6 @@
         </div>
       
         <div class="contact-card">
-            <hr>
             
             <h3>Verzonden formulieren</h3>
             <ul>
