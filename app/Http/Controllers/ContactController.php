@@ -16,8 +16,6 @@ class ContactController extends Controller
         $actie = $request->query('actie', 'overzicht');
         
         $berichten = [];
-        $medewerkers = [];
-        $gekozenOntvanger = null;
         $bekijkBericht = null;
 
         if ($actie === 'overzicht') {
@@ -26,25 +24,17 @@ class ContactController extends Controller
                                 ->orderBy('created_at', 'desc')
                                 ->get();
                                 
-        } elseif ($actie === 'nieuw_kies') {
-            $medewerkers = User::where(function($q) {
-                $q->where('is_admin', true)->orWhere('is_stockmedewerker', true);
-            })->where('id', '!=', $user->id)->get();
-            
-        } elseif ($actie === 'nieuw_formulier') {
-            $gekozenOntvanger = User::find($request->query('ontvanger_id'));
-            
         } elseif ($actie === 'bekijk') {
             $bekijkBericht = Message::find($request->query('bericht_id'));
         }
 
-        return view('pages.contact', compact('user', 'actie', 'berichten', 'medewerkers', 'gekozenOntvanger', 'bekijkBericht'));
+        return view('pages.contact', compact('user', 'actie', 'berichten', 'bekijkBericht'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'receiver_id' => 'required|exists:users,id',
+            'receiver_role' => 'required|in:admin,stock',
             'subject'     => 'required|string|max:255',
             'message'     => 'required|string',
             'attachment'  => 'nullable|file|mimes:jpg,png,pdf,docx|max:2048',
@@ -55,14 +45,30 @@ class ContactController extends Controller
             $filePath = $request->file('attachment')->store('attachments', 'public');
         }
 
-        Message::create([
-            'sender_id'   => Auth::id(),
-            'receiver_id' => $request->receiver_id,
-            'subject'     => $request->subject,
-            'body'        => $request->message,
-            'file_path'   => $filePath,
-        ]);
+        if ($request->receiver_role === 'admin') {
+            $ontvangers = User::where('is_admin', 1)->get();
+        } else {
+            $ontvangers = User::where('is_stockMedewerker', 1)->get();
+        }
 
-        return redirect('/contact')->with('success', 'Formulier is succesvol verstuurd!');
+        $aantalVerstuurd = 0;
+
+        foreach ($ontvangers as $ontvanger) {
+            Message::create([
+                'sender_id'   => Auth::id(),
+                'receiver_id' => $ontvanger->id,
+                'subject'     => $request->subject,
+                'body'        => $request->message,
+                'file_path'   => $filePath,
+            ]);
+            
+            $aantalVerstuurd++;
+        }
+
+        if ($aantalVerstuurd > 0) {
+            return redirect('/contact')->with('success', 'Formulier is succesvol verstuurd!');
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Er konden geen medewerkers gevonden worden in deze groep.']);
+        }
     }
 }
