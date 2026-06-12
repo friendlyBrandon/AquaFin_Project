@@ -14,8 +14,7 @@
         </p>
     @endif
 
-    <div style="display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
-        
+    <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
         <div style="flex: 1; min-width: 250px;">
             <select id="categorySelect" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; background-color: #f8f9fa; cursor: pointer;">
                 <option value="all">-- Alle Categorieën --</option>
@@ -28,20 +27,22 @@
         <div style="flex: 2; min-width: 250px;">
             <input type="text" id="search" placeholder="Zoek op naam of productnummer..." style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
         </div>
-
     </div>
 
     <form action="/materials/bestel" method="POST">
         @csrf
 
+        <div style="text-align: right; margin-bottom: 30px; position: sticky; top: 10px; z-index: 100;">
+            <button type="submit" style="padding: 12px 25px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background-color 0.3s;">
+                Bestellen
+            </button>
+        </div>
+
         @foreach($materials->groupBy('category') as $categorieNaam => $artikelen)
-            
             <div class="categorie-sectie" data-category="{{ $categorieNaam }}">
-                
                 <h2 style="border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 20px; color: #333;">{{ $categorieNaam }}</h2>
                 
                 <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 50px;">
-                    
                     @foreach($artikelen as $material)
                         <div class="product-card" data-name="{{ strtolower($material->productname) }}" data-number="{{ strtolower($material->productnumber) }}" style="width: 250px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); background-color: #fff; display: flex; flex-direction: column;">
                             
@@ -54,34 +55,21 @@
                             </div>
                             
                             <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
-                                
                                 <h3 style="margin: 0 0 10px 0; font-size: 1.1em; color: #333;">{{ $material->productname }}</h3>
+                                <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">Art. code: <strong>{{ $material->productnumber }}</strong></p>
+                                <p style="margin: 0 0 15px 0; font-size: 0.9em; color: {{ $material->stock > 0 ? 'green' : 'red' }};">Voorraad: <strong>{{ $material->stock }}</strong></p>
                                 
-                                <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">
-                                    Art. code: <strong>{{ $material->productnumber }}</strong>
-                                </p>
-                                
-                                <p style="margin: 0 0 15px 0; font-size: 0.9em; color: {{ $material->stock > 0 ? 'green' : 'red' }};">
-                                    Voorraad: <strong>{{ $material->stock }}</strong>
-                                </p>
-                                
-                                <div style="margin-top: auto; display: flex; gap: 10px;">
+                                <div style="margin-top: auto; display: flex; align-items: center; gap: 10px; background-color: #f8f9fa; padding: 10px; border-radius: 5px; border: 1px solid #eee;">
+                                    <span style="font-size: 0.95em; color: #555; font-weight: bold;">Aantal:</span>
                                     
-                                    <input type="number" placeholder="0" name="bestelling[{{ $material->id }}]" min="0" max="{{ $material->stock }}" style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" {{ $material->stock == 0 ? 'disabled' : '' }}>
-                                    
-                                    <button type="submit" style="flex-grow: 1; padding: 8px; background-color: {{ $material->stock == 0 ? '#ccc' : '#0056b3' }}; color: white; border: none; border-radius: 4px; cursor: pointer;" {{ $material->stock == 0 ? 'disabled' : '' }}>
-                                        Order
-                                    </button>
+                                    <input type="number" placeholder="0" name="bestelling[{{ $material->id }}]" min="0" max="{{ $material->stock }}" style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; text-align: center;" {{ $material->stock == 0 ? 'disabled' : '' }}>
                                 </div>
-
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </div>
         @endforeach
-
     </form> </div>
 
 <script>
@@ -95,16 +83,13 @@ function filterMaterialen() {
 
     categorieSecties.forEach(function(sectie) {
         let sectieCategorie = sectie.getAttribute('data-category');
-        
         let categorieIsGekozen = (gekozenCategorie === 'all' || gekozenCategorie === sectieCategorie);
-
         let cards = sectie.querySelectorAll('.product-card');
         let heeftZichtbareCards = false;
 
         cards.forEach(function(card) {
             let name = card.getAttribute('data-name');
             let number = card.getAttribute('data-number');
-
             let zoekMatch = name.includes(filterTekst) || number.includes(filterTekst);
 
             if (categorieIsGekozen && zoekMatch) {
@@ -122,10 +107,8 @@ function filterMaterialen() {
         }
     });
 }
-
 searchInput.addEventListener('keyup', filterMaterialen);
 categorySelect.addEventListener('change', filterMaterialen);
-
 filterMaterialen();
 </script>
 
