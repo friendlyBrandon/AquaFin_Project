@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Material;
+use App\Models\Orderlog;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-  public function index()
-{
-    $cart = session()->get('cart', []);
+    public function index()
+    {
+        $cart = session()->get('cart', []);
 
-    $materials = \App\Models\Material::whereIn('id', array_keys($cart))
-        ->get()
-        ->keyBy('id');
+        $materialIds = [];
+        foreach ($cart as $key => $item) {
+            $materialIds[] = is_array($item) && isset($item['material_id']) ? $item['material_id'] : $key;
+        }
 
-    return view('pages.cart', compact('cart', 'materials'));
-}
+        $materials = Material::whereIn('id', $materialIds)
+            ->get()
+            ->keyBy('id');
+
+        return view('pages.cart', compact('cart', 'materials'));
+    }
 
     public function add(Request $request)
     {
@@ -35,7 +43,38 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
-    public function update(Request $request, $id) {
+    public function addMaatwerk(Request $request)
+    {
+        $request->validate([
+            'material_id' => 'required', 
+            'quantity'    => 'required|integer|min:1',
+            'dimensions'  => 'required|string',
+        ]);
+
+        $material = Material::find($request->material_id);
+
+        if (!$material) {
+            return redirect()->back()->withErrors(['error' => 'Het geselecteerde materiaal kon niet worden gevonden.']);
+        }
+
+        $cart = session()->get('cart', []);
+
+        $uniqueKey = 'custom_' . $material->id . '_' . time();
+
+        $cart[$uniqueKey] = [
+            'material_id' => $material->id,
+            'quantity'    => $request->quantity,
+            'dimensions'  => $request->dimensions,
+            'is_custom'   => true
+        ];
+
+        session()->put('cart', $cart);
+
+        return redirect()->back()->with('Success', 'Maatwerk toegevoegd aan winkelmand!');
+    }
+
+    public function update(Request $request, $id) 
+    {
         $request->validate(['quantity' => 'required|integer|min:1']);
         
         $nieuweAantal = (int) $request->quantity;
@@ -44,10 +83,10 @@ class CartController extends Controller
         if(!isset($cart[$id])) return redirect()->back();
 
         $oudeAantal = is_array($cart[$id]) ? $cart[$id]['quantity'] : $cart[$id];
-        
         $verschil = $nieuweAantal - $oudeAantal;
 
-        $materiaal = \App\Models\Material::find($id);
+        $realId = is_array($cart[$id]) && isset($cart[$id]['material_id']) ? $cart[$id]['material_id'] : $id;
+        $materiaal = Material::find($realId);
 
         if($verschil > 0) {
             if($materiaal->stock < $verschil) {
@@ -76,11 +115,12 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
-            
             $item = $cart[$id];
             $qtyToRemove = is_array($item) ? $item['quantity'] : $item;
 
-            $material = \App\Models\Material::find($id);
+            $realId = is_array($item) && isset($item['material_id']) ? $item['material_id'] : $id;
+            
+            $material = Material::find($realId);
             if ($material) {
                 $material->stock += $qtyToRemove;
                 $material->save();
@@ -97,15 +137,38 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
+        if (empty($cart)) {
+            return redirect('/cart')->withErrors(['error' => 'Je winkelmand is leeg!']);
+        }
+
+        $orderId = 'ORD-' . date('Ymd') . '-' . rand(1000, 9999);
+
+        foreach ($cart as $key => $item) {
+            $materialId = is_array($item) && isset($item['material_id']) ? $item['material_id'] : $key;
+            $quantity   = is_array($item) ? $item['quantity'] : $item;
+            $dimensions = is_array($item) && isset($item['dimensions']) ? $item['dimensions'] : null;
+            
+            $material = Material::find($materialId);
+
+            Orderlog::create([
+                'user_id'     => Auth::id(),
+                'order_id'    => $orderId,
+                'material_id' => $materialId,
+                'productname' => $material ? $material->productname : 'Verwijderd Artikel',
+                'quantity'    => $quantity,
+                'dimensions'  => $dimensions,
+                'status'      => 'pending',
+            ]);
+        }
+
         session()->forget('cart');
 
-        return redirect('/cart')->with('success', 'Bestelling succesvol geplaatst!');
+        return redirect('/orderlog')->with('success', 'Bestelling succesvol geplaatst en wacht op goedkeuring!');
     }
 
     public function checkout()
     {
         $cart = session()->get('cart', []);
-
         return view('pages.cart', compact('cart'));
     }
 }
