@@ -37,56 +37,44 @@
 
         <h2>Mijn Inbox</h2>
 
-
         <div class="contact-card">
-
-
-        @if($user->is_admin || $user->is_stockMedewerker)
-
-        <h3>Ontvangen formulieren</h3>
-        <ul>
-            @forelse($berichten->where('receiver_id', $user->id) as $bericht)
-                <li>
-                    <strong>Van:</strong> {{ $bericht->sender->username }}<br>
-                    <strong>Onderwerp:</strong> {{ $bericht->subject }}<br>
-                    <strong>Datum:</strong> {{ $bericht->created_at->format('d-m-Y H:i') }}<br>
-                    <a href="/contact?actie=bekijk&bericht_id={{ $bericht->id }}" class="contact-link">[ Bekijk dit formulier ]</a>
-                </li>
-                <br>
-            @empty
-                <p>Je hebt nog geen formulieren ontvangen.</p>
-            @endforelse
-        </ul>
-        </div>
-     
-
-        <div class="contact-card">
-
-        <hr>
-        @endif
-
-
-        <h3>Verzonden formulieren</h3>
-        <ul>
             
-            @forelse($berichten->where('sender_id', $user->id) as $bericht)
-                
-                    
+            <h3>Ontvangen formulieren</h3>
+            <ul>
+                @forelse($berichten->where('receiver_id', $user->id) as $bericht)
+                    <li>
+                        <strong>Van:</strong> {{ $bericht->sender->username }}<br>
+                        <strong>Onderwerp:</strong> {{ $bericht->subject }}<br>
+                        <strong>Datum:</strong> {{ $bericht->created_at->format('d-m-Y H:i') }}<br>
+                        <a href="/contact?actie=bekijk&bericht_id={{ $bericht->id }}" class="contact-link">[ Bekijk dit formulier ]</a>
+                    </li>
+                    <br>
+                @empty
+                    <p>Je hebt nog geen formulieren ontvangen.</p>
+                @endforelse
+            </ul>
+        </div>
+      
+        <div class="contact-card">
+            <hr>
+            
+            <h3>Verzonden formulieren</h3>
+            <ul>
+                @forelse($berichten->where('sender_id', $user->id) as $bericht)
                     <strong>Aan:</strong> {{ $bericht->receiver->username }}<br>
                     <strong>Onderwerp:</strong> {{ $bericht->subject }}<br>
                     <strong>Datum:</strong> {{ $bericht->created_at->format('d-m-Y H:i') }}
                     <br>
                     <a href="/contact?actie=bekijk&bericht_id={{ $bericht->id }}">
                         <button class ="contact-btn">Bekijk dit formulier</button>
-                        </a>
-                <br>
-                <br>
-            @empty
-                <p>Je hebt nog geen formulieren verstuurd.</p>
-            @endforelse
-        </ul>
-
-    </div>
+                    </a>
+                    <br>
+                    <br>
+                @empty
+                    <p>Je hebt nog geen formulieren verstuurd.</p>
+                @endforelse
+            </ul>
+        </div>
 
     @elseif($actie === 'nieuw_kies')
         <h3>Stap 1: Kies een ontvanger</h3>
