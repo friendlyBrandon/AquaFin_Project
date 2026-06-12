@@ -15,14 +15,23 @@
         @auth
             <a href="/materials">Materiaal</a>
             <a href="/forecast">Neerslag Voorspelling</a>
-            <a href="/contact">Contact</a>
-            
+            @php
+                $contactCount = \App\Models\Message::where('receiver_id', auth()->id())
+                                       ->where('is_read', false)
+                                       ->count();
+            @endphp
+            <a href="/contact" style="display: inline-flex; align-items: center;">
+                Contact
+                @if($contactCount > 0)
+                    <span style="background-color: #007bff; color: white; border-radius: 50%; padding: 2px 7px; font-size: 0.75em; font-weight: bold; margin-left: 6px;">
+                        {{ $contactCount }}
+                    </span>
+                @endif
+            </a>
             <a href="{{ route('profile.edit') }}">Profiel</a>
-
             @php
                 $cartCount = count(session('cart', []));
                 
-                // Bereken hier alvast de pending teller voor de technieker
                 $navPending = 0;
                 if (auth()->user()->is_admin != 1 && auth()->user()->is_stockMedewerker != 1) {
                     $navPending = \App\Models\Orderlog::where('user_id', auth()->id())

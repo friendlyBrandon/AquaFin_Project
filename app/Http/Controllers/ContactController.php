@@ -26,6 +26,10 @@ class ContactController extends Controller
                                 
         } elseif ($actie === 'bekijk') {
             $bekijkBericht = Message::find($request->query('bericht_id'));
+            if ($bekijkBericht && $bekijkBericht->receiver_id === $user->id) {
+                $bekijkBericht->is_read = 1;
+                $bekijkBericht->save();
+            }
         }
 
         return view('pages.contact', compact('user', 'actie', 'berichten', 'bekijkBericht'));
