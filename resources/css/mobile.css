@@ -70,12 +70,12 @@
 
 .logo-topright {
     position: absolute;
-    top: auto;      /* Schakelt desktop top uit */
-    right: auto;    /* Schakelt desktop right uit */
-    bottom: 20px;   /* Afstand vanaf de onderkant */
-    left: 50%;      /* Startpositie in het midden */
-    transform: translateX(-50%); /* Schuift exact naar het midden */
-    height: 40px;   /* Behoudt de hoogte */
+    top: auto;      
+    right: auto;   
+    bottom: 20px;  
+    left: 50%;   
+    transform: translateX(-50%); 
+    height: 40px;
 }
 .btn-login,
 .btn-register{
@@ -83,4 +83,53 @@
     width:100%;
     text-align:center;
     margin-top:15px;
+}
+.navbar-mobile {
+    background: #0099d8;
+    padding: 15px;
+}
+
+/* logo */
+.mobile-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* logo styling */
+.logo-mobile {
+    height: 45px;
+    cursor: pointer;
+}
+
+/* menu HIDDEN standaard */
+.nav-mobile-center {
+    display: none;
+    flex-direction: column;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+/* menu open */
+.nav-mobile-center.active {
+    display: flex;
+}
+
+/* links */
+.nav-mobile-center a {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* logout */
+.logout-btn {
+    background: white;
+    color: #0099d8;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
 }
