@@ -78,11 +78,13 @@
     @elseif($actie === 'nieuw_kies')
         <h3>Stap 1: Kies een doelgroep</h3>
         <br>
-        <ul style="list-style-type: none; padding: 0; display: flex; gap: 20px; flex-wrap: wrap;">
+        <ul style="list-style-type: none; padding: 0; display: flex; gap: 20px; flex-wrap: wrap;justify-content: center;align-items:">
             <li>
                 <div style="padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f8f9fa; text-align: center; width: 200px;">
                     <h4 style="margin-top: 0;">Alle Admins</h4>
+                    
                     <p style="font-size: 0.9em; color: #666;">Stuur dit naar de admins.</p>
+                    
                     <a href="/contact?actie=nieuw_formulier&ontvanger_rol=admin">
                         <button type="button" class="contact-btn">SELECTEER</button>
                     </a>
@@ -91,7 +93,9 @@
             <li>
                 <div style="padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f8f9fa; text-align: center; width: 200px;">
                     <h4 style="margin-top: 0;">Alle Stockmedewerkers</h4>
+               
                     <p style="font-size: 0.9em; color: #666;">Stuur dit naar de stockmedewerkers.</p>
+            
                     <a href="/contact?actie=nieuw_formulier&ontvanger_rol=stock">
                         <button type="button" class="contact-btn">SELECTEER</button>
                     </a>
