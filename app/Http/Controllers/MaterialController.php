@@ -67,4 +67,48 @@ class MaterialController extends Controller
 
         return redirect()->back()->withErrors(['error' => 'Je hebt nergens een aantal ingevuld!']);
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'productname' => 'required',
+            'category'    => 'required',
+            'stock'       => 'required|integer',
+        ]);
+
+        $latest = Material::orderBy('id', 'desc')->first();
+        $number = $latest ? intval(str_replace('ART-', '', $latest->productnumber)) + 1 : 1;
+        $artCode = 'ART-' . str_pad($number, 5, '00', STR_PAD_LEFT);
+
+        $material = new Material();
+        $material->productname = $request->productname;
+        $material->productnumber = $artCode;
+        $material->category = $request->category;
+        $material->stock = $request->stock;
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('material_pics', 'public');
+            $material->image_path = basename($path);
+        }
+
+        $material->save();
+        return redirect()->back()->with('Success', 'Nieuw materiaal aangemaakt!');
+    }
+
+    public function update(Request $request)
+    {
+        $material = Material::findOrFail($request->material_id);
+        
+        $material->productname = $request->productname;
+        $material->category = $request->category;
+        $material->stock = $request->stock;
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('material_pics', 'public');
+            $material->image_path = basename($path);
+        }
+
+        $material->save();
+        return redirect()->back()->with('Success', 'Materiaal bijgewerkt!');
+    }
 }
