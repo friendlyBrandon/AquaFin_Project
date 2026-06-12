@@ -16,7 +16,7 @@
 
 
         <br>
-
+        <div class="neerslag-dashboard">
         <h2>Neerslag Voorspelling <span class="provincie">({{ $provincie }})</span> </h2>
         <br>
 
@@ -53,6 +53,7 @@
                     <div class="chart"></div>
                     <canvas id="rainChart" width="200" height="100"
                         style="display: block; box-sizing: border-box; height: 191px; width: 382px;"></canvas>
+                </div>
                 </div>
             </div>
         @else
