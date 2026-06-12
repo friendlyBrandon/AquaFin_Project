@@ -15,7 +15,7 @@
     .forc-container {
     width:95%;
     max-width: 1200px;
-    margin:10px;
+    margin:30px auto;
     padding: 10px;
     border-radius: 18px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
