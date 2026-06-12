@@ -349,3 +349,12 @@ button[type="submit"]:hover {
     color: #007bb0;
 
 }
+.cart {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    
+}
+
