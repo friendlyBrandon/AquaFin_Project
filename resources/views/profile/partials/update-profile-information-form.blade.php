@@ -14,9 +14,10 @@
         @csrf
     </form>
 
+   
     <div>
         <x-input-label for="username" :value="__('Gebruikersnaam:')" />
-        <x-text-input id="username" type="text" class="mt-1 block w-full bg-gray-100" :value="$user->username" readonly />
+        <x-input-label for="username" :value="$user->username" readonly />
     </div>
 
     

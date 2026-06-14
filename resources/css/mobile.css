@@ -2,111 +2,84 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter',sans-serif;
+    
 }
+
 
 .container {
     display: flex;
-    height: 100vh; 
+    flex-direction: column;
+    min-height: 100vh;
+    background: #f4f7fa;
 }
 
-
-
-/* Linkerkant */
 .left-side {
-    flex: 1;
-    
-    background-color: #1faeeb;
-    background-position: center;
-    color: white;
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+    background: #0099d8;
+    padding: 30px 20px;
     text-align: center;
-    padding: 40px;
+    color:white;
+    background-position: center;
+    position: relative;
 }
 
 .left-side h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
+    font-size: 1.8rem;
 }
 
 .left-side p {
-    max-width: 400px;
-    line-height: 1.6;
+    margin-top: 10px;
+    font-size: .9rem;
 }
 
-
-/* Rechterkant */
-.logo-topright {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    height: 40px;
-}
 .right-side {
     flex: 1;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
     background: #f4f7fa;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-
 .login-card {
+    width:100%;
+    max-width:350px;
     background: white;
     padding: 40px;
     border-radius: 15px;
-
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-
-    width: 350px;
     text-align: center;
 }
-
-.login-card h2 {
+ .login-card h2 {
     margin-bottom: 15px;
     color: #0099d8;
 }
-
 .login-card p {
     margin-bottom: 25px;
     color: #666;
 }
 
-.btn {
-    display: block;
-    text-decoration: none;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    font-weight: bold;
-
-    transition: 0.3s;
-}
-
-.btn-login {
-    background: #0099d8;
-    color: white;
-    text-decoration: none;
-}
-
+.btn-login,
 .btn-register {
-    border: 2px solid #0099d8;
-    color: #0099d8;
+    padding:18px;
+    font-size:1.1rem;
+    background: #0099d8;
+    color: white;
     text-decoration: none;
 }
 
-.btn-register:hover , .btn-login:hover{
-    background: #0099d8;
-    color: white;
-}
 
+.logo-topright {
+    position: absolute;
+    top: auto;      
+    right: auto;   
+    bottom: 20px;  
+    left: 50%;   
+    transform: translateX(-50%); 
+    height: 40px;
+}
 .btn-login,
 .btn-register{
     display:block;
@@ -114,95 +87,58 @@
     text-align:center;
     margin-top:15px;
 }
+.navbar-mobile {
+    background: #1faeeb;
+    padding: 15px;
+}
 
-/* navigatiebalk */
-.navbar {
+/* logo */
+.mobile-top {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 70px;
-    background: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-
-.nav-left .logo {
-    font-size: 20px;
-    font-weight: bold;
-    color: #0099d8;
-    text-decoration: none;
-}
-.logo-navbar{
-    
-    height: 30px; 
-    width: auto; 
-}
-.nav-center {
-    display: flex;
-    align-items: center;
-}
-
-.nav-center a{
-    margin: 0 10px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-}
-
-.nav-center a:hover
- {
-    color: #0099d8;
-}
-.logout-btn:hover{
-    color:white;
-}
-
-.nav-center form {
-    margin: 0;
-    display: flex;
-    align-items: center;
-}
-
-.logout-btn {
-    background: none;
-    border: none;
-    color: #333;
-    font-weight: 500;
-    cursor: pointer;
-    font-size: 1rem;
-    margin: 0 10px;
-    padding: 0;
-}
-
-
-.logo{
-    font-size:1.5rem;
-    font-weight:bold;
-}
-
-.title{
-    color:#0099d8;
-}
-.dashboard{
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    text-align: center;
-  
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 20px;
-    
 }
-.dashboard-container{
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 20px;
+
+/* logo styling */
+.logo-mobile {
+    height: 45px;
+    cursor: pointer;
+}
+
+/* menu HIDDEN standaard */
+.nav-mobile-center {
+    display: none;
+    flex-direction: column;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+/* menu open */
+.nav-mobile-center.active {
+    display: flex;
+}
+
+/* links */
+.nav-mobile-center a {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* logout */
+.logout-btn {
+    background: white;
+    color: #0099d8;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
 }
 .dashboard-header {
-    width: 100%;
-    text-align: left;
+    width: 90%;
+    text-align: center;
     margin: 30px auto;
     padding: 25px;
     background: linear-gradient(135deg, #1faeeb, #0099d8);
@@ -212,17 +148,39 @@
     margin-bottom: 25px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
     
-    
 }
 .reminder {
+    width: 90%;
+    text-align: center;
+    margin: 30px auto;
     border: 2px solid #007bb0;
     background-color: lightblue;
     padding: 15px;
     border-radius: 10px;
     margin-top: 20px;
+    color:black;
 }
-
-
+.neerslag-dashboard{
+    width: 90%;
+    text-align: center;
+    margin: 30px auto;
+    padding:15px;
+}
+.provincie{
+    color:#0099d8;
+}
+.contact-header {
+    width: 90%;
+    text-align: left;
+    margin: 40px auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #1faeeb, #0099d8);
+    color: white;
+    margin-top: 15px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
 .profile{
     display: flex;
     flex-direction: column;
@@ -233,7 +191,6 @@
     padding: 40px;
     
 }
-
 .profile-card {
     background: #fff;
     border-radius: 18px;
@@ -271,104 +228,6 @@ button[type="submit"] {
 button[type="submit"]:hover {
     box-shadow: 0 8px 18px rgba(0, 153, 216, 0.35);
 }
-
-.materials {
-    padding: 30px;
-    max-width: 1200px;
-    margin: auto;
-    font-family: 'Inter', sans-serif;
-}
-/* SEARCH WRAPPER (voor centreren/spacing) */
-.search-wrapper {
-    margin-bottom: 25px;
-}
-
-/* SEARCH BAR LOOK */
-#search {
-    width: 100%;
-    max-width: 700px;
-    padding: 16px 20px;
-    font-size: 16px;
-    border-radius: 12px;
-    border: 1px solid #ddd;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    transition: all 0.2s ease;
-    outline: none;
-}
-
-/* FOCUS EFFECT */
-#search:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 6px 18px rgba(79,70,229,0.2);
-    transform: scale(1.01);
-}
-
-/* PLACEHOLDER STYLE */
-#search::placeholder {
-    color: #9ca3af;
-}
-.search {
-    width: 100%;
-    padding: 14px 16px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 16px;
-    outline: none;
-    transition: 0.2s;
-}
-
-.search:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
-}
-
-.materiaalTabel {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-}
-
-.materiaalTabel th {
-    background: #4f46e5;
-    color: white;
-    text-align: left;
-    padding: 14px;
-}
-
-.materiaalTabel td {
-    padding: 14px;
-    border-bottom: 1px solid #eee;
-}
-.reminder {
-    border: 2px solid #0099d8;
-    background-color: #0097d857;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 15px;
-}
-
-.reminder h2 , reminder h1{
-    color:#007bb0;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.chart{
-    width:200px;
-    height:100px;
-}
-.table{
-    margin-bottom: 5px;
-}
-.provincie{
-    color:#0099d8;
-}
-/* CONTACT PAGINA */
 .contact-container {
     max-width: 1200px;
     margin: 30px auto;
@@ -490,13 +349,129 @@ button[type="submit"]:hover {
     color: #007bb0;
 
 }
+.mobile-cart {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+}
 
-/*FORCAST/NEERSLAG CSS IN STYLE ZELF TE VINDEN*/
-.cart {
-    background: white;
+/* 1 item = kaart */
+.mobile-cart-item {
+    background: #ffffff;
     border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    padding: 15px;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.mobile-cart-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* titel */
+.mobile-cart-item h3 {
+    font-size: 1rem;
+    color: #222;
+    margin: 0;
+    padding: 25px;
+}
+
+/* dimensies */
+.mobile-dimensions {
+    font-size: 0.85rem;
+    color: #666;
+    background: #f5f7fa;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+/* aantal tekst */
+.mobile-cart-item p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* acties onderaan */
+.mobile-actions {
     
+    display: flex;
+    justify-content: flex-end; /* alles naar rechts */
+    align-items: center;
+    gap: 10px; /* nette spacing tussen knoppen */
+    margin-top: 10px;
+
+}
+/* forms naast elkaar zonder rare gaps */
+.mobile-actions form {
+    margin: 0;
+}
+
+/* input + knop netjes inline */
+.mobile-actions form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* input quantity */
+.mobile-actions input[type="number"] {
+    width: 60px;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+}
+
+
+
+/* edit + delete knop */
+.mobile-actions form:first-child button,
+.mobile-actions form:last-child button {
+    background: #0099d8;
+    color: white;
+}
+
+
+/* hover effect */
+.mobile-actions button:hover {
+    opacity: 0.9;
+}
+.cart{padding: 20px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+/* totaal sectie */
+.cart p {
+    font-size: 1rem;
+    margin-top: 15px;
+    margin: 20px;
+}
+.cart p {
+    margin-top: 20px;
+    padding: 10px 0;
+    font-size: 1rem;
+}
+
+/* checkout knop */
+.cart button[type="submit"] {
+    width: 90%;
+    padding: 12px;
+    background:#0099d8;
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    font-weight: bold;
+    margin-top: 10px;
 }
