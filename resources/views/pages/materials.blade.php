@@ -72,6 +72,111 @@
         @endforeach
     </form> </div>
 
+<style>
+    .materials {
+        width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+
+    .materials form > div:first-of-type {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .category-section > div[style] {
+        justify-content: center !important;
+    }
+
+    @media (max-width: 768px) {
+        .materials {
+            padding: 0 10px;
+        }
+
+        h2 {
+            font-size: 22px;
+            padding-left: 0;
+        }
+
+        .materials > div:first-of-type {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .product-card {
+            width: calc(50% - 10px) !important;
+            max-width: calc(50% - 10px) !important;
+            min-width: unset !important;
+            box-sizing: border-box;
+        }
+
+        .materials form > div:first-of-type {
+            justify-content: center;
+            position: relative;
+            top: unset;
+        }
+
+        .materials form > div:first-of-type button {
+            font-size: 0.95em !important;
+            padding: 10px 16px !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        h2 {
+            font-size: 20px;
+            padding-left: 0;
+        }
+
+        .product-card {
+            width: calc(50% - 8px) !important;
+            max-width: calc(50% - 8px) !important;
+            margin-left: 0 !important;
+            box-sizing: border-box;
+        }
+
+        .product-card > div:first-of-type {
+            height: 120px !important;
+        }
+
+        .product-card h3 {
+            font-size: 0.95em !important;
+        }
+
+        .materials form > div:first-of-type {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .materials form > div:first-of-type button {
+            width: 100%;
+            font-size: 0.9em !important;
+            padding: 10px 12px !important;
+        }
+    }
+
+    @media (max-width: 375px) {
+        h2 {
+            font-size: 18px;
+            padding-left: 0;
+        }
+
+        .product-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box;
+            margin: 0 auto !important;
+        }
+
+        .product-card > div:first-of-type {
+            height: 140px !important;
+        }
+
+        .materials form > div:first-of-type button {
+            font-size: 0.85em !important;
+        }
+    }
+</style>
 <script>
 const searchInput = document.getElementById('search');
 const categorySelect = document.getElementById('categorySelect');
