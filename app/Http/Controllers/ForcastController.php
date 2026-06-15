@@ -396,7 +396,7 @@ class ForcastController extends Controller
             if ($floodRisk) {
                 $suggestedMaterials = Material::whereIn('productname', [
                     'Overall-waterafstotend',
-                    'werklaarzen-pvc',
+                    'Werklaarzen-pvc',
                     'Ontstoppingsveer',
                     'Rioolcamera'
                 ])->get();
