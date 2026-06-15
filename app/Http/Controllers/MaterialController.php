@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Material;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class MaterialController extends Controller
 {
@@ -119,5 +120,18 @@ class MaterialController extends Controller
 
         $material->save();
         return redirect()->back()->with('Success', 'Materiaal bijgewerkt!');
+    }
+
+    public function destroy($id)
+    {
+        $material = Material::findOrFail($id);
+
+        if ($material->image_path) {
+            Storage::disk('public')->delete('material_pics/' . $material->image_path);
+        }
+
+        $material->delete();
+
+        return redirect()->back()->with('Success', 'Het materiaal is succesvol en definitief verwijderd!');
     }
 }

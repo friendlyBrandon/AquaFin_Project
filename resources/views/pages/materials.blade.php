@@ -66,11 +66,20 @@
                                 @endif
                                 
                                 @if(auth()->check() && auth()->user()->is_admin == 1)
+                                    
+                                    <form action="/materials/delete/{{ $material->id }}" method="POST" onsubmit="return confirm('Weet je zeker dat je {{ $material->productname }} definitief wilt verwijderen?');" style="position: absolute; top: 5px; left: 5px; margin: 0;">
+                                        @csrf
+                                        <button type="submit" title="Verwijderen" style="background-color: rgba(220, 53, 69, 0.9); color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                            ❌
+                                        </button>
+                                    </form>
+
                                     <button type="button" onclick='openEditMaterialModal({{ $material->id }}, @json($material->productname), @json($material->productnumber), @json($material->category), {{ $material->stock }})' style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 193, 7, 0.9); border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                                        Wijzig
+                                        ✏️ Wijzig
                                     </button>
+
                                 @endif
-                            </div>
+                                </div>
                             
                             <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
                                 <h3 style="margin: 0 0 10px 0; font-size: 1.1em; color: #333;">{{ $material->productname }}</h3>
@@ -183,111 +192,6 @@
 </div>
 @endif
 
-<style>
-    .materials {
-        width: 100%;
-        padding: 0 15px;
-        box-sizing: border-box;
-    }
-
-    .materials form > div:first-of-type {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .category-section > div[style] {
-        justify-content: center !important;
-    }
-
-    @media (max-width: 768px) {
-        .materials {
-            padding: 0 10px;
-        }
-
-        h2 {
-            font-size: 22px;
-            padding-left: 0;
-        }
-
-        .materials > div:first-of-type {
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .product-card {
-            width: calc(50% - 10px) !important;
-            max-width: calc(50% - 10px) !important;
-            min-width: unset !important;
-            box-sizing: border-box;
-        }
-
-        .materials form > div:first-of-type {
-            justify-content: center;
-            position: relative;
-            top: unset;
-        }
-
-        .materials form > div:first-of-type button {
-            font-size: 0.95em !important;
-            padding: 10px 16px !important;
-        }
-    }
-
-    @media (max-width: 576px) {
-        h2 {
-            font-size: 20px;
-            padding-left: 0;
-        }
-
-        .product-card {
-            width: calc(50% - 8px) !important;
-            max-width: calc(50% - 8px) !important;
-            margin-left: 0 !important;
-            box-sizing: border-box;
-        }
-
-        .product-card > div:first-of-type {
-            height: 120px !important;
-        }
-
-        .product-card h3 {
-            font-size: 0.95em !important;
-        }
-
-        .materials form > div:first-of-type {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .materials form > div:first-of-type button {
-            width: 100%;
-            font-size: 0.9em !important;
-            padding: 10px 12px !important;
-        }
-    }
-
-    @media (max-width: 375px) {
-        h2 {
-            font-size: 18px;
-            padding-left: 0;
-        }
-
-        .product-card {
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box;
-            margin: 0 auto !important;
-        }
-
-        .product-card > div:first-of-type {
-            height: 140px !important;
-        }
-
-        .materials form > div:first-of-type button {
-            font-size: 0.85em !important;
-        }
-    }
-</style>
 <script>
 const searchInput = document.getElementById('searchInput');
 const categorySelect = document.getElementById('categorySelect');

@@ -87,6 +87,7 @@ Route::post('/materials/bestel', [MaterialController::class, 'order']);
 Route::post('/materials/maatwerk', [\App\Http\Controllers\CartController::class, 'addMaatwerk']);
 Route::post('/materials/create', [MaterialController::class, 'store']);
 Route::post('/materials/update', [MaterialController::class, 'update']);
+Route::post('/materials/delete/{id}', [MaterialController::class, 'destroy']);
 
 Route::get('/forecast', [ForcastController::class, 'forecast']);
 
