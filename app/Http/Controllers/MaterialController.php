@@ -77,12 +77,20 @@ class MaterialController extends Controller
         ]);
 
         $latest = Material::orderBy('id', 'desc')->first();
-        $number = $latest ? intval(str_replace('ART-', '', $latest->productnumber)) + 1 : 1;
-        $artCode = 'ART-' . str_pad($number, 5, '00', STR_PAD_LEFT);
+        
+        $number = 1;
+        
+        if ($latest && $latest->productnumber) {
+            $alleenCijfers = preg_replace('/[^0-9]/', '', $latest->productnumber);
+            
+            $number = intval($alleenCijfers) + 1;
+        }
+
+        $artCode = str_pad($number, 5, '0', STR_PAD_LEFT);
 
         $material = new Material();
         $material->productname = $request->productname;
-        $material->productnumber = $artCode;
+        $material->productnumber = $artCode; 
         $material->category = $request->category;
         $material->stock = $request->stock;
 
@@ -92,7 +100,8 @@ class MaterialController extends Controller
         }
 
         $material->save();
-        return redirect()->back()->with('Success', 'Nieuw materiaal aangemaakt!');
+        
+        return redirect()->back()->with('Success', 'Nieuw materiaal aangemaakt met nummer: ' . $artCode);
     }
 
     public function update(Request $request)
