@@ -216,10 +216,21 @@
 }
 .reminder {
     border: 2px solid #007bb0;
-    background-color: lightblue;
+    background-color: #add8e6;
     padding: 15px;
     border-radius: 10px;
     margin-top: 20px;
+}
+.alert-warning{    
+    border: 2px solid #007bb0;
+    background-color: #add8e6;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    
+}
+.alert-warning h4{
+    color:#007bb0;
 }
 
 

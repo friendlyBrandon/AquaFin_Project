@@ -19,8 +19,8 @@
         @endphp
 
         @if($floodRisk)
-            <div class="alert alert-warning">
-                <h4>Recommended materials</h4>
+            <div class="alert-warning">
+                <h4>AANGERADEN MATERIAAL</h4>
                 <div id="suggestedMaterial">
                     @foreach($suggestedMaterials as $material)
                         <p>{{ $material['productname'] }}</p>
