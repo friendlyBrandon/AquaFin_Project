@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
-use App\Models\Material;
 
 class ForcastController extends Controller
 {
@@ -338,8 +337,10 @@ class ForcastController extends Controller
             ['Date' => '2025-12-01', 'Rainfall' => 108]
         ];
 
+        // 2. Data naar JSON converteren
         $jsonPayload = json_encode($historicalDataArray);
-        
+
+        // 3. De Python Microservice aanroepen (de logica verandert niet)
         $pythonApiUrl = 'http://localhost:6942/api/forecast';
 
         try {
@@ -383,7 +384,7 @@ class ForcastController extends Controller
             $thresholds = [
                 'winter' => 300,
                 'spring' => 250,
-                'summer' => 1,
+                'summer' => 260,
                 'autumn' => 280,
             ];
 
@@ -411,4 +412,6 @@ class ForcastController extends Controller
             dd($e->getMessage());
         }
     }
+
+    // ... (groupForecastData methode blijft hetzelfde) ...
 }

@@ -14,11 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         //
     })
-    ->withMiddleware(function ($middleware) {
-    $middleware->alias([
-        'rain.session' => \App\Http\Middleware\EnsureRainSession::class,
-    ]);
-})
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*'),

@@ -29,7 +29,8 @@
                 </div>
                 <br>
                 <a href="/cart">
-                 <button type="button">Aan winkelmand toevoegen</button>
+                 <button type="button" style="background:linear-gradient(135deg, #0099d8, #00b4ff);color: white;border: none;border-radius: 12px;padding: 12px 24px;font-size: 0.95rem;font-weight: 600;cursor: pointer;box-shadow: 0 4px 12px rgba(0, 153, 216, 0.25)">
+                Aan winkelmand toevoegen</button>
                 </a>
                 
             </div>
@@ -38,46 +39,46 @@
 
         <br>
         <div class="neerslag-dashboard">
-            <h2>Neerslag Voorspelling <span class="provincie">({{ $provincie }})</span> </h2>
-            <br>
+        <h2>Neerslag Voorspelling <span class="provincie">({{ $provincie }})</span> </h2>
+        <br>
 
-            @if($weather && isset($weather['daily']))
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Dag</th>
-                                    <th>Regen (mm)</th>
-                                    <th>Regen kans (%)</th>
-                                    <th>Zal het regenen?</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($weather['daily']['time'] as $i => $day)
-                                        <tr>
-                                            <td>{{ $day }}</td>
+        @if($weather && isset($weather['daily']))
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Dag</th>
+                            <th>Regen (mm)</th>
+                            <th>Regen kans (%)</th>
+                            <th>Zal het regenen?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($weather['daily']['time'] as $i => $day)
+                            <tr>
+                                <td>{{ $day }}</td>
 
-                                            <td>{{ $weather['daily']['rain_sum'][$i] }}</td>
+                                <td>{{ $weather['daily']['rain_sum'][$i] }}</td>
 
-                                            <td>{{ $weather['daily']['precipitation_probability_max'][$i] }}</td>
+                                <td>{{ $weather['daily']['precipitation_probability_max'][$i] }}</td>
 
-                                            <td>
-                                                {{ $weather['daily']['rain_sum'][$i] > 0
-                                    ? 'Ja'
-                                    : 'Nee' }}
-                                            </td>
-                                        </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                <td>
+                                    {{ $weather['daily']['rain_sum'][$i] > 0
+                            ? 'Ja'
+                            : 'Nee' }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
-                        <div class="chart-wrapper">
-                            <div class="chart"></div>
-                            <canvas id="rainChart" width="200" height="100"
-                                style="display: block; box-sizing: border-box; height: 191px; width: 382px;"></canvas>
-                        </div>
-                    </div>
+                <div class="chart-wrapper">
+                    <div class="chart"></div>
+                    <canvas id="rainChart" width="200" height="100"
+                        style="display: block; box-sizing: border-box; height: 191px; width: 382px;"></canvas>
                 </div>
-            @else
+                </div>
+            </div>
+        @else
         <div class="alert alert-warning">
             {{ $error ?? 'Weersgegevens zijn momenteel niet beschikbaar.' }}
         </div>

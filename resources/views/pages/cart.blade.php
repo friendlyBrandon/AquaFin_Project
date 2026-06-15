@@ -19,7 +19,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
     @php
         $cart = session('cart', []);
         
-        // Initialiseer tellers voor items en gewicht buiten de loops
         $totalItems = 0;
         $totaalGewicht = 0;
     @endphp
@@ -71,7 +70,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
                         @php 
                             $totalItems += $echteQty; 
-                            // Tel het gewicht op
                             $totaalGewicht += ($material ? ($material->weight * $echteQty) : 0);
                         @endphp
 
@@ -155,7 +153,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
                         @php 
                             $totalItems += $echteQty; 
-                            // Tel het gewicht op
                             $totaalGewicht += ($material ? ($material->weight * $echteQty) : 0);
                         @endphp
 
@@ -205,7 +202,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
         {{-- ================= TOTAAL + LOGISTIEK + BESTELLING ================= --}}
         @php
-            // Bepaal de levertijd op basis van het berekende totale gewicht
             if ($totaalGewicht > 1000) {
                 $levertijd = "5 werkdagen";
                 $leverKleur = "#dc3545"; // Rood
@@ -228,7 +224,7 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
             <p style="font-size: 1.1em;"><b>Totaal massa:</b> {{ number_format($totaalGewicht, 2) }} kg</p>
             
             <div style="background-color: {{ $leverAchtergrond }}; padding: 15px; border-radius: 6px; border: 1px solid {{ $leverKleur }}; margin-top: 20px; margin-bottom: 20px;">
-                <p style="margin: 0 0 5px 0; font-size: 0.95em; color: #555; font-weight: bold;">🚛 Logistieke informatie:</p>
+                <p style="margin: 0 0 5px 0; font-size: 0.95em; color: #555; font-weight: bold;">Logistieke informatie:</p>
                 <p style="margin: 0; font-size: 1.1em; color: {{ $leverKleur }}; font-weight: bold;">
                     Verwachte levertijd: {{ $levertijd }}
                 </p>
