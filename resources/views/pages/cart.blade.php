@@ -34,7 +34,7 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
                 <tr style="background-color: #f8f9fa;">
                     <th style="padding: 10px;">Foto</th>
                     <th style="padding: 10px;">Materiaal</th>
-                    <th style="padding: 10px;">Dimensies / Eigenschappen</th>
+                    <th style="padding: 10px;">Afmetingen / Eigenschappen</th>
                     <th style="padding: 10px;">Aantal</th>
                     <th style="padding: 10px;">Actie</th>
                 </tr>

@@ -69,7 +69,7 @@
                     <table style="width: 100%; border-collapse: collapse; text-align: left;">
                         <tr>
                             <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555;">Product</th>
-                            <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555;">Dimensies / Eigenschappen</th>
+                            <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555;">Afmetingen / Eigenschappen</th>
                             <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555; text-align: right;">Aantal</th>
                         </tr>
                         @foreach($items as $item)
