@@ -15,6 +15,7 @@ class Material extends Model
         'productnumber',
         'category',
         'stock',
+        'weight'
     ];
     protected $table = 'materiallist';
 }

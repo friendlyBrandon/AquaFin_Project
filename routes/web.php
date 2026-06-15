@@ -31,6 +31,7 @@ Route::post('/materials/maatwerk', [\App\Http\Controllers\CartController::class,
 Route::post('/materials/create', [MaterialController::class, 'store']);
 Route::post('/materials/update', [MaterialController::class, 'update']);
 });
+Route::post('/materials/delete/{id}', [MaterialController::class, 'destroy']);
 
 Route::middleware('auth')->group(function () {
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');

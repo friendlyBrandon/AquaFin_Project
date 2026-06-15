@@ -69,14 +69,18 @@
                     <table style="width: 100%; border-collapse: collapse; text-align: left;">
                         <tr>
                             <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555;">Product</th>
-                            <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555;">Dimensies / Eigenschappen</th>
+                            <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555;">Afmetingen / Eigenschappen</th>
                             <th style="padding: 8px 5px; border-bottom: 2px solid #eee; color: #555; text-align: right;">Aantal</th>
                         </tr>
                         @foreach($items as $item)
                             <tr style="border-bottom: 1px solid #f4f4f4;">
                                 
                                 <td style="padding: 10px 5px; width: 40%; vertical-align: top;">
-                                    <span style="font-weight: bold;">{{ $item->productname }}</span>
+                                    @if(is_array($item->productname))
+                                        <span style="font-weight: bold;">{{ implode(', ', $item->productname) }}</span>
+                                    @else
+                                        <span style="font-weight: bold;">{{ $item->productname }}</span>
+                                    @endif
                                 </td>
                                 
                                 <td style="padding: 10px 5px; width: 40%; vertical-align: top;">

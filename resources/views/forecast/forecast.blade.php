@@ -90,8 +90,10 @@
                 pointRadius: 3
             }]
         },
+        
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     display: true

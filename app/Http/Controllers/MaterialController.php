@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Material;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class MaterialController extends Controller
 {
@@ -80,17 +81,29 @@ class MaterialController extends Controller
             'productname' => 'required',
             'category' => 'required',
             'stock' => 'required|integer',
+            'category'    => 'required',
+            'stock'       => 'required|integer',
+            'weight'      => 'required|numeric|min:0',
         ]);
 
         $latest = Material::orderBy('id', 'desc')->first();
-        $number = $latest ? intval(str_replace('ART-', '', $latest->productnumber)) + 1 : 1;
-        $artCode = 'ART-' . str_pad($number, 5, '00', STR_PAD_LEFT);
+        
+        $number = 1;
+        
+        if ($latest && $latest->productnumber) {
+            $alleenCijfers = preg_replace('/[^0-9]/', '', $latest->productnumber);
+            
+            $number = intval($alleenCijfers) + 1;
+        }
+
+        $artCode = str_pad($number, 5, '0', STR_PAD_LEFT);
 
         $material = new Material();
         $material->productname = $request->productname;
-        $material->productnumber = $artCode;
+        $material->productnumber = $artCode; 
         $material->category = $request->category;
         $material->stock = $request->stock;
+        $material->weight = $request->weight;
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('material_pics', 'public');
@@ -98,16 +111,22 @@ class MaterialController extends Controller
         }
 
         $material->save();
-        return redirect()->back()->with('Success', 'Nieuw materiaal aangemaakt!');
+        
+        return redirect()->back()->with('Success', 'Nieuw materiaal aangemaakt met nummer: ' . $artCode);
     }
 
     public function update(Request $request)
     {
+        $request->validate([
+            'weight' => 'required|numeric|min:0',
+        ]);
+
         $material = Material::findOrFail($request->material_id);
 
         $material->productname = $request->productname;
         $material->category = $request->category;
         $material->stock = $request->stock;
+        $material->weight = $request->weight;
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('material_pics', 'public');
@@ -116,5 +135,18 @@ class MaterialController extends Controller
 
         $material->save();
         return redirect()->back()->with('Success', 'Materiaal bijgewerkt!');
+    }
+
+    public function destroy($id)
+    {
+        $material = Material::findOrFail($id);
+
+        if ($material->image_path) {
+            Storage::disk('public')->delete('material_pics/' . $material->image_path);
+        }
+
+        $material->delete();
+
+        return redirect()->back()->with('Success', 'Het materiaal is succesvol en definitief verwijderd!');
     }
 }

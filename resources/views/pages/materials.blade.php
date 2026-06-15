@@ -107,6 +107,47 @@
                                             style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; text-align: center;"
                                             {{ $material->stock == 0 ? 'disabled' : '' }}>
                                     </div>
+        @foreach($materials->groupBy('category') as $categoryName => $items)
+            <div class="category-section" data-category="{{ $categoryName }}">
+                <h2 style="border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 20px; color: #333;">{{ $categoryName }}</h2>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 50px;">
+                    @foreach($items as $material)
+                        <div class="product-card" data-name="{{ strtolower($material->productname) }}" data-number="{{ strtolower($material->productnumber) }}" style="width: 250px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); background-color: #fff; display: flex; flex-direction: column;">
+                            
+                            <div style="height: 150px; background-color: #f4f4f4; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                                @if($material->image_path)
+                                    <img src="{{ asset('material_pics/' . $material->image_path) }}" alt="{{ $material->productname }}" style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
+                                @else
+                                    <span style="color: #999; font-size: 1.2em;">Geen foto</span>
+                                @endif
+                                
+                                @if(auth()->check() && auth()->user()->is_admin == 1)
+                                    
+                                    <form action="/materials/delete/{{ $material->id }}" method="POST" onsubmit="return confirm('Weet je zeker dat je {{ $material->productname }} definitief wilt verwijderen?');" style="position: absolute; top: 5px; left: 5px; margin: 0;">
+                                        @csrf
+                                        <button type="submit" title="Verwijderen" style="background-color: rgba(220, 53, 69, 0.9); color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                            ❌
+                                        </button>
+                                    </form>
+
+                                    <button type="button" onclick='openEditMaterialModal({{ $material->id }}, @json($material->productname), @json($material->productnumber), @json($material->category), {{ $material->stock }}, {{ $material->weight ?? 0 }})' style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 193, 7, 0.9); border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                        ✏️ Wijzig
+                                    </button>
+
+                                @endif
+                                </div>
+                            
+                            <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
+                                <h3 style="margin: 0 0 10px 0; font-size: 1.1em; color: #333;">{{ $material->productname }}</h3>
+                                <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">Art. code: <strong>{{ $material->productnumber }}</strong></p>
+                                <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">Gewicht per stuk: <strong>{{ $material->weight ?? 0 }} kg</strong></p>
+                                <p style="margin: 0 0 15px 0; font-size: 0.9em; color: {{ $material->stock > 0 ? 'green' : 'red' }};">Voorraad: <strong>{{ $material->stock }}</strong></p>
+                                
+                                <div style="margin-top: auto; display: flex; align-items: center; gap: 10px; background-color: #f8f9fa; padding: 10px; border-radius: 5px; border: 1px solid #eee;">
+                                    <span style="font-size: 0.95em; color: #555; font-weight: bold;">Aantal:</span>
+                                    
+                                    <input type="number" placeholder="0" name="bestelling[{{ $material->id }}]" min="0" max="{{ $material->stock }}" style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; text-align: center;" {{ $material->stock == 0 ? 'disabled' : '' }}>
                                 </div>
                             </div>
                         @endforeach
@@ -150,6 +191,38 @@
                 </div>
             </form>
         </div>
+@if(auth()->check() && auth()->user()->is_admin == 1)
+<div id="newMaterialModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background-color: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto;">
+        <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #17a2b8;">Nieuw Materiaal Aanmaken</h3>
+        
+        <form method="POST" action="/materials/create" enctype="multipart/form-data">
+            @csrf
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Productnaam:</label>
+            <input type="text" name="productname" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Categorie:</label>
+            <select name="category" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa; cursor: pointer;">
+                <option value="" disabled selected>-- Selecteer een bestaande categorie --</option>
+                @foreach($materials->pluck('category')->unique() as $cat)
+                    <option value="{{ $cat }}">{{ $cat }}</option>
+                @endforeach
+            </select>
+
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Voorraad (Stock):</label>
+            <input type="number" name="stock" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Gewicht per stuk (in kg):</label>
+            <input type="number" name="weight" step="0.01" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Afbeelding (Optioneel):</label>
+            <input type="file" name="image" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa;">
+
+            <div style="display: flex; gap: 10px; margin-top: 25px; justify-content: flex-end;">
+                <button type="button" onclick="closeNewMaterialModal()" style="padding: 10px 15px; background-color: #f8f9fa; border: 1px solid #ccc; color: #333; border-radius: 5px; cursor: pointer; font-weight: bold;">Annuleren</button>
+                <button type="submit" style="padding: 10px 15px; background-color: #17a2b8; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Opslaan</button>
+            </div>
+        </form>
     </div>
 
     @if(auth()->check() && auth()->user()->is_admin == 1)
@@ -180,6 +253,12 @@
                         (Stock):</label>
                     <input type="number" name="stock" min="0" required
                         style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Categorie:</label>
+            <select name="category" id="edit_category" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa; cursor: pointer;">
+                @foreach($materials->pluck('category')->unique() as $cat)
+                    <option value="{{ $cat }}">{{ $cat }}</option>
+                @endforeach
+            </select>
 
                     <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Afbeelding
                         (Optioneel):</label>
@@ -193,6 +272,15 @@
                             style="padding: 10px 15px; background-color: #17a2b8; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Opslaan</button>
                     </div>
                 </form>
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Gewicht per stuk (in kg):</label>
+            <input type="number" name="weight" id="edit_weight" step="0.01" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Nieuwe Afbeelding (Laat leeg om huidige te behouden):</label>
+            <input type="file" name="image" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa;">
+
+            <div style="display: flex; gap: 10px; margin-top: 25px; justify-content: flex-end;">
+                <button type="button" onclick="closeEditMaterialModal()" style="padding: 10px 15px; background-color: #f8f9fa; border: 1px solid #ccc; color: #333; border-radius: 5px; cursor: pointer; font-weight: bold;">Annuleren</button>
+                <button type="submit" style="padding: 10px 15px; background-color: #ffc107; color: #333; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Wijzigingen Opslaan</button>
             </div>
         </div>
 
@@ -261,6 +349,22 @@
         @media (max-width: 768px) {
             .materials {
                 padding: 0 10px;
+<script>
+const searchInput = document.getElementById('searchInput');
+const categorySelect = document.getElementById('categorySelect');
+const categorySections = document.querySelectorAll('.category-section');
+
+function fuzzyMatch(query, target) {
+    if (query.length === 0) return true;
+    if (target.includes(query)) return true;
+    if (query.length < 2) return false;
+
+    let maxErrors = Math.floor(query.length / 2);
+    for (let i = 0; i <= target.length - query.length; i++) {
+        let errors = 0;
+        for (let j = 0; j < query.length; j++) {
+            if (target[i + j] !== query[j]) {
+                errors++;
             }
 
             h2 {
@@ -416,6 +520,16 @@
         searchInput.addEventListener('keyup', filterMaterials);
         categorySelect.addEventListener('change', filterMaterials);
         filterMaterials();
+    function openEditMaterialModal(id, name, number, category, stock, weight) {
+        document.getElementById('edit_material_id').value = id;
+        document.getElementById('edit_productname').value = name;
+        document.getElementById('edit_productnumber').value = number;
+        document.getElementById('edit_category').value = category;
+        document.getElementById('edit_stock').value = stock;
+        document.getElementById('edit_weight').value = weight; 
+        
+        editMaterialModal.style.display = 'flex';
+    }
 
         const modal = document.getElementById('customOrderModal');
         function openCustomOrderModal() { modal.style.display = 'flex'; }

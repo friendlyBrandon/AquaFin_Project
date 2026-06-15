@@ -105,7 +105,7 @@
     cursor: pointer;
 }
 
-/* menu HIDDEN standaard */
+/* menu HIDDEN */
 .nav-mobile-center {
     display: none;
     flex-direction: column;
@@ -118,7 +118,7 @@
     display: flex;
 }
 
-/* links */
+
 .nav-mobile-center a {
     background: rgba(255,255,255,0.15);
     color: white;
@@ -128,7 +128,7 @@
     text-align: center;
 }
 
-/* logout */
+
 .logout-btn {
     background: white;
     color: #0099d8;
@@ -377,7 +377,7 @@ button[type="submit"]:hover {
     border-radius: 10px;
 }
 
-/* titel */
+
 .mobile-cart-item h3 {
     font-size: 1rem;
     color: #222;
@@ -385,7 +385,7 @@ button[type="submit"]:hover {
     padding: 25px;
 }
 
-/* dimensies */
+
 .mobile-dimensions {
     font-size: 0.85rem;
     color: #666;
@@ -394,28 +394,27 @@ button[type="submit"]:hover {
     border-radius: 8px;
 }
 
-/* aantal tekst */
 .mobile-cart-item p {
     margin: 0;
     font-size: 0.9rem;
 }
 
-/* acties onderaan */
+
 .mobile-actions {
     
     display: flex;
-    justify-content: flex-end; /* alles naar rechts */
+    justify-content: flex-end; 
     align-items: center;
-    gap: 10px; /* nette spacing tussen knoppen */
+    gap: 10px;
     margin-top: 10px;
 
 }
-/* forms naast elkaar zonder rare gaps */
+
 .mobile-actions form {
     margin: 0;
 }
 
-/* input + knop netjes inline */
+
 .mobile-actions form {
     display: flex;
     align-items: center;
@@ -423,7 +422,7 @@ button[type="submit"]:hover {
 }
 
 
-/* input quantity */
+
 .mobile-actions input[type="number"] {
     width: 60px;
     padding: 6px;
@@ -441,8 +440,6 @@ button[type="submit"]:hover {
     color: white;
 }
 
-
-/* hover effect */
 .mobile-actions button:hover {
     opacity: 0.9;
 }
@@ -474,4 +471,29 @@ button[type="submit"]:hover {
 
     font-weight: bold;
     margin-top: 10px;
+}
+/*MATERIAAL pagina is daarin zelf responsive gemaakt*/
+.forc-container {
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+.forc-container h1 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chart-wrapper {
+    width: 100%;
+    height: 320px;
+    position: relative;
+}
+
+.rainChart {
+    width: 100% !important;
+    height: 100% !important;
 }

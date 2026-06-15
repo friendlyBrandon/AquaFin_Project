@@ -18,6 +18,10 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
     @php
         $cart = session('cart', []);
+        
+        // Initialiseer tellers voor items en gewicht buiten de loops
+        $totalItems = 0;
+        $totaalGewicht = 0;
     @endphp
 
     @if(empty($cart))
@@ -34,12 +38,10 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
                 <tr style="background-color: #f8f9fa;">
                     <th style="padding: 10px;">Foto</th>
                     <th style="padding: 10px;">Materiaal</th>
-                    <th style="padding: 10px;">Dimensies / Eigenschappen</th>
+                    <th style="padding: 10px;">Afmetingen / Eigenschappen</th>
                     <th style="padding: 10px;">Aantal</th>
                     <th style="padding: 10px;">Actie</th>
                 </tr>
-
-                @php $totalItems = 0; @endphp
 
                 @foreach($cart as $id => $item)
 
@@ -67,7 +69,11 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
                     @if($material || is_array($item))
 
-                        @php $totalItems += $echteQty; @endphp
+                        @php 
+                            $totalItems += $echteQty; 
+                            // Tel het gewicht op
+                            $totaalGewicht += ($material ? ($material->weight * $echteQty) : 0);
+                        @endphp
 
                         <tr style="border-bottom: 1px solid #ddd;">
                             <td style="padding: 10px;">
@@ -78,6 +84,9 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
                             <td style="padding: 10px;">
                                 <strong>{{ str_replace('-', ' ', $naam) }}</strong>
+                                @if($material && $material->weight > 0)
+                                    <br><span style="font-size: 0.85em; color: #666;">Gewicht: {{ $material->weight }} kg/st</span>
+                                @endif
                             </td>
 
                             <td style="padding: 10px;">
@@ -118,8 +127,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
             <div class="mobile-cart">
 
-                @php $totalItems = 0; @endphp
-
                 @foreach($cart as $id => $item)
 
                     @php
@@ -146,7 +153,11 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
                     @if($material || is_array($item))
 
-                        @php $totalItems += $echteQty; @endphp
+                        @php 
+                            $totalItems += $echteQty; 
+                            // Tel het gewicht op
+                            $totaalGewicht += ($material ? ($material->weight * $echteQty) : 0);
+                        @endphp
 
                         <div class="mobile-cart-item">
 
@@ -155,6 +166,9 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
                             @endif
 
                             <h3>{{ str_replace('-', ' ', $naam) }}</h3>
+                            @if($material && $material->weight > 0)
+                                <p style="font-size: 0.85em; color: #666; margin: 2px 0;">Gewicht: {{ $material->weight }} kg/st</p>
+                            @endif
 
                             @if(is_array($item) && !empty($item['dimensions']))
                                 <p class="mobile-dimensions">
@@ -189,18 +203,44 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
         @endif
 
-        {{-- ================= TOTAAL + BESTELLING ================= --}}
+        {{-- ================= TOTAAL + LOGISTIEK + BESTELLING ================= --}}
+        @php
+            // Bepaal de levertijd op basis van het berekende totale gewicht
+            if ($totaalGewicht > 1000) {
+                $levertijd = "5 werkdagen";
+                $leverKleur = "#dc3545"; // Rood
+                $leverAchtergrond = "#f8d7da";
+            } elseif ($totaalGewicht > 100) {
+                $levertijd = "Meer dan 2 werkdagen";
+                $leverKleur = "#856404"; // Donkergeel/Oranje
+                $leverAchtergrond = "#fff3cd";
+            } else {
+                $levertijd = "1 tot 2 werkdagen (Standaard)";
+                $leverKleur = "#28a745"; // Groen
+                $leverAchtergrond = "#d4edda";
+            }
+        @endphp
 
-        <p style="margin-top: 20px;">
-            <b>Totaal aantal items:</b> {{ $totalItems }}
-        </p>
+        <div style="margin-top: 30px; padding: 25px; background-color: #fff; border: 1px solid #ddd; border-radius: 8px; max-width: 500px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">Overzicht Bestelling</h3>
+            
+            <p style="font-size: 1.1em;"><b>Totaal aantal items:</b> {{ $totalItems }}</p>
+            <p style="font-size: 1.1em;"><b>Totaal massa:</b> {{ number_format($totaalGewicht, 2) }} kg</p>
+            
+            <div style="background-color: {{ $leverAchtergrond }}; padding: 15px; border-radius: 6px; border: 1px solid {{ $leverKleur }}; margin-top: 20px; margin-bottom: 20px;">
+                <p style="margin: 0 0 5px 0; font-size: 0.95em; color: #555; font-weight: bold;">🚛 Logistieke informatie:</p>
+                <p style="margin: 0; font-size: 1.1em; color: {{ $leverKleur }}; font-weight: bold;">
+                    Verwachte levertijd: {{ $levertijd }}
+                </p>
+            </div>
 
-        <form method="POST" action="{{ route('orderlog.store') }}">
-            @csrf
-            <button type="submit"class="order-btn">
-                Bestelling Plaatsen
-            </button>
-        </form>
+            <form method="POST" action="{{ route('orderlog.store') }}">
+                @csrf
+                <button type="submit" class="order-btn" style="width: 100%; padding: 15px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer;">
+                    Bestelling Plaatsen
+                </button>
+            </form>
+        </div>
 
     @endif
 
