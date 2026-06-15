@@ -234,6 +234,7 @@ function matchMultipleTerms(query, target) {
     return true;
 }
 
+
 function filterMaterials() {
     let queryText = searchInput.value.toLowerCase().trim();
     let selectedCategory = categorySelect.value;
