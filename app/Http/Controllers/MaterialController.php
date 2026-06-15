@@ -8,22 +8,28 @@ use Illuminate\Support\Facades\Session;
 
 class MaterialController extends Controller
 {
-    public function index() {
-        $materials = Material::all()->map(function($material) {
+    public function index()
+    {
+        $materials = Material::all()->map(function ($material) {
             $material->category = trim($material->category);
-            
+
             $material->productname = str_replace('-', ' ', $material->productname);
-            
+
             return $material;
         });
-            
-        return view('pages.materials', compact('materials'));
+
+        return view('pages.materials', [
+            'materials' => $materials,
+            'floodRisk' => session('floodRisk', false),
+            'suggestedMaterials' => session('suggestedMaterials', collect()),
+        ]);
     }
 
-    public function order(Request $request) {
-        
+    public function order(Request $request)
+    {
+
         $bestellingen = $request->input('bestelling', []);
-        
+
         $cart = session()->get('cart', []);
         $aantalToegevoegd = 0;
 
@@ -34,7 +40,7 @@ class MaterialController extends Controller
                 $material = \App\Models\Material::find($id);
 
                 if ($material) {
-                    
+
                     if ($qty > $material->stock) {
                         return redirect()->back()->withErrors(['error' => 'Order more than the available stock for ' . $material->productname . ' is impossible!']);
                     }
@@ -72,8 +78,8 @@ class MaterialController extends Controller
     {
         $request->validate([
             'productname' => 'required',
-            'category'    => 'required',
-            'stock'       => 'required|integer',
+            'category' => 'required',
+            'stock' => 'required|integer',
         ]);
 
         $latest = Material::orderBy('id', 'desc')->first();
@@ -98,7 +104,7 @@ class MaterialController extends Controller
     public function update(Request $request)
     {
         $material = Material::findOrFail($request->material_id);
-        
+
         $material->productname = $request->productname;
         $material->category = $request->category;
         $material->stock = $request->stock;

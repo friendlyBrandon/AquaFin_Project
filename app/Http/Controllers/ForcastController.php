@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
+use App\Models\Material;
 
 class ForcastController extends Controller
 {
@@ -337,10 +338,8 @@ class ForcastController extends Controller
             ['Date' => '2025-12-01', 'Rainfall' => 108]
         ];
 
-        // 2. Data naar JSON converteren
         $jsonPayload = json_encode($historicalDataArray);
-
-        // 3. De Python Microservice aanroepen (de logica verandert niet)
+        
         $pythonApiUrl = 'http://localhost:6942/api/forecast';
 
         try {
@@ -359,12 +358,57 @@ class ForcastController extends Controller
             // 4. De gestructureerde data ophalen (Deze functie blijft hetzelfde!)
             $processedForecast = $forecastData;
 
+            $currentMonth = now()->month;
+
+            $season = match (true) {
+                in_array($currentMonth, [12, 1, 2]) => 'winter',
+                in_array($currentMonth, [3, 4, 5]) => 'spring',
+                in_array($currentMonth, [6, 7, 8]) => 'summer',
+                default => 'autumn',
+            };
+
+            $seasonMonths = match ($season) {
+                'winter' => [12, 1, 2],
+                'spring' => [3, 4, 5],
+                'summer' => [6, 7, 8],
+                'autumn' => [9, 10, 11],
+            };
+
+            $seasonData = collect($processedForecast)->filter(function ($item) use ($seasonMonths) {
+                return in_array($item['month'], $seasonMonths);
+            });
+
+            $seasonRainfall = $seasonData->sum('rainfall');
+
+            $thresholds = [
+                'winter' => 300,
+                'spring' => 250,
+                'summer' => 1,
+                'autumn' => 280,
+            ];
+
+            $floodRisk = $seasonRainfall >= $thresholds[$season];
+
+            $suggestedMaterials = collect();
+
+            if ($floodRisk) {
+                $suggestedMaterials = Material::whereIn('productname', [
+                    'Overall-waterafstotend',
+                    'werklaarzen-pvc',
+                    'Ontstoppingsveer',
+                    'rioolcamera'
+                ])->get();
+            }
+
+            session([
+                'floodRisk' => $floodRisk,
+                'suggestedMaterials' => $suggestedMaterials,
+            ]);
+
             return view('forecast.forecast', compact('processedForecast'));
 
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
     }
-
-    // ... (groupForecastData methode blijft hetzelfde) ...
 }
