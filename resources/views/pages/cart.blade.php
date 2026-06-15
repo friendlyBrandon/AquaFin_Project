@@ -71,7 +71,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
                         @php 
                             $totalItems += $echteQty; 
-                            // Tel het gewicht op
                             $totaalGewicht += ($material ? ($material->weight * $echteQty) : 0);
                         @endphp
 
@@ -155,7 +154,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
                         @php 
                             $totalItems += $echteQty; 
-                            // Tel het gewicht op
                             $totaalGewicht += ($material ? ($material->weight * $echteQty) : 0);
                         @endphp
 
