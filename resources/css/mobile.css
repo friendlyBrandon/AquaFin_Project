@@ -473,3 +473,27 @@ button[type="submit"]:hover {
     margin-top: 10px;
 }
 /*MATERIAAL pagina is daarin zelf responsive gemaakt*/
+.forc-container {
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+.forc-container h1 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chart-wrapper {
+    width: 100%;
+    height: 320px;
+    position: relative;
+}
+
+.rainChart {
+    width: 100% !important;
+    height: 100% !important;
+}
