@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
+use App\Models\Material;
 
 class ForcastController extends Controller
 {
@@ -384,7 +385,7 @@ class ForcastController extends Controller
             $thresholds = [
                 'winter' => 300,
                 'spring' => 250,
-                'summer' => 260,
+                'summer' => 1,
                 'autumn' => 280,
             ];
 
