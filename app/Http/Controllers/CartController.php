@@ -43,6 +43,33 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
+    public function addSuggested(Request $request)
+{
+    $cart = session()->get('cart', []);
+
+    foreach ($request->materials as $materialId) {
+
+        $material = \App\Models\Material::find($materialId);
+
+        if (!$material) continue;
+
+        if (isset($cart[$materialId])) {
+            $cart[$materialId]['quantity'] += 1;
+        } else {
+            $cart[$materialId] = [
+                'material_id' => $materialId,
+                'productname' => $material->productname,
+                'image_path' => $material->image_path,
+                'quantity' => 1
+            ];
+        }
+    }
+
+    session()->put('cart', $cart);
+
+    return redirect('/cart')->with('success', 'Aanbevolen materialen toegevoegd!');
+}
+
     public function addMaatwerk(Request $request)
     {
         $request->validate([
