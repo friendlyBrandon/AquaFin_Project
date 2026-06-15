@@ -359,6 +359,53 @@ class ForcastController extends Controller
             // 4. De gestructureerde data ophalen (Deze functie blijft hetzelfde!)
             $processedForecast = $forecastData;
 
+            $currentMonth = now()->month;
+
+            $season = match (true) {
+                in_array($currentMonth, [12, 1, 2]) => 'winter',
+                in_array($currentMonth, [3, 4, 5]) => 'spring',
+                in_array($currentMonth, [6, 7, 8]) => 'summer',
+                default => 'autumn',
+            };
+
+            $seasonMonths = match ($season) {
+                'winter' => [12, 1, 2],
+                'spring' => [3, 4, 5],
+                'summer' => [6, 7, 8],
+                'autumn' => [9, 10, 11],
+            };
+
+            $seasonData = collect($processedForecast)->filter(function ($item) use ($seasonMonths) {
+                return in_array($item['month'], $seasonMonths);
+            });
+
+            $seasonRainfall = $seasonData->sum('rainfall');
+
+            $thresholds = [
+                'winter' => 300,
+                'spring' => 250,
+                'summer' => 260,
+                'autumn' => 280,
+            ];
+
+            $floodRisk = $seasonRainfall >= $thresholds[$season];
+
+            $suggestedMaterials = collect();
+
+            if ($floodRisk) {
+                $suggestedMaterials = Material::whereIn('productname', [
+                    'Overall-waterafstotend',
+                    'werklaarzen-pvc',
+                    'Ontstoppingsveer',
+                    'rioolcamera'
+                ])->get();
+            }
+
+            session([
+                'floodRisk' => $floodRisk,
+                'suggestedMaterials' => $suggestedMaterials,
+            ]);
+
             return view('forecast.forecast', compact('processedForecast'));
 
         } catch (\Exception $e) {
