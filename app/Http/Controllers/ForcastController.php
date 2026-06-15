@@ -396,7 +396,7 @@ class ForcastController extends Controller
                     'Overall-waterafstotend',
                     'werklaarzen-pvc',
                     'Ontstoppingsveer',
-                    'rioolcamera'
+                    'Rioolcamera'
                 ])->get();
             }
 

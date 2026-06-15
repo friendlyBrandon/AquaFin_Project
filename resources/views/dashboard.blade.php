@@ -20,12 +20,18 @@
 
         @if($floodRisk)
             <div class="alert-warning">
-                <h4>AANGERADEN MATERIAAL</h4>
+                <h3>AANGERADEN MATERIAAL</h3>
+                
                 <div id="suggestedMaterial">
                     @foreach($suggestedMaterials as $material)
                         <p>{{ $material['productname'] }}</p>
                     @endforeach
                 </div>
+                <br>
+                <a href="/cart">
+                 <button type="button">Aan winkelmand toevoegen</button>
+                </a>
+                
             </div>
         @endif
 
