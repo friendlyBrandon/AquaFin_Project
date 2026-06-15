@@ -74,7 +74,7 @@
                                         </button>
                                     </form>
 
-                                    <button type="button" onclick='openEditMaterialModal({{ $material->id }}, @json($material->productname), @json($material->productnumber), @json($material->category), {{ $material->stock }})' style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 193, 7, 0.9); border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                    <button type="button" onclick='openEditMaterialModal({{ $material->id }}, @json($material->productname), @json($material->productnumber), @json($material->category), {{ $material->stock }}, {{ $material->weight ?? 0 }})' style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 193, 7, 0.9); border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                                         ✏️ Wijzig
                                     </button>
 
@@ -84,6 +84,7 @@
                             <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
                                 <h3 style="margin: 0 0 10px 0; font-size: 1.1em; color: #333;">{{ $material->productname }}</h3>
                                 <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">Art. code: <strong>{{ $material->productnumber }}</strong></p>
+                                <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">Gewicht per stuk: <strong>{{ $material->weight ?? 0 }} kg</strong></p>
                                 <p style="margin: 0 0 15px 0; font-size: 0.9em; color: {{ $material->stock > 0 ? 'green' : 'red' }};">Voorraad: <strong>{{ $material->stock }}</strong></p>
                                 
                                 <div style="margin-top: auto; display: flex; align-items: center; gap: 10px; background-color: #f8f9fa; padding: 10px; border-radius: 5px; border: 1px solid #eee;">
@@ -145,6 +146,9 @@
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Voorraad (Stock):</label>
             <input type="number" name="stock" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
 
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Gewicht per stuk (in kg):</label>
+            <input type="number" name="weight" step="0.01" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Afbeelding (Optioneel):</label>
             <input type="file" name="image" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa;">
 
@@ -179,6 +183,9 @@
 
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Voorraad (Stock):</label>
             <input type="number" name="stock" id="edit_stock" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Gewicht per stuk (in kg):</label>
+            <input type="number" name="weight" id="edit_weight" step="0.01" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
 
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Nieuwe Afbeelding (Laat leeg om huidige te behouden):</label>
             <input type="file" name="image" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa;">
@@ -278,12 +285,13 @@ function closeCustomOrderModal() { modal.style.display = 'none'; }
         newMaterialModal.style.display = 'none';
     }
 
-    function openEditMaterialModal(id, name, number, category, stock) {
+    function openEditMaterialModal(id, name, number, category, stock, weight) {
         document.getElementById('edit_material_id').value = id;
         document.getElementById('edit_productname').value = name;
         document.getElementById('edit_productnumber').value = number;
         document.getElementById('edit_category').value = category;
         document.getElementById('edit_stock').value = stock;
+        document.getElementById('edit_weight').value = weight; 
         
         editMaterialModal.style.display = 'flex';
     }

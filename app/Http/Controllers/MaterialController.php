@@ -75,6 +75,7 @@ class MaterialController extends Controller
             'productname' => 'required',
             'category'    => 'required',
             'stock'       => 'required|integer',
+            'weight'      => 'required|numeric|min:0',
         ]);
 
         $latest = Material::orderBy('id', 'desc')->first();
@@ -94,6 +95,7 @@ class MaterialController extends Controller
         $material->productnumber = $artCode; 
         $material->category = $request->category;
         $material->stock = $request->stock;
+        $material->weight = $request->weight;
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('material_pics', 'public');
@@ -107,11 +109,16 @@ class MaterialController extends Controller
 
     public function update(Request $request)
     {
+        $request->validate([
+            'weight' => 'required|numeric|min:0',
+        ]);
+
         $material = Material::findOrFail($request->material_id);
         
         $material->productname = $request->productname;
         $material->category = $request->category;
         $material->stock = $request->stock;
+        $material->weight = $request->weight;
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('material_pics', 'public');
