@@ -37,7 +37,7 @@ class MaterialController extends Controller
                 if ($material) {
                     
                     if ($qty > $material->stock) {
-                        return redirect()->back()->withErrors(['error' => 'Order more than the available stock for ' . $material->productname . ' is impossible!']);
+                        return redirect()->back()->withErrors(['error' => 'Meer dan de beschikbare stock bestellen ' . $material->productname . ' is onmogelijk!']);
                     }
 
                     $material->stock -= $qty;
