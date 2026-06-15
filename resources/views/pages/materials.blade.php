@@ -118,20 +118,20 @@
 @if(auth()->check() && auth()->user()->is_admin == 1)
 <div id="newMaterialModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     <div style="background-color: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto;">
-        <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #17a2b8;">➕ Nieuw Materiaal Aanmaken</h3>
+        <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #17a2b8;">Nieuw Materiaal Aanmaken</h3>
         
         <form method="POST" action="/materials/create" enctype="multipart/form-data">
             @csrf
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Productnaam:</label>
             <input type="text" name="productname" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
 
-            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Categorie (Kies of typ nieuw):</label>
-            <input type="text" name="category" list="categoryOptions" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-            <datalist id="categoryOptions">
+            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Categorie:</label>
+            <select name="category" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa; cursor: pointer;">
+                <option value="" disabled selected>-- Selecteer een bestaande categorie --</option>
                 @foreach($materials->pluck('category')->unique() as $cat)
-                    <option value="{{ $cat }}">
+                    <option value="{{ $cat }}">{{ $cat }}</option>
                 @endforeach
-            </datalist>
+            </select>
 
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Voorraad (Stock):</label>
             <input type="number" name="stock" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
@@ -162,7 +162,11 @@
             <input type="text" name="productnumber" id="edit_productnumber" readonly style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #e9ecef; color: #555; cursor: not-allowed;">
 
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Categorie:</label>
-            <input type="text" name="category" id="edit_category" list="categoryOptions" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <select name="category" id="edit_category" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa; cursor: pointer;">
+                @foreach($materials->pluck('category')->unique() as $cat)
+                    <option value="{{ $cat }}">{{ $cat }}</option>
+                @endforeach
+            </select>
 
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Voorraad (Stock):</label>
             <input type="number" name="stock" id="edit_stock" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
