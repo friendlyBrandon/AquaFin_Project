@@ -215,11 +215,22 @@
     
 }
 .reminder {
-    border: 2px solid #007bb0;
-    background-color: lightblue;
+    border: 2px solid #0099d8;
+    background-color: #C1E6F5;
     padding: 15px;
     border-radius: 10px;
     margin-top: 20px;
+}
+.alert-warning{    
+    border: 2px solid #0099d8;
+    background-color: #add8e6;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    
+}
+.alert-warning h3{
+    color:#0099d8;
 }
 
 
@@ -353,7 +364,7 @@ button[type="submit"]:hover {
 }
 
 .reminder h2 , reminder h1{
-    color:#007bb0;
+    color:#0099d8;
     padding: 5px;
     border-radius: 5px;
 }

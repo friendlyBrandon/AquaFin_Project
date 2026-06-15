@@ -19,7 +19,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
     @php
         $cart = session('cart', []);
         
-        // Initialiseer tellers voor items en gewicht buiten de loops
         $totalItems = 0;
         $totaalGewicht = 0;
     @endphp
@@ -71,7 +70,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
                         @php 
                             $totalItems += $echteQty; 
-                            // Tel het gewicht op
                             $totaalGewicht += ($material ? ($material->weight * $echteQty) : 0);
                         @endphp
 
@@ -155,7 +153,6 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
                         @php 
                             $totalItems += $echteQty; 
-                            // Tel het gewicht op
                             $totaalGewicht += ($material ? ($material->weight * $echteQty) : 0);
                         @endphp
 

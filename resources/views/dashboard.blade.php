@@ -13,6 +13,28 @@
             <h2> REMINDER </h2>
             <p>Vergeet het gasdetectiemeter niet mee te nemen!</p>
         </div>
+        @php
+            $floodRisk = session('floodRisk', false);
+            $suggestedMaterials = session('suggestedMaterials', collect());
+        @endphp
+
+        @if($floodRisk)
+            <div class="alert-warning">
+                <h3>AANGERADEN MATERIAAL</h3>
+                
+                <div id="suggestedMaterial">
+                    @foreach($suggestedMaterials as $material)
+                        <p>{{ $material['productname'] }}</p>
+                    @endforeach
+                </div>
+                <br>
+                <a href="/cart">
+                 <button type="button" style="background:linear-gradient(135deg, #0099d8, #00b4ff);color: white;border: none;border-radius: 12px;padding: 12px 24px;font-size: 0.95rem;font-weight: 600;cursor: pointer;box-shadow: 0 4px 12px rgba(0, 153, 216, 0.25)">
+                Aan winkelmand toevoegen</button>
+                </a>
+                
+            </div>
+        @endif
 
 
         <br>
