@@ -1,16 +1,34 @@
+# Requirements:
+
+- Larvel Herd must be set up.
+
+- Python must be installed.
+
 # Installation guide 🔧 :
 
-- composer install
+Any text like this must be pasted in the command prompt (CMD) `example text to show the tags`
 
-- copy .env.example .env
+Open CMD and paste in the following commands: 
 
-- php artisan key:generate
+ ## Copying the Aquafin Project:
 
-- php artisan migrate:fresh --seed
+  `git clone https://github.com/friendlyBrandon/AquaFin_Project.git`
 
-- npm install
+# Setting up the website:
 
-- npm run build
+- `cd AquaFin_Project`
+
+- `composer install`
+
+- `copy env.example .env`
+
+- `php artisan key:generate`
+
+- `php artisan migrate:fresh --seed`
+
+- `npm install`
+
+- `npm run build`
 
 # Forcasting python 1 year 🌧️:
 
@@ -18,29 +36,29 @@
 
 - Go to the forcasting folder in the main folder of the project.
 
-- Go into the forcasting folder by "cd forcasting"
+- Go into the forcasting folder by `cd forcasting`
 
-- Create venv folder by "python -m venv venv"
+- Create venv enviroment by `python -m venv venv` (must be only done the first time, the enviroment is generated this step can be skipped)
 
-- Activate venv by typing "venv\Scripts\activate.bat"
+- Activate venv by typing `venv\Scripts\activate.bat`
 
-- Install needing dependencies "pip install prophet pandas flask"
+- Install needing dependencies `pip install prophet pandas flask` (must be done only the first time in the virtual enviroment of venv, afterwards this step can be skipped)
 
-- Start Python script "python forcast.py"
+- Start Python script `python forcast.py`
 
 ## Linux Debian based 🐧:
 
 - Go to the forcasting folder in the main folder of the project.
 
-- Go into the forcasting folder by "cd forcasting"
+- Go into the forcasting folder by `cd forcasting`
 
-- Create venv folder by "python -m venv venv"
+- Create venv enviroment by `python -m venv venv` (must be only done the first time, the enviroment is generated this step can be skipped)
 
-- Activate venv by typing "source venv/bin/activate"
+- Activate venv by typing `source venv/bin/activate`
 
-- Install needing dependencies "pip install prophet pandas flask"
+- Install needing dependencies `pip install prophet pandas flask` (must be done only the first time in the virtual enviroment of venv, afterwards this step can be skipped)
 
-- Start Python script "python forcast.py"
+- Start Python script `python forcast.py`
 
   
 
