@@ -12,7 +12,7 @@ Open CMD and paste in the following commands:
 
  ## Copying the Aquafin Project:
 
-  `git clone https://github.com/friendlyBrandon/AquaFin_Project.git`
+- `git clone https://github.com/friendlyBrandon/AquaFin_Project.git`
 
 # Setting up the website:
 
