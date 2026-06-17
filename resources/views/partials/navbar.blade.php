@@ -71,7 +71,7 @@
                 </a>
             @endif
             @if(auth()->user()->is_admin == 1)
-             <a href="/admin">Flood Materials</a>
+             <a href="/admin">Risicomateriaal</a>
              @endif
             
             <form method="POST" action="{{ route('logout') }}" style="display: inline; margin-left: 10px;">
@@ -105,7 +105,7 @@
                 <a href="/orderlog">Bestellog</a>
             @endif
             @if(auth()->user()->is_admin == 1)
-             <a href="/admin">Flood Materials</a>
+             <a href="/admin">Risicomateriaal</a>
              @endif
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
