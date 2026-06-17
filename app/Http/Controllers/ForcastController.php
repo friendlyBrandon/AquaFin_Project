@@ -394,17 +394,23 @@ class ForcastController extends Controller
             $suggestedMaterials = collect();
 
             if ($floodRisk) {
-                $suggestedMaterials = Material::whereIn('productname', [
-                    'Overall-waterafstotend',
-                    'Werklaarzen-pvc',
-                    'Ontstoppingsveer',
-                    'Rioolcamera'
-                ])->get();
+
+                $suggestedMaterials = \App\Models\FloodMaterial::with('material')
+                    ->get()
+                    ->filter(function ($item) {
+                        return $item->material !== null; //safety check
+                    })
+                    ->map(function ($item) {
+                        return [
+                            'id' => $item->material->id,
+                            'productname' => $item->material->productname,
+                        ];
+                    })
+                    ->values();
             }
 
             session([
                 'floodRisk' => $floodRisk,
-                'suggestedMaterials' => $suggestedMaterials,
             ]);
 
             return view('forecast.forecast', compact('processedForecast'));
@@ -413,6 +419,4 @@ class ForcastController extends Controller
             dd($e->getMessage());
         }
     }
-
-    // ... (groupForecastData methode blijft hetzelfde) ...
 }

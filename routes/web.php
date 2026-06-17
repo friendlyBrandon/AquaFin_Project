@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\FloodMaterialController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ForcastController;
@@ -72,5 +73,26 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/forecast', [ForcastController::class, 'forecast'])
         ->name('forecast.forecast');
 });
+
+
+Route::middleware(['auth'])
+    ->prefix('admin')
+    ->group(function () {
+
+        Route::get(
+            '/',
+            [FloodMaterialController::class, 'index']
+        )->name('flood.index');
+
+        Route::post(
+            '/',
+            [FloodMaterialController::class, 'store']
+        )->name('flood.store');
+
+        Route::delete(
+            '/{id}',
+            [FloodMaterialController::class, 'destroy']
+        )->name('flood.destroy');
+    });
 
 require __DIR__ . '/auth.php';
