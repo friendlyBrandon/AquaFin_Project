@@ -189,6 +189,7 @@ class CartController extends Controller
                 'quantity' => $quantity,
                 'dimensions' => $dimensions,
                 'status' => 'pending',
+                'provincie'   => Auth::user()->provincie,
             ]);
         }
 

@@ -98,6 +98,7 @@ class OrderlogController extends Controller
                 'dimensions'  => $dimensions,
                 'status'      => 'pending',
                 'material_id' => $realId,
+                'provincie'   => $request->input('provincie', Auth::user()->provincie),
             ]);
         }
 

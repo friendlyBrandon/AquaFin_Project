@@ -9,7 +9,7 @@ class Orderlog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['order_id', 'user_id', 'productname', 'quantity', 'status', 'dimensions', 'material_id'];
+    protected $fillable = ['order_id', 'user_id', 'productname', 'quantity', 'status', 'dimensions', 'material_id', 'provincie'];
 
     public function user() {
         return $this->belongsTo(User::class);
