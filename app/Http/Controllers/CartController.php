@@ -43,39 +43,42 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
-    public function addSuggested(Request $request)
-{
-    $cart = session()->get('cart', []);
+    public function addSuggested()
+    {
+        $cart = session()->get('cart', []);
 
-    foreach ($request->materials as $materialId) {
+        $suggestedMaterials = \App\Models\FloodMaterial::with('material')
+            ->get()
+            ->filter(fn($item) => $item->material);
 
-        $material = \App\Models\Material::find($materialId);
+        foreach ($suggestedMaterials as $item) {
 
-        if (!$material) continue;
+            $material = $item->material;
+            $materialId = $material->id;
 
-        if (isset($cart[$materialId])) {
-            $cart[$materialId]['quantity'] += 1;
-        } else {
-            $cart[$materialId] = [
-                'material_id' => $materialId,
-                'productname' => $material->productname,
-                'image_path' => $material->image_path,
-                'quantity' => 1
-            ];
+            if (isset($cart[$materialId])) {
+                $cart[$materialId]['quantity'] += 1;
+            } else {
+                $cart[$materialId] = [
+                    'material_id' => $materialId,
+                    'productname' => $material->productname,
+                    'image_path' => $material->image_path,
+                    'quantity' => 1
+                ];
+            }
         }
+
+        session()->put('cart', $cart);
+
+        return redirect('/cart')->with('success', 'Aanbevolen materialen toegevoegd!');
     }
-
-    session()->put('cart', $cart);
-
-    return redirect('/cart')->with('success', 'Aanbevolen materialen toegevoegd!');
-}
 
     public function addMaatwerk(Request $request)
     {
         $request->validate([
-            'material_id' => 'required', 
-            'quantity'    => 'required|integer|min:1',
-            'dimensions'  => 'required|string',
+            'material_id' => 'required',
+            'quantity' => 'required|integer|min:1',
+            'dimensions' => 'required|string',
         ]);
 
         $material = Material::find($request->material_id);
@@ -90,9 +93,9 @@ class CartController extends Controller
 
         $cart[$uniqueKey] = [
             'material_id' => $material->id,
-            'quantity'    => $request->quantity,
-            'dimensions'  => $request->dimensions,
-            'is_custom'   => true
+            'quantity' => $request->quantity,
+            'dimensions' => $request->dimensions,
+            'is_custom' => true
         ];
 
         session()->put('cart', $cart);
@@ -100,14 +103,15 @@ class CartController extends Controller
         return redirect()->back()->with('Success', 'Maatwerk toegevoegd aan winkelmand!');
     }
 
-    public function update(Request $request, $id) 
+    public function update(Request $request, $id)
     {
         $request->validate(['quantity' => 'required|integer|min:1']);
-        
+
         $nieuweAantal = (int) $request->quantity;
         $cart = session()->get('cart', []);
 
-        if(!isset($cart[$id])) return redirect()->back();
+        if (!isset($cart[$id]))
+            return redirect()->back();
 
         $oudeAantal = is_array($cart[$id]) ? $cart[$id]['quantity'] : $cart[$id];
         $verschil = $nieuweAantal - $oudeAantal;
@@ -115,18 +119,18 @@ class CartController extends Controller
         $realId = is_array($cart[$id]) && isset($cart[$id]['material_id']) ? $cart[$id]['material_id'] : $id;
         $materiaal = Material::find($realId);
 
-        if($verschil > 0) {
-            if($materiaal->stock < $verschil) {
+        if ($verschil > 0) {
+            if ($materiaal->stock < $verschil) {
                 return redirect()->back()->withErrors(['error' => 'Er is niet genoeg voorraad om dit te verhogen!']);
             }
             $materiaal->stock -= $verschil;
-        } elseif($verschil < 0) {
+        } elseif ($verschil < 0) {
             $materiaal->stock += abs($verschil);
         }
 
         $materiaal->save();
 
-        if(is_array($cart[$id])) {
+        if (is_array($cart[$id])) {
             $cart[$id]['quantity'] = $nieuweAantal;
         } else {
             $cart[$id] = $nieuweAantal;
@@ -146,7 +150,7 @@ class CartController extends Controller
             $qtyToRemove = is_array($item) ? $item['quantity'] : $item;
 
             $realId = is_array($item) && isset($item['material_id']) ? $item['material_id'] : $id;
-            
+
             $material = Material::find($realId);
             if ($material) {
                 $material->stock += $qtyToRemove;
@@ -172,19 +176,19 @@ class CartController extends Controller
 
         foreach ($cart as $key => $item) {
             $materialId = is_array($item) && isset($item['material_id']) ? $item['material_id'] : $key;
-            $quantity   = is_array($item) ? $item['quantity'] : $item;
+            $quantity = is_array($item) ? $item['quantity'] : $item;
             $dimensions = is_array($item) && isset($item['dimensions']) ? $item['dimensions'] : null;
-            
+
             $material = Material::find($materialId);
 
             Orderlog::create([
-                'user_id'     => Auth::id(),
-                'order_id'    => $orderId,
+                'user_id' => Auth::id(),
+                'order_id' => $orderId,
                 'material_id' => $materialId,
                 'productname' => $material ? $material->productname : 'Verwijderd Artikel',
-                'quantity'    => $quantity,
-                'dimensions'  => $dimensions,
-                'status'      => 'pending',
+                'quantity' => $quantity,
+                'dimensions' => $dimensions,
+                'status' => 'pending',
             ]);
         }
 

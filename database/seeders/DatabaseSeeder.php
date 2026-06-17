@@ -15,13 +15,14 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    
+
     public function run(): void
     {
         $this->call([
             MaterialListSeeder::class,
+                FloodMaterialSeeder::class,
         ]);
-         User::factory(10)->create();
+        User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Gwen',
@@ -40,6 +41,6 @@ class DatabaseSeeder extends Seeder
             'is_stockMedewerker' => '1',
             'provincie' => 'Antwerpen'
         ]);
-      
+
     }
 }

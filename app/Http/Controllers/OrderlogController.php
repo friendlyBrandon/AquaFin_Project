@@ -93,7 +93,7 @@ class OrderlogController extends Controller
             Orderlog::create([
                 'order_id'    => $orderId,
                 'user_id'     => Auth::id(),
-                'productname' => str_replace('-', ' ', $ruweNaam),
+                'product_name' => str_replace('-', ' ', $ruweNaam),
                 'quantity'    => $echteQty,
                 'dimensions'  => $dimensions,
                 'status'      => 'pending',

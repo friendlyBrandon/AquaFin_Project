@@ -70,6 +70,9 @@
                     @endif
                 </a>
             @endif
+            @if(auth()->user()->is_admin == 1)
+             <a href="/admin">Flood Materials</a>
+             @endif
             
             <form method="POST" action="{{ route('logout') }}" style="display: inline; margin-left: 10px;">
                 @csrf
