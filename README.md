@@ -162,6 +162,8 @@ Open CMD and paste in the following commands:
 ## API data Python bot :
 This bot is made with the Phrophet library of Meta.
 
-https://medium.com/@barisenzeybek/time-series-analysis-and-forecasting-with-metas-prophet-library-d44e2e911b03  
+ ### Links for the Meta Prophet library :
 
-https://ai.meta.com/blog/neuralprophet-the-neural-evolution-of-facebooks-prophet/
+ - https://medium.com/@barisenzeybek/time-series-analysis-and-forecasting-with-metas-prophet-library-d44e2e911b03  
+
+ - https://ai.meta.com/blog/neuralprophet-the-neural-evolution-of-facebooks-prophet/
