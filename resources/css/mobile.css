@@ -8,6 +8,14 @@
 body {
     overflow-x: hidden;
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter',sans-serif;
+}
+
+
 
 /* ================= LOGIN ================= */
 
@@ -22,12 +30,9 @@ body {
     background: #0099d8;
     padding: 30px 20px;
     text-align: center;
-    color: white;
+    color:white;
+    background-position: center;
     position: relative;
-}
-
-.left-side h1 {
-    font-size: 1.8rem;
 }
 
 .left-side p {
@@ -35,15 +40,20 @@ body {
     font-size: .9rem;
 }
 
+.left-side h1 {
+    font-size: 1.8rem;
+}
+
 .right-side {
     flex: 1;
+
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:20px;
-    background:#f4f7fa;
-}
 
+    padding:20px;
+    background: #f4f7fa;
+}
 .login-card {
     width:100%;
     max-width:350px;
@@ -55,8 +65,8 @@ body {
 }
 
 .login-card h2 {
-    margin-bottom:15px;
-    color:#0099d8;
+    margin-bottom: 15px;
+    color: #0099d8;
 }
 
 .login-card p {
@@ -64,18 +74,29 @@ body {
     color:#666;
 }
 
+.logo-topright {
+    position: absolute;
+    top: auto;      
+    right: auto;  
+    bottom: 20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    height: 40px; 
+}
 
 .btn-login,
 .btn-register{
-    display:block;
-    width:100%;
-    padding:18px;
-    margin-top:15px;
-    font-size:1.1rem;
-    background:#0099d8;
-    color:white;
-    text-decoration:none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:90%;
     text-align:center;
+    margin: 15px;
+    padding:18px;
+    font-size:1.1rem;
+    background: #0099d8;
+    color: white;
+    
 }
 
 
