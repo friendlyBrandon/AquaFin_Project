@@ -67,12 +67,9 @@
                                 
                                 @if(auth()->check() && auth()->user()->is_admin == 1)
                                     
-                                    <form action="/materials/delete/{{ $material->id }}" method="POST" onsubmit="return confirm('Weet je zeker dat je {{ $material->productname }} definitief wilt verwijderen?');" style="position: absolute; top: 5px; left: 5px; margin: 0;">
-                                        @csrf
-                                        <button class="btn-delete" type="submit" title="Verwijderen" style="background-color: rgba(220, 53, 69, 0.9); color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                                            ❌
-                                        </button>
-                                    </form>
+                                    <button type="button" onclick='submitGlobalDelete({{ $material->id }}, @json($material->productname))' title="Verwijderen" style="position: absolute; top: 5px; left: 5px; margin: 0; background-color: rgba(220, 53, 69, 0.9); color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                        ❌
+                                    </button>
 
                                     <button type="button" onclick='openEditMaterialModal({{ $material->id }}, @json($material->productname), @json($material->productnumber), @json($material->category), {{ $material->stock }}, {{ $material->weight ?? 0 }})' style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 193, 7, 0.9); border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                                         ✏️ Wijzig
@@ -99,7 +96,7 @@
             </div>
         @endforeach
     </form> 
-</div>
+    </div>
 
 <div id="customOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     <div style="background-color: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
@@ -126,6 +123,10 @@
 </div>
 
 @if(auth()->check() && auth()->user()->is_admin == 1)
+<form id="globalDeleteForm" method="POST" style="display: none;">
+    @csrf
+</form>
+
 <div id="newMaterialModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     <div style="background-color: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto;">
         <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #17a2b8;">Nieuw Materiaal Aanmaken</h3>
@@ -298,6 +299,14 @@ function closeCustomOrderModal() { modal.style.display = 'none'; }
 
     function closeEditMaterialModal() {
         editMaterialModal.style.display = 'none';
+    }
+
+    function submitGlobalDelete(id, name) {
+        if(confirm('Weet je zeker dat je ' + name + ' definitief wilt verwijderen?')) {
+            let form = document.getElementById('globalDeleteForm');
+            form.action = '/materials/delete/' + id;
+            form.submit();
+        }
     }
 @endif
 </script>
