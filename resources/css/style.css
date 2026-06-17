@@ -511,3 +511,72 @@ button[type="submit"]:hover {
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
     
 }
+.flood-material {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+}
+
+.flood-material h2 {
+    color: #0099d8;
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.flood-material form {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.flood-material select {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.flood-material button {
+    background: #0099d8;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+
+.flood-material button:hover {
+    background: #007bb0;
+}
+
+
+.flood-material hr {
+    border: none;
+    height: 1px;
+    background: #ddd;
+    margin: 30px 0;
+}
+
+
+.flood-material > div {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid #1faeeb;
+}
+
+

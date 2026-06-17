@@ -1,3 +1,8 @@
+@extends('layouts.dashboard')
+
+@section('content')
+<div class='flood-material'>
+
 <h2>Overstromingsmaterialen beheren</h2>
 
 <form method="POST" action="{{ route('flood.store') }}">
@@ -34,5 +39,7 @@
         </form>
 
     </div>
+    
 
 @endforeach
+@endsection
