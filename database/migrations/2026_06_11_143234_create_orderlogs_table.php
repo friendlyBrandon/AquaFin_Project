@@ -16,7 +16,7 @@ return new class extends Migration
             
             $table->string('order_id');             
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->json('productnames')->change();
+            $table->json('product_name')->change();
             $table->integer('quantity');
             $table->string('status')->default('pending'); 
             
