@@ -1,50 +1,135 @@
-# Installation guide 🔧 :
+# AquaFin Project 💧
+## Description :
 
-- composer install
+Aquafin is a platform that allows users to consult material and monitor flood risks.
+The application combines Laravel with a Python forecasting service to predict rainfall for the coming year.
 
-- copy .env.example .env
+## Features / Pages :
+### Dashboard 
+Main overview page after login
+Functions:
+- Reminder for the gas detection meter
+- Shows recommended materials based on rainfall/weather data
+- Recommended materials can be directly added to the shopping cart with one button
+- Displays rainfall overview in a table
+- Shows rainfall data per province using a diagram
 
-- php artisan key:generate
+### Materials 
+Overview of available materials
+Functions:
+- Displays the complete material list
+- Search bar to find materials
+- Category filter button
+- Add materials to shopping cart
+- Request custom material button
 
-- php artisan migrate:fresh --seed
+Admin functions:
+- Add new materials
+- Edit existing materials
+- Delete materials
 
-- npm install
+### Rainfall Overview 
+Visualize rainfall predictions.
+Functions:
+- Displays a 1-year rainfall forecast
+- Shows rainfall data in a line chart
+- Forecast data is generated through Python forecasting 
 
-- npm run build
+Note:
+After login, users are redirected here first because the rainfall forecast must be activated before recommendations can be displayed on the dashboard.
 
-# Forcasting python 1 year 🌧️:
+### Contact 
+Communication between users and administrators
+Functions:
+- Create a new contact form
+- View sent forms
+- View received forms
 
-## Windows :
+### Profile
+Manage user information.
+Functions:
+- Displays user details
+- Allows updating profile information and password
+
+### Shopping Cart
+Manage selected materials
+Functions:
+- View selected materials
+- Remove materials
+- Update quantity of materials
+- Shows delivery time
+
+### Admin Orders
+Manage orders
+Admin functions:
+- View placed orders
+- Manage order status by accepting or refusing
+
+## Requirements:
+
+- Larvel Herd must be set up.
+
+- Python must be installed.
+
+## Installation guide 🔧 :
+
+Any text like this must be pasted in the command prompt (CMD) `example text to show the tags`
+
+Open CMD and paste in the following commands: 
+
+ ### Copying the Aquafin Project:
+
+- `git clone https://github.com/friendlyBrandon/AquaFin_Project.git`
+
+## Setting up the website:
+
+- `cd AquaFin_Project`
+
+- `composer install`
+
+- `copy env.example .env`
+
+- `php artisan key:generate`
+
+- `php artisan migrate:fresh --seed`
+
+- `npm install`
+
+- `npm run build`
+
+## Forcasting python 1 year 🌧️:
+
+### Windows :
 
 - Go to the forcasting folder in the main folder of the project.
 
-- Go into the forcasting folder by "cd forcasting"
+- Go into the forcasting folder by `cd forcasting`
 
-- Create venv folder by "python -m venv venv"
+- Create venv enviroment by `python -m venv venv` (must be only done the first time, the enviroment is generated this step can be skipped)
 
-- Activate venv by typing "venv\Scripts\activate.bat"
+- Activate venv by typing `venv\Scripts\activate.bat`
 
-- Install needing dependencies "pip install prophet pandas flask"
+- Install needing dependencies `pip install prophet pandas flask` (must be done only the first time in the virtual enviroment of venv, afterwards this step can be skipped)
 
-- Start Python script "python forcast.py"
+- Start Python script `python forcast.py`
 
-## Linux Debian based 🐧:
+### Linux Debian based 🐧:
 
 - Go to the forcasting folder in the main folder of the project.
 
-- Go into the forcasting folder by "cd forcasting"
+- Go into the forcasting folder by `cd forcasting`
 
-- Create venv folder by "python -m venv venv"
+- Create venv enviroment by `python -m venv venv` (must be only done the first time, the enviroment is generated this step can be skipped)
 
-- Activate venv by typing "source venv/bin/activate"
+- Activate venv by typing `source venv/bin/activate`
 
-- Install needing dependencies "pip install prophet pandas flask"
+- Install needing dependencies `pip install prophet pandas flask` (must be done only the first time in the virtual enviroment of venv, afterwards this step can be skipped)
 
-- Start Python script "python forcast.py"
+- Start Python script `python forcast.py`
 
   
 
-# Sources 🔗 :
+## Sources 🔗 :
 
 - https://chatgpt.com/share/6a2557ea-2c10-83eb-a11b-fefca377a8e7
 
@@ -53,7 +138,7 @@
 - https://chatgpt.com/share/6a281b15-9320-83ed-988e-41776d3d17ae
 
 
-# API data source on dashboard 🔗 :
+## API data source on dashboard 🔗 :
 
 - https://open-meteo.com/en/docs (weather)
 

@@ -69,7 +69,7 @@
                                     
                                     <form action="/materials/delete/{{ $material->id }}" method="POST" onsubmit="return confirm('Weet je zeker dat je {{ $material->productname }} definitief wilt verwijderen?');" style="position: absolute; top: 5px; left: 5px; margin: 0;">
                                         @csrf
-                                        <button type="submit" title="Verwijderen" style="background-color: rgba(220, 53, 69, 0.9); color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                        <button class="btn-delete" type="submit" title="Verwijderen" style="background-color: rgba(220, 53, 69, 0.9); color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                                             ❌
                                         </button>
                                     </form>
