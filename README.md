@@ -65,6 +65,16 @@ Admin functions:
 - View placed orders
 - Manage order status by accepting or refusing
 
+ ### Admin Flood Material page 💧 :
+Admins can add/remove materials that will be suggested in the dashboard page if the amount of rain is over the threshold of the season.
+Threshold per season mm of rainfall during that whole season:
+winter => 300
+spring => 250
+summer => 260
+autumn => 280
+
+The rainfall data is collected from the Python API that is ran locally.
+
 ## Requirements:
 
 - Larvel Herd must be set up.
@@ -139,9 +149,19 @@ Open CMD and paste in the following commands:
 
 - https://chatgpt.com/c/6a32566a-6f14-83ed-b6b6-b81b902612b9
 
+- https://medium.com/@barisenzeybek/time-series-analysis-and-forecasting-with-metas-prophet-library-d44e2e911b03
+
 
 ## API data source on dashboard 🔗 :
 
 - https://open-meteo.com/en/docs (weather)
 
 - https://open-meteo.com/en/docs/geocoding-api (location for city)
+
+
+## API data Python bot :
+This bot is made with the Phrophet library of Meta.
+
+https://medium.com/@barisenzeybek/time-series-analysis-and-forecasting-with-metas-prophet-library-d44e2e911b03  
+
+https://ai.meta.com/blog/neuralprophet-the-neural-evolution-of-facebooks-prophet/
