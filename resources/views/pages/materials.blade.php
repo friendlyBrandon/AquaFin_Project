@@ -66,17 +66,19 @@
                                 @endif
                                 
                                 @if(auth()->check() && auth()->user()->is_admin == 1)
-                                    
                                     <button type="button" onclick='submitGlobalDelete({{ $material->id }}, @json($material->productname))' title="Verwijderen" style="position: absolute; top: 5px; left: 5px; margin: 0; background-color: rgba(220, 53, 69, 0.9); color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                                         ❌
                                     </button>
-
                                     <button type="button" onclick='openEditMaterialModal({{ $material->id }}, @json($material->productname), @json($material->productnumber), @json($material->category), {{ $material->stock }}, {{ $material->weight ?? 0 }})' style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 193, 7, 0.9); border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                                         ✏️
                                     </button>
 
+                                @elseif(auth()->check() && auth()->user()->is_stockMedewerker == 1)
+                                    <button type="button" onclick='openEditMaterialModal({{ $material->id }}, @json($material->productname), @json($material->productnumber), @json($material->category), {{ $material->stock }}, {{ $material->weight ?? 0 }})' style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 193, 7, 0.9); border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                        ✏️
+                                    </button>
                                 @endif
-                                </div>
+                            </div>
                             
                             <div style="padding: 15px; display: flex; flex-direction: column; flex-grow: 1;">
                                 <h3 style="margin: 0 0 10px 0; font-size: 1.1em; color: #333;">{{ $material->productname }}</h3>
@@ -86,7 +88,6 @@
                                 
                                 <div style="margin-top: auto; display: flex; align-items: center; gap: 10px; background-color: #f8f9fa; padding: 10px; border-radius: 5px; border: 1px solid #eee;">
                                     <span style="font-size: 0.95em; color: #555; font-weight: bold;">Aantal:</span>
-                                    
                                     <input type="number" placeholder="0" name="bestelling[{{ $material->id }}]" min="0" max="{{ $material->stock }}" style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; text-align: center;" {{ $material->stock == 0 ? 'disabled' : '' }}>
                                 </div>
                             </div>
@@ -96,7 +97,7 @@
             </div>
         @endforeach
     </form> 
-    </div>
+</div>
 
 <div id="customOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     <div style="background-color: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
@@ -130,12 +131,10 @@
 <div id="newMaterialModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     <div style="background-color: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto;">
         <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #17a2b8;">Nieuw Materiaal Aanmaken</h3>
-        
         <form method="POST" action="/materials/create" enctype="multipart/form-data">
             @csrf
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Productnaam:</label>
             <input type="text" name="productname" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Categorie:</label>
             <select name="category" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa; cursor: pointer;">
                 <option value="" disabled selected>-- Selecteer een bestaande categorie --</option>
@@ -143,16 +142,12 @@
                     <option value="{{ $cat }}">{{ $cat }}</option>
                 @endforeach
             </select>
-
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Voorraad (Stock):</label>
             <input type="number" name="stock" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Gewicht per stuk (in kg):</label>
             <input type="number" name="weight" step="0.01" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Afbeelding (Optioneel):</label>
             <input type="file" name="image" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa;">
-
             <div style="display: flex; gap: 10px; margin-top: 25px; justify-content: flex-end;">
                 <button type="button" onclick="closeNewMaterialModal()" style="padding: 10px 15px; background-color: #f8f9fa; border: 1px solid #ccc; color: #333; border-radius: 5px; cursor: pointer; font-weight: bold;">Annuleren</button>
                 <button type="submit" style="padding: 10px 15px; background-color: #17a2b8; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Opslaan</button>
@@ -160,7 +155,9 @@
         </form>
     </div>
 </div>
+@endif
 
+@if(auth()->check() && (auth()->user()->is_admin == 1 || auth()->user()->is_stockMedewerker == 1))
 <div id="editMaterialModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
     <div style="background-color: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto;">
         <h3 style="margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #ffc107;">Materiaal Wijzigen</h3>
@@ -168,6 +165,9 @@
         <form method="POST" action="/materials/update" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="material_id" id="edit_material_id">
+            <input type="hidden" name="productname_hidden" id="edit_productname_hidden">
+            <input type="hidden" name="category_hidden" id="edit_category_hidden">
+            <input type="hidden" name="weight_hidden" id="edit_weight_hidden">
 
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Productnaam:</label>
             <input type="text" name="productname" id="edit_productname" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
@@ -188,8 +188,10 @@
             <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Gewicht per stuk (in kg):</label>
             <input type="number" name="weight" id="edit_weight" step="0.01" min="0" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
 
-            <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Nieuwe Afbeelding (Laat leeg om huidige te behouden):</label>
-            <input type="file" name="image" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa;">
+            @if(auth()->user()->is_admin == 1)
+                <label style="font-weight: bold; display: block; margin-bottom: 5px; margin-top: 15px;">Nieuwe Afbeelding (Laat leeg om huidige te behouden):</label>
+                <input type="file" name="image" accept="image/*" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f9fa;">
+            @endif
 
             <div style="display: flex; gap: 10px; margin-top: 25px; justify-content: flex-end;">
                 <button type="button" onclick="closeEditMaterialModal()" style="padding: 10px 15px; background-color: #f8f9fa; border: 1px solid #ccc; color: #333; border-radius: 5px; cursor: pointer; font-weight: bold;">Annuleren</button>
@@ -209,14 +211,11 @@ function fuzzyMatch(query, target) {
     if (query.length === 0) return true;
     if (target.includes(query)) return true;
     if (query.length < 2) return false;
-
     let maxErrors = Math.floor(query.length / 2);
     for (let i = 0; i <= target.length - query.length; i++) {
         let errors = 0;
         for (let j = 0; j < query.length; j++) {
-            if (target[i + j] !== query[j]) {
-                errors++;
-            }
+            if (target[i + j] !== query[j]) errors++;
             if (errors > maxErrors) break;
         }
         if (errors <= maxErrors) return true;
@@ -228,9 +227,7 @@ function matchMultipleTerms(query, target) {
     let terms = query.split(' ').filter(w => w.length > 0);
     if (terms.length === 0) return true;
     for (let term of terms) {
-        if (!fuzzyMatch(term, target)) {
-            return false;
-        }
+        if (!fuzzyMatch(term, target)) return false;
     }
     return true;
 }
@@ -258,11 +255,7 @@ function filterMaterials() {
             }
         });
 
-        if (categoryMatches && hasVisibleCards) {
-            section.style.display = "block";
-        } else {
-            section.style.display = "none";
-        }
+        section.style.display = (categoryMatches && hasVisibleCards) ? "block" : "none";
     });
 }
 
@@ -276,15 +269,22 @@ function closeCustomOrderModal() { modal.style.display = 'none'; }
 
 @if(auth()->check() && auth()->user()->is_admin == 1)
     const newMaterialModal = document.getElementById('newMaterialModal');
+
+    function openNewMaterialModal() { newMaterialModal.style.display = 'flex'; }
+    function closeNewMaterialModal() { newMaterialModal.style.display = 'none'; }
+
+    function submitGlobalDelete(id, name) {
+        if (confirm('Weet je zeker dat je ' + name + ' definitief wilt verwijderen?')) {
+            let form = document.getElementById('globalDeleteForm');
+            form.action = '/materials/delete/' + id;
+            form.submit();
+        }
+    }
+@endif
+
+@if(auth()->check() && (auth()->user()->is_admin == 1 || auth()->user()->is_stockMedewerker == 1))
     const editMaterialModal = document.getElementById('editMaterialModal');
-
-    function openNewMaterialModal() {
-        newMaterialModal.style.display = 'flex';
-    }
-
-    function closeNewMaterialModal() {
-        newMaterialModal.style.display = 'none';
-    }
+    const isAdmin = {{ auth()->user()->is_admin == 1 ? 'true' : 'false' }};
 
     function openEditMaterialModal(id, name, number, category, stock, weight) {
         document.getElementById('edit_material_id').value = id;
@@ -292,22 +292,33 @@ function closeCustomOrderModal() { modal.style.display = 'none'; }
         document.getElementById('edit_productnumber').value = number;
         document.getElementById('edit_category').value = category;
         document.getElementById('edit_stock').value = stock;
-        document.getElementById('edit_weight').value = weight; 
-        
+        document.getElementById('edit_weight').value = weight;
+
+        // Hidden velden altijd invullen als fallback
+        document.getElementById('edit_productname_hidden').value = name;
+        document.getElementById('edit_category_hidden').value = category;
+        document.getElementById('edit_weight_hidden').value = weight;
+
+        if (!isAdmin) {
+            document.getElementById('edit_productname').disabled = true;
+            document.getElementById('edit_category').disabled = true;
+            document.getElementById('edit_weight').disabled = true;
+            document.getElementById('edit_productname').style.backgroundColor = '#e9ecef';
+            document.getElementById('edit_category').style.backgroundColor = '#e9ecef';
+            document.getElementById('edit_weight').style.backgroundColor = '#e9ecef';
+        } else {
+            document.getElementById('edit_productname').disabled = false;
+            document.getElementById('edit_category').disabled = false;
+            document.getElementById('edit_weight').disabled = false;
+            document.getElementById('edit_productname').style.backgroundColor = '';
+            document.getElementById('edit_category').style.backgroundColor = '';
+            document.getElementById('edit_weight').style.backgroundColor = '';
+        }
+
         editMaterialModal.style.display = 'flex';
     }
 
-    function closeEditMaterialModal() {
-        editMaterialModal.style.display = 'none';
-    }
-
-    function submitGlobalDelete(id, name) {
-        if(confirm('Weet je zeker dat je ' + name + ' definitief wilt verwijderen?')) {
-            let form = document.getElementById('globalDeleteForm');
-            form.action = '/materials/delete/' + id;
-            form.submit();
-        }
-    }
+    function closeEditMaterialModal() { editMaterialModal.style.display = 'none'; }
 @endif
 </script>
 @endsection
