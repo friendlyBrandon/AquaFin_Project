@@ -217,15 +217,15 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
 
         @php
             if ($totaalGewicht > 1000) {
-                $levertijd = "5 werkdagen (Vrachtwagen Transport)";
+                $levertijd = "5 werkdagen";
                 $leverKleur = "#dc3545"; // Rood
                 $leverAchtergrond = "#f8d7da";
             } elseif ($totaalGewicht > 100) {
-                $levertijd = "Meer dan 2 werkdagen (Zwaar Transport)";
+                $levertijd = "Meer dan 2 werkdagen";
                 $leverKleur = "#856404"; // Donkergeel/Oranje
                 $leverAchtergrond = "#fff3cd";
             } else {
-                $levertijd = "1 tot 2 werkdagen (Standaard bestelwagen)";
+                $levertijd = "1 tot 2 werkdagen";
                 $leverKleur = "#28a745"; // Groen
                 $leverAchtergrond = "#d4edda";
             }
