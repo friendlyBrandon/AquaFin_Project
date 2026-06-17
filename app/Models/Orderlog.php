@@ -9,7 +9,7 @@ class Orderlog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['order_id', 'user_id', 'productname', 'quantity', 'status', 'dimensions'];
+    protected $fillable = ['order_id', 'user_id', 'productname', 'quantity', 'status', 'dimensions', 'material_id'];
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -17,5 +17,6 @@ class Orderlog extends Model
 
     protected $casts = [
     'productname' => 'array',
+
     ];
 }

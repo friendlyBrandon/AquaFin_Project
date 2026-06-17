@@ -11,9 +11,9 @@ class OrderlogController extends Controller
 {
     public function index() {
         if (Auth::user()->is_admin == 1 || Auth::user()->is_stockMedewerker == 1) {
-            $rawOrders = \App\Models\Orderlog::orderBy('created_at', 'desc')->get();
+            $rawOrders = \App\Models\Orderlog::with('user')->orderBy('created_at', 'desc')->get();
         } else {
-            $rawOrders = \App\Models\Orderlog::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+            $rawOrders = \App\Models\Orderlog::with('user')->where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
         }
 
         $orders = $rawOrders->groupBy('order_id');
@@ -41,10 +41,7 @@ class OrderlogController extends Controller
 
                 if ($huidigeStatus === 'pending') {
                     foreach ($orderItems as $item) {
-                        
-                        $materiaal = \App\Models\Material::where('productname', $item->productname)
-                                                         ->orWhere('productname', str_replace(' ', '-', $item->productname))
-                                                         ->first();
+                        $materiaal = \App\Models\Material::find($item->material_id);
                         
                         if ($materiaal) {
                             $materiaal->stock += $item->quantity;
@@ -61,7 +58,6 @@ class OrderlogController extends Controller
         
         return redirect()->route('orderlog.index')->withErrors(['error' => 'Je hebt niet de juiste rechten om bestellingen te wijzigen!']);
     }
-
 
     public function store(Request $request) {
         $cart = session()->get('cart', []);
@@ -87,13 +83,12 @@ class OrderlogController extends Controller
         $orderId = 'ORD-' . $vandaag . '-' . $volgnummer;
 
         foreach($cart as $id => $item) {
-            $echteQty = is_array($item) ? $item['quantity'] : $item;
-            
-            $realId = is_array($item) && isset($item['material_id']) ? $item['material_id'] : $id;
+            $echteQty   = is_array($item) ? $item['quantity'] : $item;
+            $realId     = is_array($item) && isset($item['material_id']) ? $item['material_id'] : $id;
             $dimensions = is_array($item) && isset($item['dimensions']) ? $item['dimensions'] : null;
             
             $materiaal = Material::find($realId);
-            $ruweNaam = $materiaal ? $materiaal->productname : (is_array($item) ? ($item['productname'] ?? 'Onbekend') : 'Onbekend');
+            $ruweNaam  = $materiaal ? $materiaal->productname : (is_array($item) ? ($item['productname'] ?? 'Onbekend') : 'Onbekend');
 
             Orderlog::create([
                 'order_id'    => $orderId,
@@ -101,18 +96,16 @@ class OrderlogController extends Controller
                 'productname' => str_replace('-', ' ', $ruweNaam),
                 'quantity'    => $echteQty,
                 'dimensions'  => $dimensions,
-                'status'      => 'pending'
+                'status'      => 'pending',
+                'material_id' => $realId,
             ]);
         }
 
         session()->forget('cart');
 
         if (Auth::user()->is_admin == 1 || Auth::user()->is_stockMedewerker == 1) {
-            
             return redirect()->route('cart.index')->with('success', 'Bestelling ' . $orderId . ' is succesvol geplaatst!');
-            
         } else {
-            
             $aantalPending = Orderlog::where('user_id', Auth::id())
                                      ->where('status', 'pending')
                                      ->get()
@@ -120,7 +113,6 @@ class OrderlogController extends Controller
                                      ->count();
 
             $bericht = 'Bestelling ' . $orderId . ' is succesvol geplaatst!';
-
             return redirect()->route('cart.index')->with('success', $bericht);
         }
     }
