@@ -137,6 +137,8 @@ Open CMD and paste in the following commands:
 
 - https://chatgpt.com/share/6a281b15-9320-83ed-988e-41776d3d17ae
 
+- https://chatgpt.com/c/6a32566a-6f14-83ed-b6b6-b81b902612b9
+
 
 ## API data source on dashboard 🔗 :
 
