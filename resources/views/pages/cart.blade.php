@@ -118,7 +118,7 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
                             <td style="padding: 10px;">
                                 <form method="POST" action="/cart/remove/{{ $id }}">
                                     @csrf
-                                    <button type="submit" style="color: red;">Verwijderen</button>
+                                    <button type="submit">Verwijderen</button>
                                 </form>
                             </td>
                         </tr>
