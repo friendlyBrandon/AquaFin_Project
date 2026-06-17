@@ -104,7 +104,9 @@
             @if(auth()->user()->is_admin == 1 || auth()->user()->is_stockMedewerker == 1)
                 <a href="/orderlog">Bestellog</a>
             @endif
-
+            @if(auth()->user()->is_admin == 1)
+             <a href="/admin">Flood Materials</a>
+             @endif
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button class="logout-btn">Logout</button>

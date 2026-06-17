@@ -36,7 +36,7 @@
             
             @if(auth()->check() && auth()->user()->is_admin == 1)
                 <button type="button" onclick="openNewMaterialModal()" style="padding: 12px 25px; background-color: #17a2b8; color: white; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background-color 0.3s;">
-                    Nieuw Materiaal toevoegen
+                    Nieuw materiaal toevoegen
                 </button>
             @endif
 
