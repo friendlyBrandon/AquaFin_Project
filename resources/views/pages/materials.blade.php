@@ -72,7 +72,7 @@
                                     </button>
 
                                     <button type="button" onclick='openEditMaterialModal({{ $material->id }}, @json($material->productname), @json($material->productnumber), @json($material->category), {{ $material->stock }}, {{ $material->weight ?? 0 }})' style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 193, 7, 0.9); border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                                        ✏️ Wijzig
+                                        ✏️
                                     </button>
 
                                 @endif
