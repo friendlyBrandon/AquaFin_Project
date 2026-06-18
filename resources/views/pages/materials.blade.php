@@ -295,7 +295,6 @@ function closeCustomOrderModal() { modal.style.display = 'none'; }
         document.getElementById('edit_stock').value = stock;
         document.getElementById('edit_weight').value = weight;
 
-        // Hidden velden altijd invullen als fallback
         document.getElementById('edit_productname_hidden').value = name;
         document.getElementById('edit_category_hidden').value = category;
         document.getElementById('edit_weight_hidden').value = weight;

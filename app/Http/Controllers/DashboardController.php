@@ -50,7 +50,6 @@ class DashboardController extends Controller
 
             $weather = $weatherResponse->json();
 
-            // 🔥 hier halen we forecast data (session of fallback)
             $forecast = session('forecast', null);
             $floodRisk = session('floodRisk', false);
             $suggestedMaterials = session('suggestedMaterials', collect());
