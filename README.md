@@ -192,7 +192,9 @@ Open CMD and paste in the following commands:
 
 - https://gemini.google.com/share/2689f65e9098
 
+- https://chatgpt.com/c/6a27fc40-9158-83eb-8de8-1b2ba9bfd859
 
+- https://chatgpt.com/c/6a22813f-f9ac-832a-b8d0-f4e961b2767e
 
 ## API data source on dashboard 🔗 :
 
