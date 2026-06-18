@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             MaterialListSeeder::class,
                 FloodMaterialSeeder::class,
         ]);
-        User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Gwen',
