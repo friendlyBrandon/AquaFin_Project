@@ -67,7 +67,7 @@
                                 
                                 @if(auth()->check() && auth()->user()->is_admin == 1)
                                     
-                                    <button type="button" onclick='submitGlobalDelete({{ $material->id }}, @json($material->productname))' title="Verwijderen" style="position: absolute; top: 5px; left: 5px; margin: 0; background-color: rgba(220, 53, 69, 0.9); color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                    <button type="button" onclick='submitGlobalDelete({{ $material->id }}, @json($material->productname))' title="Verwijderen" style="position: absolute; top: 5px; left: 5px; margin: 0; background-color: #0099d8; color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                                         ❌
                                     </button>
 
@@ -193,7 +193,7 @@
 
             <div style="display: flex; gap: 10px; margin-top: 25px; justify-content: flex-end;">
                 <button type="button" onclick="closeEditMaterialModal()" style="padding: 10px 15px; background-color: #f8f9fa; border: 1px solid #ccc; color: #333; border-radius: 5px; cursor: pointer; font-weight: bold;">Annuleren</button>
-                <button type="submit" style="padding: 10px 15px; background-color: #ffc107; color: #333; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Wijzigingen Opslaan</button>
+                <button type="submit" style="padding: 10px 15px; background-color: #ffc107; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Wijzigingen Opslaan</button>
             </div>
         </form>
     </div>
