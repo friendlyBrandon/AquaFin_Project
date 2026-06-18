@@ -195,7 +195,7 @@ class MaterialListSeeder extends Seeder
                 'productname'   => $productNaam,
                 'productnumber' => $artikelCode,
                 'category'      => $categorie,
-                'stock'         => 100,
+                'stock'         => 1000,
                 'weight'        => $this->gewichten[$productNaam] ?? 0.00,
                 'image_path'    => $volledigeNaam,
                 'created_at'    => now(),

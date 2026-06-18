@@ -216,13 +216,13 @@ $isMobile = preg_match('/Android|iPhone|iPad/i', request()->userAgent());
         @endif
 
         @php
-            if ($totaalGewicht > 1000) {
+            if ($totaalGewicht >= 1000) {
                 $levertijd = "5 werkdagen";
                 $leverKleur = "#dc3545";
                 $leverAchtergrond = "#f8d7da";
-            } elseif ($totaalGewicht > 100) {
-                $levertijd = "Meer dan 2 werkdagen";
-                $leverKleur = "#856404";
+            } elseif ($totaalGewicht >= 100) {
+                $levertijd = "3 tot 4 werkdagen";
+                $leverKleur = "#a77e03";
                 $leverAchtergrond = "#fff3cd";
             } else {
                 $levertijd = "1 tot 2 werkdagen";
