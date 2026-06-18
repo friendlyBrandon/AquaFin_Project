@@ -12,9 +12,7 @@ class MaterialController extends Controller
     public function index() {
         $materials = Material::all()->map(function($material) {
             $material->category = trim($material->category);
-            
             $material->productname = str_replace('-', ' ', $material->productname);
-            
             return $material;
         });
             
@@ -47,12 +45,12 @@ class MaterialController extends Controller
                         $cart[$id]['quantity'] += $qty;
                     } else {
                         $cart[$id] = [
-                            "id" => $material->id,
-                            "productname" => str_replace('-', ' ', $material->productname),
+                            "id"            => $material->id,
+                            "productname"   => str_replace('-', ' ', $material->productname),
                             "productnumber" => $material->productnumber,
-                            "quantity" => $qty,
-                            "image_path" => $material->image_path,
-                            "category" => $material->category
+                            "quantity"      => $qty,
+                            "image_path"    => $material->image_path,
+                            "category"      => $material->category
                         ];
                     }
 
@@ -84,18 +82,17 @@ class MaterialController extends Controller
         
         if ($latest && $latest->productnumber) {
             $alleenCijfers = preg_replace('/[^0-9]/', '', $latest->productnumber);
-            
             $number = intval($alleenCijfers) + 1;
         }
 
         $artCode = str_pad($number, 5, '0', STR_PAD_LEFT);
 
         $material = new Material();
-        $material->productname = $request->productname;
+        $material->productname   = $request->productname;
         $material->productnumber = $artCode; 
-        $material->category = $request->category;
-        $material->stock = $request->stock;
-        $material->weight = $request->weight;
+        $material->category      = $request->category;
+        $material->stock         = $request->stock;
+        $material->weight        = $request->weight;
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('material_pics', 'public');
@@ -110,15 +107,15 @@ class MaterialController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'weight' => 'required|numeric|min:0',
+            'weight' => 'nullable|numeric|min:0',
         ]);
 
         $material = Material::findOrFail($request->material_id);
         
-        $material->productname = $request->productname;
-        $material->category = $request->category;
-        $material->stock = $request->stock;
-        $material->weight = $request->weight;
+        $material->productname = $request->productname ?? $request->productname_hidden;
+        $material->category    = $request->category    ?? $request->category_hidden;
+        $material->stock       = $request->stock;
+        $material->weight      = $request->weight      ?? $request->weight_hidden;
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('material_pics', 'public');
