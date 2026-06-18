@@ -66,6 +66,7 @@
                                 @endif
                                 
                                 @if(auth()->check() && auth()->user()->is_admin == 1)
+                                    
                                     <button type="button" onclick='submitGlobalDelete({{ $material->id }}, @json($material->productname))' title="Verwijderen" style="position: absolute; top: 5px; left: 5px; margin: 0; background-color: #0099d8; color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                                         ❌
                                     </button>
