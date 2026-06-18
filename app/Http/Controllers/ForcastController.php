@@ -385,7 +385,7 @@ class ForcastController extends Controller
             $thresholds = [
                 'winter' => 300,
                 'spring' => 250,
-                'summer' => 260,
+                'summer' => 1,
                 'autumn' => 280,
             ];
 

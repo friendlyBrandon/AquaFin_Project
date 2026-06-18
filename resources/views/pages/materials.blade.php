@@ -66,7 +66,8 @@
                                 @endif
                                 
                                 @if(auth()->check() && auth()->user()->is_admin == 1)
-                                    <button type="button" onclick='submitGlobalDelete({{ $material->id }}, @json($material->productname))' title="Verwijderen" style="position: absolute; top: 5px; left: 5px; margin: 0; background-color: rgba(220, 53, 69, 0.9); color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                    
+                                    <button type="button" onclick='submitGlobalDelete({{ $material->id }}, @json($material->productname))' title="Verwijderen" style="position: absolute; top: 5px; left: 5px; margin: 0; background-color: #0099d8; color: white; border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                                         ❌
                                     </button>
                                     <button type="button" onclick='openEditMaterialModal({{ $material->id }}, @json($material->productname), @json($material->productnumber), @json($material->category), {{ $material->stock }}, {{ $material->weight ?? 0 }})' style="position: absolute; top: 5px; right: 5px; background-color: rgba(255, 193, 7, 0.9); border: none; border-radius: 4px; padding: 5px 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
@@ -195,7 +196,7 @@
 
             <div style="display: flex; gap: 10px; margin-top: 25px; justify-content: flex-end;">
                 <button type="button" onclick="closeEditMaterialModal()" style="padding: 10px 15px; background-color: #f8f9fa; border: 1px solid #ccc; color: #333; border-radius: 5px; cursor: pointer; font-weight: bold;">Annuleren</button>
-                <button type="submit" style="padding: 10px 15px; background-color: #ffc107; color: #333; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Wijzigingen Opslaan</button>
+                <button type="submit" style="padding: 10px 15px; background-color: #ffc107; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Wijzigingen Opslaan</button>
             </div>
         </form>
     </div>
@@ -294,7 +295,6 @@ function closeCustomOrderModal() { modal.style.display = 'none'; }
         document.getElementById('edit_stock').value = stock;
         document.getElementById('edit_weight').value = weight;
 
-        // Hidden velden altijd invullen als fallback
         document.getElementById('edit_productname_hidden').value = name;
         document.getElementById('edit_category_hidden').value = category;
         document.getElementById('edit_weight_hidden').value = weight;
