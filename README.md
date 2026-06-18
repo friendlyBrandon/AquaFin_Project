@@ -167,3 +167,41 @@ This bot is made with the Phrophet library of Meta.
  - https://medium.com/@barisenzeybek/time-series-analysis-and-forecasting-with-metas-prophet-library-d44e2e911b03  
 
  - https://ai.meta.com/blog/neuralprophet-the-neural-evolution-of-facebooks-prophet/
+
+# Screenshots of the website :
+
+ - Welcome page:
+<img width="1916" height="913" alt="image" src="https://github.com/user-attachments/assets/8e34aebd-11ae-40af-bd2c-b69199ce8c44" />
+
+ - Register page:
+<img width="1912" height="913" alt="image" src="https://github.com/user-attachments/assets/a1434b31-c0ee-4ce9-a04e-7fa753813ecc" />
+
+ - Login page:
+<img width="1919" height="914" alt="image" src="https://github.com/user-attachments/assets/c8dd391b-b581-4b8b-aae4-e3bdf1143a80" />
+
+ - Reset password page:
+<img width="1917" height="916" alt="image" src="https://github.com/user-attachments/assets/525d9d40-9fbd-4620-a1f7-f8cc42191690" />
+
+ - Dashboard:
+<img width="1899" height="910" alt="image" src="https://github.com/user-attachments/assets/38dda295-f092-43f1-b53e-7d88e018b1cf" />
+
+ - Material page to order the materials you need:
+<img width="1896" height="913" alt="image" src="https://github.com/user-attachments/assets/3dade60c-d426-45ef-b334-c52ecb552a34" />
+
+ - Rainforecast page for a year:
+<img width="1915" height="916" alt="image" src="https://github.com/user-attachments/assets/0a0ee882-6b36-4632-808f-b60dbf833a1e" />
+
+ - Contact page, own function can be "technieker", "admin" or "stockmedewerker":
+<img width="1911" height="913" alt="image" src="https://github.com/user-attachments/assets/fc75f05a-a453-493c-ac24-2e23d99fd4f1" />
+<img width="1909" height="912" alt="image" src="https://github.com/user-attachments/assets/99e229f1-3335-4cbc-9df6-98e7e0a274a6" />
+<img width="1909" height="918" alt="image" src="https://github.com/user-attachments/assets/17b630c4-8beb-47f3-a627-9fdd3bf39d32" />
+<img width="1913" height="913" alt="image" src="https://github.com/user-attachments/assets/266be13c-2d44-4e49-9b29-0a9a683779ec" />
+
+ - Profile page to edit province info and your password:
+<img width="1899" height="911" alt="image" src="https://github.com/user-attachments/assets/618d27eb-3201-401d-8b3a-65d5fe2c10dc" />
+
+ - Cart page to view what you wish to order after you already added it to your cart:
+<img width="1899" height="917" alt="image" src="https://github.com/user-attachments/assets/abbf3134-dbe9-4a76-8511-ceef8e029633" />
+
+ - Orderlog page for "admins" and "stockmedewerkers":
+<img width="1908" height="922" alt="image" src="https://github.com/user-attachments/assets/23a5fea0-9010-4e46-b6af-b421e4d3274f" />
