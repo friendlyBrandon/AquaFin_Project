@@ -182,7 +182,19 @@ Open CMD and paste in the following commands:
 
 - https://medium.com/@barisenzeybek/time-series-analysis-and-forecasting-with-metas-prophet-library-d44e2e911b03
 
+- https://gemini.google.com/share/3bcde1a9de0f
 
+- https://gemini.google.com/share/7b6f112e7114
+
+- https://gemini.google.com/share/7b7f9c315072
+
+- https://gemini.google.com/share/5267665b6a79
+
+- https://gemini.google.com/share/2689f65e9098
+
+- https://chatgpt.com/c/6a27fc40-9158-83eb-8de8-1b2ba9bfd859
+
+- https://chatgpt.com/c/6a22813f-f9ac-832a-b8d0-f4e961b2767e
 
 ## API data source on dashboard 🔗 :
 
